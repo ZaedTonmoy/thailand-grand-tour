@@ -36,8 +36,8 @@ const routeBases = [
     cityKey: "khaosok",
     image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=1000&q=85",
     alt: "Khao Sok rainforest and Cheow Lan Lake",
-    tags: ["Floating Raft House", "Night Safari", "Cave Trek", "River Tubing"],
-    summary: "Oldest evergreen rainforest in the world, Sok River tubing, night wildlife jungle safari, and a Christmas overnight in a floating bungalow on Cheow Lan Lake."
+    tags: ["Floating Raft House", "Christmas Eve Lake", "Night Safari", "River Tubing"],
+    summary: "Christmas Eve overwater raft house on Cheow Lan Lake, cave treks, dawn mist gibbon safari, Sok river tubing, and Christmas night jungle safari."
   },
   {
     dates: "26–29 Dec",
@@ -46,7 +46,7 @@ const routeBases = [
     image: "https://images.unsplash.com/photo-1512553353614-82a7370096dc?auto=format&fit=crop&w=1000&q=85",
     alt: "Chiang Mai mountain temple",
     tags: ["Tiger Kingdom", "Zipline / Bungee", "Sticky Waterfalls", "Elephants"],
-    summary: "Close-up Giant Tiger shoulder/back photos in Mae Rim, Pongyang Jungle Coaster & 50m bungee, Bua Thong Sticky Waterfalls, Monk's Trail hike, and Doi Inthanon."
+    summary: "Direct flight north from URT, Mae Rim Giant Tiger photos & 50m bungee, Mae Taeng ethical elephants + Sticky Waterfalls, Monk's Trail hike, and Doi Inthanon."
   },
   {
     dates: "2 Jan day trip",
@@ -69,7 +69,7 @@ const fixedCostDefaults = [
   {
     id: "fix-dom-transit",
     label: "2. Domestic Flights, Vans & Sleeper Train",
-    note: "BKK→HKT flight, URT→CNX flight, vans & Sleeper Train #10",
+    note: "BKK→HKT flight, URT→CNX direct flight, vans & Sleeper Train #10",
     defaultTHB: 6800
   },
   {
@@ -95,16 +95,20 @@ const days = [
     dateNum: "15",
     month: "Dec",
     location: "Bangkok · Old Town & Chinatown",
-    title: "Arrive, check in & Yaowarat street food crawl",
+    title: "Arrive, SuperRich USD exchange, check in & Yaowarat street food",
     stay: "🛏 Bangkok · Night 1 of 2 (Luk Hostel or Once Again Hostel)",
-    morning: "Travel day: fly Dhaka (DAC) → Bangkok (BKK or DMK). Activate your Thai tourist eSIM and withdraw initial cash in a single ATM transaction to minimise the ฿220 Thai ATM fee.",
-    afternoon: "Take the Airport Rail Link + MRT (from BKK) or A1/A4 Bus + MRT (from DMK) to Sam Yot / Wat Mangkon. Check into your hostel and freshen up.",
-    evening: "Walk Yaowarat Road (Chinatown) once the neon signs light up after 6:00 PM. Sample Michelin-recognised street stalls—crispy pork belly pepper soup at Guay Jab Ouan Pochana, grilled river prawns, and mango sticky rice.",
+    morning: "Fly Dhaka (DAC) → Bangkok (BKK/DMK). Scan your pre-approved Thailand Digital Arrival Card (TDAC) QR at immigration e-gates. If landing at Suvarnabhumi (BKK), head straight down to Basement B Floor (beside Airport Rail Link) to exchange crisp $100 USD bills at SuperRich Thailand—saving the mandatory ฿220 ATM fee + 3% bank markup!",
+    afternoon: "Take the Airport Rail Link + MRT Blue Line to Sam Yot / Wat Mangkon. Check into your hostel, lock your passport/backup cards in your locker, and freshen up.",
+    evening: "Walk Yaowarat Road (Chinatown) once neon signs blaze at 6:00 PM. Feast on Michelin-recognised crispy pork belly pepper soup at Guay Jab Ouan Pochana, grilled river prawns, and mango sticky rice.",
     spend: "฿600–1,200 excluding flight and bed",
     minSpend: 600,
     maxSpend: 1200,
-    transport: "Airport Rail Link + MRT Blue Line to Sam Yot/Wat Mangkon; walk Chinatown on foot.",
-    tip: "Landing early with energy to spare? Tuesday night features the fast-paced 'Rajadamnern Knockout' Muay Thai card just 2 km from Sam Yot."
+    transport: "Airport Rail Link + MRT Blue Line to Sam Yot / Wat Mangkon; walk Chinatown on foot.",
+    tip: "Avoid Thai ATMs: Every ATM in Thailand charges ฿220 (~৳800) flat fee per transaction plus 3% bank FX markups. Exchanging clean, uncreased post-2013 $100 USD bills at SuperRich saves ~৳10,000 across your trip.",
+    mapsUrl: "https://maps.google.com/?q=Yaowarat+Road+Bangkok",
+    thaiText: "ถนนเยาวราช กรุงเทพฯ (เยาวราช)",
+    thaiPhonetic: "Thanon Yaowarat, Krung Thep",
+    driverNote: "ไปเยาวราช ถนนมังกร (MRT วัดมังกร) / To Chinatown"
   },
   {
     day: 2,
@@ -114,16 +118,20 @@ const days = [
     dateNum: "16",
     month: "Dec",
     location: "Bangkok · Rattanakosin Island",
-    title: "Grand Palace, Wat Pho, Wat Arun & Chao Phraya sunset",
+    title: "Grand Palace, Wat Pho massage, Wat Arun & Chao Phraya sunset",
     stay: "🛏 Bangkok · Night 2 of 2 (Luk Hostel or Once Again Hostel)",
-    morning: "Arrive at the Grand Palace & Wat Phra Kaew (Emerald Buddha) by 8:30 AM sharp to beat tour buses and midday heat. Shoulders and knees must be covered (light trousers or elephant pants).",
-    afternoon: "Walk 10 minutes south to Wat Pho to see the 46-metre Reclining Buddha and get a traditional 1-hour Thai massage at the historic Wat Pho Massage School. Cross the river by ฿5 shuttle boat to climb the porcelain spires of Wat Arun.",
-    evening: "Cross back to Tha Tien pier for sunset views facing Wat Arun, then explore Rambuttri Alley or Phra Athit Road for casual backpacker drinks before tomorrow's morning flight.",
+    morning: "Arrive at Grand Palace & Wat Phra Kaew (Emerald Buddha) by 8:30 AM sharp to beat tour crowds and midday tropical heat. Shoulders and knees must be covered (light linen pants or elephant trousers).",
+    afternoon: "Walk 10 mins south to Wat Pho for the 46m Reclining Buddha and a traditional 1-hour Thai massage at the historic Wat Pho Massage School. Cross the river via ฿5 shuttle ferry to climb Wat Arun's porcelain stupas.",
+    evening: "Cross back to Tha Tien pier for sunset views facing Wat Arun, then explore Rambuttri Alley or Phra Athit Road for casual backpacker craft drinks before tomorrow's morning flight.",
     spend: "฿1,100–1,900 including Grand Palace (฿500), Wat Pho (฿300), Wat Arun (฿200), ferries and meals",
     minSpend: 1100,
     maxSpend: 1900,
-    transport: "Walk or MRT to Sanam Chai Station; Chao Phraya river cross-ferries.",
-    tip: "Ignore anyone outside the Grand Palace claiming it is 'closed today for a royal ceremony'—that is Bangkok's oldest tuk-tuk scam."
+    transport: "Walk or MRT to Sanam Chai Station; Chao Phraya cross-river ferries (฿5).",
+    tip: "Ignore anyone outside the Grand Palace claiming it is 'closed today for royal ceremony'—that is Bangkok's oldest tuk-tuk commission scam.",
+    mapsUrl: "https://maps.google.com/?q=Grand+Palace+Bangkok",
+    thaiText: "พระบรมมหาราชวัง และ วัดโพธิ์ (ท่าเตียน)",
+    thaiPhonetic: "Phra Borom Maha Ratcha Wang / Wat Pho",
+    driverNote: "ไปพระบรมมหาราชวัง ท่าเตียน (MRT สนามไชย) / To Grand Palace"
   },
   {
     day: 3,
@@ -133,16 +141,20 @@ const days = [
     dateNum: "17",
     month: "Dec",
     location: "Phuket · Bang Tao / Cherng Talay",
-    title: "Fly to Phuket, Big Buddha Jungle ATV & EDC prep",
+    title: "Fly to Phuket, Smart Bus to Bang Tao, Jungle ATV & EDC wristband prep",
     stay: "🛏 Phuket (Bang Tao / Cherng Talay) · Festival base, night 1 of 4",
-    morning: "Catch a morning flight Bangkok → Phuket (HKT). Outside the terminal, board the orange Phuket Smart Bus (฿100 flat fare) straight to Bang Tao / Cherng Talay instead of paying ฿800+ for an airport taxi.",
-    afternoon: "Check into ChillHub Hostel or Hanuman VIP Hostel (only 10 mins from Rhythm Park EDC venue). Optional afternoon adrenaline kick: 1-hour Jungle ATV Quad-Bike ride up the rubber-plantation trails in Phuket (฿1,200–1,500).",
-    evening: "Stock up on electrolyte packets, snacks, and water at 7-Eleven. Confirm your EDC wristband pickup rules at Rhythm Park and have dinner near Boat Avenue / Porto de Phuket.",
-    spend: "฿1,000–2,500 excluding flight and bed (add ฿1,300 if doing Jungle ATV)",
+    morning: "Morning flight Bangkok (DMK/BKK) → Phuket (HKT). Outside terminal, board the orange Phuket Smart Bus (฿100 flat fare) straight to Bang Tao / Cherng Talay instead of paying ฿800+ for an airport taxi.",
+    afternoon: "Check into ChillHub Hostel or Hanuman VIP Hostel (10 mins from Rhythm Park EDC venue). Optional afternoon adrenaline: 1-hour Jungle ATV Quad-Bike ride through rubber plantations (฿1,200–1,500).",
+    evening: "Hit 7-Eleven for electrolytes, water, and gym snacks (Meiji 28g protein milk + chicken breast). Confirm your EDC wristband pickup rules at Rhythm Park and dine near Boat Avenue / Porto de Phuket.",
+    spend: "฿1,000–2,500 excluding flight and bed (add ฿1,300 for Jungle ATV)",
     minSpend: 1000,
     maxSpend: 2500,
     transport: "Phuket Smart Bus from HKT airport; Bolt or InDrive app for local rides.",
-    tip: "Do NOT base yourself in Patong if you want cheap transport—EDC Thailand is at Rhythm Park in Thalang (Bang Tao/Laguna), and 2:00 AM Patong taxis charge ฿1,500–2,000+."
+    tip: "Do NOT stay in Patong if you want affordable festival transit—EDC Thailand is at Rhythm Park in Thalang (Bang Tao), and 2:00 AM Patong taxis surge to ฿1,500–2,000+.",
+    mapsUrl: "https://maps.google.com/?q=Boat+Avenue+Cherngtalay+Phuket",
+    thaiText: "หาดบางเทา เชิงทะเล ภูเก็ต (โบ๊ทอเวนิว)",
+    thaiPhonetic: "Hat Bang Tao, Choeng Thale, Phuket",
+    driverNote: "ไปหาดบางเทา โบ๊ทอเวนิว เชิงทะเล / To Bang Tao Beach & Boat Avenue"
   },
   {
     day: 4,
@@ -154,14 +166,18 @@ const days = [
     location: "Phuket · EDC Thailand",
     title: "EDC Thailand — Day 1 Under the Electric Sky",
     stay: "🛏 Phuket (Bang Tao / Cherng Talay) · Festival base, night 2 of 4",
-    morning: "Sleep in, eat a high-protein breakfast, and double-check the prohibited items list, set times, and stage map (kineticFIELD, circuitGROUNDS, Neon Garden) on the Insomniac app.",
-    afternoon: "Head to Bang Tao Beach for a swim or meet solo festivalgoers at your hostel. Eat a substantial meal around 3:30 PM, pack a 10,000mAh power bank, earplugs, and a physical passport/ID (strict 20+ check).",
-    evening: "EDC Thailand Day 1 at Rhythm Park (gates 3:00 PM – midnight). Collect your wristband early before sunset crowds peak. Walk 10 minutes past the exit bottleneck at closing to hail a Bolt or group songthaew with hostel mates.",
-    spend: "฿1,200–2,500 for food, drinks and local transport; excludes EDC pass and bed",
+    morning: "Sleep in, eat a high-protein brunch, and double-check set times and stage maps (kineticFIELD, circuitGROUNDS, Neon Garden) on the Insomniac app.",
+    afternoon: "Bang Tao Beach swim and connect with solo festivalgoers at your hostel. Eat a calorie-dense meal around 3:30 PM, pack a 10,000mAh power bank, earplugs, rain poncho, and physical passport (strict 20+ check).",
+    evening: "EDC Thailand Day 1 at Rhythm Park (gates 3:00 PM – midnight). Collect your wristband early before sunset crowds peak. Walk 10 minutes past the exit bottleneck at closing to hail a Bolt or group songthaew with hostel friends.",
+    spend: "฿1,200–2,500 for food, drinks and festival rides; excludes EDC pass and bed",
     minSpend: 1200,
     maxSpend: 2500,
-    transport: "Shared Bolt/InDrive from Bang Tao hostel (10 mins) or Official EDC Shuttle if staying farther out.",
-    tip: "Keep your phone on a tether/lanyard inside your zippered front chest bag during mainstage crowd surges."
+    transport: "Shared Bolt/InDrive from Bang Tao hostel (10 mins) or Official EDC Shuttle.",
+    tip: "Cashless Wristband Tip: Rhythm Park operates on RFID wristbands. Top up in moderate increments (฿1,000–1,500) rather than huge amounts, as post-festival online refunds carry administrative fees or require local Thai bank accounts. Keep phone tethered inside a front chest bag.",
+    mapsUrl: "https://maps.google.com/?q=Rhythm+Park+Phuket",
+    thaiText: "ริทึ่ม พาร์ค ภูเก็ต (งาน EDC Thailand ถลาง)",
+    thaiPhonetic: "Rhythm Park, Thalang, Phuket",
+    driverNote: "ไปริทึ่ม พาร์ค ถลาง (งาน EDC) / To Rhythm Park EDC Festival"
   },
   {
     day: 5,
@@ -173,14 +189,18 @@ const days = [
     location: "Phuket · EDC Thailand",
     title: "Beach club recovery & EDC Thailand — Day 2",
     stay: "🛏 Phuket (Bang Tao / Cherng Talay) · Festival base, night 3 of 4",
-    morning: "Sleep in until noon, rehydrate with electrolytes and fresh coconut water, and grab a big brunch near Bang Tao.",
-    afternoon: "Daytime recovery on Bang Tao Beach or check out an EDC Week daytime beach session at Café del Mar Phuket or Catch Beach Club (both right on Bang Tao Beach, 10 minutes from the festival grounds).",
-    evening: "EDC Thailand Day 2 at Rhythm Park. Catch sunset sets, explore the art installations and carnival rides, and stick to your pre-arranged return transport plan.",
+    morning: "Sleep in until noon, rehydrate with 7-Eleven electrolyte packets and fresh coconut water, and enjoy a slow brunch near Bang Tao.",
+    afternoon: "Daytime recovery on Bang Tao Beach or check out an EDC Week daytime beach session at Catch Beach Club or Café del Mar Phuket (both right on the beach, 10 minutes from festival grounds).",
+    evening: "EDC Thailand Day 2 at Rhythm Park. Catch golden-hour sunset sets, explore the art installations and carnival rides, and stick to your pre-arranged return transport plan.",
     spend: "฿1,000–2,200 for food, beach club drink and local transport; excludes bed",
     minSpend: 1000,
     maxSpend: 2200,
     transport: "Walk to Bang Tao beach clubs; shared Bolt/shuttle to Rhythm Park.",
-    tip: "Leave a backup ฿1,000 note and backup card locked inside your hostel locker separate from your festival wallet."
+    tip: "Leave a backup ฿1,000 note and backup bank card locked inside your hostel locker separate from your festival wallet.",
+    mapsUrl: "https://maps.google.com/?q=Catch+Beach+Club+Phuket",
+    thaiText: "แคทช์ บีชคลับ หาดบางเทา ภูเก็ต",
+    thaiPhonetic: "Catch Beach Club, Hat Bang Tao",
+    driverNote: "ไปแคทช์ บีชคลับ หาดบางเทา / To Catch Beach Club Bang Tao"
   },
   {
     day: 6,
@@ -192,14 +212,18 @@ const days = [
     location: "Phuket · EDC Thailand",
     title: "Thai massage reset & EDC Thailand — Day 3 Finale",
     stay: "🛏 Phuket (Bang Tao / Cherng Talay) · Festival base, night 4 of 4",
-    morning: "Late recovery breakfast. Confirm tomorrow's late-morning minivan/ferry pickup to Krabi so you don't have to rush out at 7:00 AM.",
-    afternoon: "Book a 90-minute foot and shoulder Thai massage (฿400–500) near Cherng Talay to loosen up after two nights on your feet, then pack most of your main bag before leaving for the venue.",
+    morning: "Late recovery breakfast. Confirm tomorrow's late-morning minivan/ferry pickup to Krabi (10:30 AM or 11:30 AM) so you don't have to rush out at 7:00 AM.",
+    afternoon: "Book a 90-minute foot and shoulder Thai massage (฿400–500) near Cherng Talay to loosen up after two nights on your feet, then pack your main bag before leaving for the venue.",
     evening: "EDC Thailand Day 3 closing night and midnight fireworks finale at Rhythm Park.",
     spend: "฿1,100–2,200 including massage, meals and festival transport; excludes bed",
     minSpend: 1100,
     maxSpend: 2200,
     transport: "Shared ride or shuttle to/from Rhythm Park.",
-    tip: "Book the 10:30 AM or 11:30 AM Phuket → Ao Nang transfer for tomorrow rather than the 7:30 AM departure so you get proper sleep after closing night."
+    tip: "Book the 10:30 AM or 11:30 AM Phuket → Ao Nang transfer for tomorrow rather than the 7:30 AM departure so you get proper sleep after the 1:00 AM closing sets.",
+    mapsUrl: "https://maps.google.com/?q=Rhythm+Park+Phuket",
+    thaiText: "ริทึ่ม พาร์ค ภูเก็ต (เชิงทะเล-ถลาง)",
+    thaiPhonetic: "Rhythm Park, Cherng Talay",
+    driverNote: "ไปริทึ่ม พาร์ค ถลาง / To Rhythm Park"
   },
   {
     day: 7,
@@ -209,16 +233,20 @@ const days = [
     dateNum: "21",
     month: "Dec",
     location: "Krabi · Ao Nang",
-    title: "Transfer to Krabi, Tiger Cave Temple 1,260 steps & Ao Nang beach",
+    title: "Transfer to Krabi, Tiger Cave Temple 1,260 steps & Ao Nang beach sunset",
     stay: "🛏 Ao Nang · Night 1 of 3 (Whoopers Hostel or Base Party Hostel)",
-    morning: "Door-to-door minivan or speedboat transfer from Phuket to Ao Nang, Krabi (~3.5 hours by road or 2 hours by speedboat across Phang Nga Bay).",
+    morning: "Minivan or speedboat transfer from Phuket to Ao Nang, Krabi (~3.5 hours by road or 2 hours by speedboat across Phang Nga Bay).",
     afternoon: "Check into your Ao Nang hostel. Head 25 minutes inland to Wat Tham Suea (Tiger Cave Temple) around 3:30 PM to climb the steep 1,260 limestone steps past wild macaques to the 278m summit Buddha for panoramic golden-hour views over Krabi's karst towers.",
-    evening: "Return to Ao Nang for a beachfront seafood dinner at the Landmark Night Market and watch the free fire-spinning show on Ao Nang Beach.",
-    spend: "฿1,000–2,000 including Phuket→Krabi transfer, songthaew/Grab to Tiger Cave Temple and dinner",
+    evening: "Return to Ao Nang for a beachfront seafood dinner at the Landmark Night Market and watch the free fire-spinning show on Ao Nang Beach. Book tomorrow's 7-Islands Plankton tour at a local booth.",
+    spend: "฿1,000–2,000 including Phuket→Krabi transfer, songthaew to Tiger Cave Temple and dinner",
     minSpend: 1000,
     maxSpend: 2000,
     transport: "Pre-booked minivan/boat from Phuket; Grab/songthaew to Tiger Cave Temple.",
-    tip: "Do not carry plastic bags or visible snacks up the Tiger Cave Temple stairs—the monkeys will snatch them immediately."
+    tip: "Do not carry plastic bags or visible snacks up the Tiger Cave Temple stairs—the monkeys will snatch them immediately. Bargain your 7-Islands Plankton tour in person at an Ao Nang street booth for ฿1,000 instead of ฿1,500 online.",
+    mapsUrl: "https://maps.google.com/?q=Wat+Tham+Suea+Krabi",
+    thaiText: "วัดถ้ำเสือ กระบี่ และ อ่าวนาง",
+    thaiPhonetic: "Wat Tham Suea, Krabi",
+    driverNote: "ไปวัดถ้ำเสือ กระบี่ (บันได 1,260 ขั้น) / To Tiger Cave Temple"
   },
   {
     day: 8,
@@ -230,14 +258,18 @@ const days = [
     location: "Krabi · Andaman Islands",
     title: "7-Islands Sunset BBQ & Bioluminescent Plankton Night Swim",
     stay: "🛏 Ao Nang · Night 2 of 3 (Whoopers Hostel or Base Party Hostel)",
-    morning: "Enjoy a slow morning by the hostel pool or café-hopping along Ao Nang beach road (alternatively, take an early morning boat to Koh Hong's 360° viewpoint and emerald lagoon).",
-    afternoon: "Depart at 1:00 PM on the 7-Islands Sunset Tour (Tup Sandbar, Chicken Island, Poda Island, Taming snorkeling reef, and Phra Nang Cave). Afternoon departure skips the 9:00 AM speedboat crowds and gives you golden-hour light.",
-    evening: "Eat a beach BBQ dinner on Phra Nang/Poda at sunset, then jump into the dark water near Railay after nightfall to snorkel surrounded by glowing bioluminescent plankton before cruising back to Ao Nang at 8:00 PM.",
+    morning: "Slow morning by the hostel pool or café-hopping along Ao Nang beach road (or take an early boat to Koh Hong's 360° viewpoint and emerald lagoon).",
+    afternoon: "Depart at 1:00 PM on the 7-Islands Sunset Tour (Tup Sandbar, Chicken Island, Poda Island, Taming snorkeling reef, and Phra Nang Cave). Afternoon departure skips the 9:00 AM speedboat crowds and gives golden-hour light.",
+    evening: "Eat a beach BBQ dinner on Phra Nang/Poda at sunset, then jump into the pitch-dark water near Railay after nightfall to snorkel surrounded by glowing bioluminescent plankton before cruising back to Ao Nang at 8:00 PM.",
     spend: "฿1,400–2,300 including 7-Islands tour (฿1,000–1,200), National Park fee (฿400) and meals",
     minSpend: 1400,
     maxSpend: 2300,
     transport: "Free songthaew pickup and drop-off directly from your Ao Nang hostel.",
-    tip: "Book the 7-Islands tour in person at an Ao Nang street booth or hostel desk the evening before—you can easily negotiate ฿200–300 off online prices."
+    tip: "Wear dark swimwear for the plankton night swim—the neon blue glow is brighter against black fabric. Bring a waterproof dry bag for your phone.",
+    mapsUrl: "https://maps.google.com/?q=Ao+Nang+Beach+Krabi",
+    thaiText: "หาดอ่าวนาง กระบี่ (ท่าเรือเรือหางยาว)",
+    thaiPhonetic: "Hat Ao Nang, Krabi",
+    driverNote: "ไปหาดอ่าวนาง หน้าหาด / To Ao Nang Beachfront"
   },
   {
     day: 9,
@@ -250,51 +282,63 @@ const days = [
     title: "Railay limestone rock climbing, Hidden Lagoon scramble & sea kayaking",
     stay: "🛏 Ao Nang · Night 3 of 3 (Whoopers Hostel or Base Party Hostel)",
     morning: "Catch a ฿100 shared longtail boat (15 mins) from Ao Nang Beach to Railay West. Join a 4-hour guided beginner/intermediate top-rope rock climbing session on world-famous vertical limestone cliffs overlooking the turquoise Andaman Sea.",
-    afternoon: "Hike the vertical mud-and-rope jungle scramble up to the East Railay Viewpoint and down into the secret cliff-enclosed Princess Lagoon (check tide tables first!), or rent a clear sea kayak (฿200/hr) to paddle around Phra Nang Cave sea stacks.",
+    afternoon: "Hike the vertical mud-and-rope jungle scramble up to East Railay Viewpoint and down into the secret cliff-enclosed Princess Lagoon (check tide tables!), or rent a clear sea kayak (฿200/hr) to paddle around Phra Nang Cave sea stacks.",
     evening: "Drink a cold shake at Tonsai/Railay Sunset Bar, take the last regular longtail boat back to Ao Nang (6:00 PM), and pack a small 2-day overnight bag for Khao Sok.",
     spend: "฿1,400–2,400 including longtail boats (฿200 RT), half-day rock climbing (฿1,200) and meals",
     minSpend: 1400,
     maxSpend: 2400,
     transport: "Shared public longtail boats from Ao Nang beachfront.",
-    tip: "Wear closed-toe sneakers with grip for the Railay Viewpoint & Lagoon rope climb—never attempt it in flip-flops or right after rain."
+    tip: "Wear closed-toe sneakers with grip for the Railay Viewpoint & Lagoon rope climb—never attempt it in flip-flops or right after rain.",
+    mapsUrl: "https://maps.google.com/?q=Railay+Beach+Krabi",
+    thaiText: "ไร่เลย์ เวสต์ อ่าวนาง กระบี่ (จุดปีนผา)",
+    thaiPhonetic: "Railay West, Ao Nang, Krabi",
+    driverNote: "ไปคิวเรือหางยาวไปไร่เลย์ อ่าวนาง / To Railay Longtail Boat Pier"
   },
   {
     day: 10,
     cities: "khaosok",
-    cityLabel: "Khao Sok",
+    cityLabel: "Khao Sok Lake",
     weekday: "Thu",
     dateNum: "24",
     month: "Dec",
-    location: "Khao Sok Rainforest Village",
-    title: "Transfer to Khao Sok, Sok River tubing & Christmas Eve Night Jungle Safari",
-    stay: "🛏 Khao Sok Village · Night 1 of 2 (Coco Khao Sok Hostel)",
-    morning: "Take the morning direct minivan from Ao Nang to Khao Sok Village (~3.5 hours, ฿450). Check into Coco Khao Sok Hostel (100m from the park headquarters) and confirm your 2D1N Cheow Lan Lake overnight package for tomorrow.",
-    afternoon: "Float down the emerald Sok River on an inner tube or bamboo raft (฿500) beneath towering limestone cliffs where macaques and hornbills perch in the canopy, then visit the cliffside Monkey Cave Temple.",
-    evening: "Join a 2-hour guided Night Jungle Safari (฿600) with headlamps into Khao Sok National Park—one of Earth's oldest rainforests—to spot slow lorises, civets, giant forest scorpions, and sleeping vibrant kingfishers.",
-    spend: "฿1,500–2,200 including minivan transfer, river tubing, night safari and meals",
-    minSpend: 1500,
-    maxSpend: 2200,
-    transport: "Direct tourist minivan from Ao Nang hostel to Khao Sok entrance.",
-    tip: "Store your large backpack for free in Coco Khao Sok Hostel's luggage room tomorrow morning and bring only a small dry bag out to the lake."
+    location: "Khao Sok · Cheow Lan Lake",
+    title: "Early transfer to Cheow Lan Lake — Floating Raft House Christmas Eve",
+    stay: "🛏 Cheow Lan Lake · Night 1 of 2 (Overwater Floating Bungalow)",
+    morning: "Catch the early 7:00 AM tourist minivan from Ao Nang straight to Ratchaprapha Dam Pier (2.5 hours, ฿450). Check in at the pier office by 10:00 AM, store any excess heavy luggage at the pier/hostel desk, and board your longtail boat.",
+    afternoon: "Cruise through emerald waters past the iconic 'Three Brothers' limestone karsts (Khao Sam Kloe). Check into your floating overwater bungalow on Cheow Lan Lake, swim right off your deck, paddle kayaks, and hike into subterranean river caves (Nam Talu Cave, or Coral Cave/Pakarang Cave backup if water is high).",
+    evening: "Dusk boat safari scanning tree canopies for hornbills, wild macaques, and gibbons. Feast on southern crispy turmeric fish and sleep in total silence over the lake under a Christmas Eve sky (zero cell signal).",
+    spend: "฿2,800–3,200 all-inclusive 2D1N lake tour (boat charter, bungalow bed, 4 meals, kayaks & guided cave hike + ฿300 park fee)",
+    minSpend: 2800,
+    maxSpend: 3200,
+    transport: "7:00 AM minivan from Ao Nang to Ratchaprapha Dam; longtail boat across Cheow Lan Lake.",
+    tip: "Nam Talu Cave seasonal check: If late December rain raises water levels inside Nam Talu, guides divert to Pakarang Cave (Coral Cave) + Khao Sam Kloe viewpoint hike—an equally breathtaking and safer route.",
+    mapsUrl: "https://maps.google.com/?q=Ratchaprapha+Dam+Pier",
+    thaiText: "ท่าเรือเขื่อนรัชชประภา (ทะเลสาบเชี่ยวหลาน เขาสก)",
+    thaiPhonetic: "Tha Ruea Khuean Ratchaprapha, Cheow Lan",
+    driverNote: "ไปท่าเรือเทศบาลเขื่อนรัชชประภา (เขาสก) / To Ratchaprapha Dam Pier"
   },
   {
     day: 11,
     cities: "khaosok",
-    cityLabel: "Khao Sok",
+    cityLabel: "Khao Sok Village",
     weekday: "Fri",
     dateNum: "25",
     month: "Dec",
-    location: "Khao Sok · Cheow Lan Lake",
-    title: "Christmas on Cheow Lan Lake — Floating Raft House Overnight",
-    stay: "🛏 Cheow Lan Lake · Night 2 of 2 (Overwater Floating Bungalow)",
-    morning: "8:30 AM pickup to Ratchaprapha Dam Pier. Board a traditional longtail boat cruising across emerald-green waters past the iconic 'Three Brothers' limestone needles (Khao Sam Kloe) to your floating raft house.",
-    afternoon: "Dive straight off your bungalow porch for a swim and paddle a kayak into quiet rainforest coves. After lunch, trek through dense jungle and wade waist-deep through the subterranean river of Nam Talu Cave (or take the easier Coral Cave boat trip).",
-    evening: "Head out on a dusk wildlife boat safari scanning the shoreline for wild elephants, gaur, and gibbons, followed by a southern Thai crispy turmeric fish feast and total stargazing over the water (zero cell signal).",
-    spend: "฿2,800–3,200 all-inclusive (covers 2D1N boat, floating bungalow bed, 4 meals, cave trek, kayaks + ฿300 park fee)",
-    minSpend: 2800,
-    maxSpend: 3200,
-    transport: "Minivan + longtail boat charter included in the 2D1N lake package.",
-    tip: "Verify your Dec 26 Surat Thani (URT) → Chiang Mai (CNX) flight departure time first: the 2D1N lake tour returns to the pier at 1:30–2:00 PM (reaching URT airport by ~3:45 PM). If your direct URT→CNX flight is in the morning, do the full-day lake tour on Dec 25 and sleep in Khao Sok village so you can take the 7:00 AM transfer to URT."
+    location: "Khao Sok Rainforest Village",
+    title: "Dawn mist gibbon safari, Sok River tubing & Christmas Night Jungle Safari",
+    stay: "🛏 Khao Sok Village · Night 2 of 2 (Coco Khao Sok Hostel)",
+    morning: "6:30 AM sunrise boat cruise as misty clouds drape the towering limestone karsts; listen for wild gibbon calls echoing through the jungle canopy. Enjoy breakfast on the raft and take one last lake swim.",
+    afternoon: "Longtail boat returns to Ratchaprapha Pier by 12:30–1:00 PM. Take the 45-minute shared shuttle to Khao Sok Village and check into Coco Khao Sok Hostel. Float down the emerald Sok River on an inner tube or bamboo raft (฿500) past monkey cliffs.",
+    evening: "Join the 2-hour guided Night Jungle Safari (฿600) with headlamps inside Khao Sok National Park (one of Earth's oldest rainforests) to spot slow lorises, civets, sleeping kingfishers, and giant tree frogs. Pack your bag for tomorrow's early airport transfer!",
+    spend: "฿1,100–1,800 for river tubing, night safari and Christmas dinner at the village",
+    minSpend: 1100,
+    maxSpend: 1800,
+    transport: "Boat transfer back to pier; shuttle to Khao Sok Village; walk village on foot.",
+    tip: "Sleeping in Khao Sok village on Dec 25 is the secret logistics hack: it allows you to take tomorrow's 7:00 AM transfer to Surat Thani (URT) airport and catch the 10:35 AM direct flight to Chiang Mai without backtracking or layovers!",
+    mapsUrl: "https://maps.google.com/?q=Coco+Khao+Sok+Hostel",
+    thaiText: "โคโค่ เขาสก โฮสเทล (หมู่บ้านเขาสก สุราษฎร์ธานี)",
+    thaiPhonetic: "Coco Khao Sok Hostel, Mu Ban Khao Sok",
+    driverNote: "ไปโคโค่ เขาสก โฮสเทล หน้าอุทยานฯ / To Coco Khao Sok Hostel"
   },
   {
     day: 12,
@@ -303,17 +347,21 @@ const days = [
     weekday: "Sat",
     dateNum: "26",
     month: "Dec",
-    location: "Cheow Lan Lake → Surat Thani → Chiang Mai",
-    title: "Dawn mist gibbon safari & fly north to Chiang Mai",
+    location: "Khao Sok Village → Surat Thani (URT) → Chiang Mai (CNX)",
+    title: "Direct flight north to Chiang Mai & Saturday Night Walking Street Market",
     stay: "🛏 Chiang Mai Old City · Night 1 of 4 (Stamps Backpackers or Hostel Lullaby)",
-    morning: "Wake at 6:30 AM as low clouds drift across the limestone karsts for a sunrise longtail boat safari listening to wild gibbon calls in the canopy, followed by breakfast and a final lake swim.",
-    afternoon: "Return to Ratchaprapha Pier and take a 70-minute minivan/taxi to Surat Thani Airport (URT) to fly north to Chiang Mai (CNX)—saving a costly backtrack to Phuket/Krabi.",
-    evening: "Land in Chiang Mai (20°C cooler mountain air!), take a ฿150 Grab (15 mins) to your Old City hostel, and head out to the Wua Lai Road Saturday Night Walking Street Market for northern sai oua sausage and khao soi.",
-    spend: "฿1,000–1,800 for URT airport transfer, CNX Grab and Saturday Night Market food; excludes flight and bed",
-    minSpend: 1000,
-    maxSpend: 1800,
-    transport: "Minivan from Cheow Lan Pier to URT Airport; flight to CNX; Grab to Old City.",
-    tip: "Surat Thani Airport (URT) is only 1 hour east of Cheow Lan Lake—always fly out of URT rather than backtracking 3 hours to Phuket or Krabi."
+    morning: "Take the confirmed 7:00 AM minivan transfer from Coco Khao Sok Hostel to Surat Thani Airport (URT, ~70 mins, ฿250–300), arriving at 8:15 AM with plenty of time for security.",
+    afternoon: "Board Thai AirAsia direct flight URT → CNX (~10:35 AM departure, landing in Chiang Mai at 12:25 PM!). Take a ฿150 Grab (15 mins) into Old City, check in, and drop your bags with the whole afternoon to settle in.",
+    evening: "Head to the famous Wua Lai Road Saturday Night Walking Street Market (opens 5:00 PM) just outside the South Gate. Feast on hot Northern Thai khao soi, grilled sai oua herb sausage, and sticky mango rice in cool 20°C mountain air.",
+    spend: "฿800–1,500 for URT minivan, CNX airport Grab, and Saturday Night Market food; excludes domestic flight and bed",
+    minSpend: 800,
+    maxSpend: 1500,
+    transport: "7:00 AM minivan to URT; direct flight to CNX; Grab taxi to Old City.",
+    tip: "Thai AirAsia's direct URT→CNX flight operates once daily in the morning (~10:35 AM). By sleeping in Khao Sok village on Dec 25, you easily make this flight and get all of Saturday evening in Chiang Mai!",
+    mapsUrl: "https://maps.google.com/?q=Wua+Lai+Walking+Street+Chiang+Mai",
+    thaiText: "ถนนคนเดินวัวลาย เชียงใหม่ (วันเสาร์)",
+    thaiPhonetic: "Thanon Khon Doen Wua Lai, Chiang Mai",
+    driverNote: "ไปถนนคนเดินวัวลาย (ประตูเชียงใหม่) / To Wua Lai Saturday Walking Street"
   },
   {
     day: 13,
@@ -323,16 +371,20 @@ const days = [
     dateNum: "27",
     month: "Dec",
     location: "Chiang Mai · Mae Rim Valley",
-    title: "Tiger Kingdom shoulder photos, Jungle Coaster / 50m Bungee, Sticky Waterfalls & Sunday Market",
+    title: "Mae Rim Valley Adrenaline: Tiger Kingdom 9 AM, Pongyang Coaster/Zipline & 50m Bungee + Sunday Night Market",
     stay: "🛏 Chiang Mai Old City · Night 2 of 4 (Stamps Backpackers or Hostel Lullaby)",
     morning: "Arrive at Tiger Kingdom Mae Rim at 9:00 AM sharp right when gates open—when the Giant Tigers, rare White Tigers, and Smallest Cubs are most alert and playful. Trainers guide you inside the enclosure to crouch/lean right across the Giant Tiger's shoulders and back (or hold a cub on your lap/shoulder). Pay the ~฿300–500 in-cage photographer add-on for low-angle wide shots.",
-    afternoon: "Continue 15 minutes up the Mae Rim mountain road to Pongyang Jungle Coaster & Zipline (36 platforms + high-speed alpine coaster) OR hit Chiang Mai X-Centre for a 50-metre Bungee Jump over a jungle lagoon. Finish the loop by climbing barefoot straight up the mineral-crusted limestone cascades of Bua Thong 'Sticky Waterfalls' (free entry).",
+    afternoon: "Continue 15 minutes up the Mae Rim mountain road to Pongyang Jungle Coaster & Zipline (36 platforms + high-speed alpine coaster) OR hit Chiang Mai X-Centre for a 50-metre Bungee Jump over a jungle lagoon. Return to Old City by 3:30–4:00 PM to rest (Sticky Waterfalls is saved for tomorrow's Mae Taeng loop!).",
     evening: "Return to Tha Phae Gate by 5:30 PM for Chiang Mai's famous Sunday Walking Street Night Market—stretching 1.5 km down Ratchadamnoen Road through illuminated temples, live Lanna musicians, and street food stalls.",
-    spend: "฿2,600–4,200 including Tiger Kingdom (฿900–1,500), Zipline/Coaster or Bungee (฿1,200–2,000), shared songthaew and market feast",
-    minSpend: 2600,
-    maxSpend: 4200,
-    transport: "Team up with 3–4 hostel mates from Stamps Backpackers' social board to split a red songthaew or Grab charter (฿1,200–1,500 split = ~฿350 each) for the full Mae Rim loop.",
-    tip: "Bring a photo of your passport on your phone for Tiger Kingdom insurance check-in, wear non-dangling clothes, and never use camera flash inside the enclosures."
+    spend: "฿2,400–3,800 including Tiger Kingdom (฿900–1,500), Zipline/Coaster or Bungee (฿1,200–1,800), shared songthaew and market feast",
+    minSpend: 2400,
+    maxSpend: 3800,
+    transport: "Team up with 3–4 hostel mates from Stamps Backpackers' social board to split a red songthaew or Grab charter (฿1,200 split = ~฿300 each) for the Mae Rim valley.",
+    tip: "Bring a photo of your passport on your phone for Tiger Kingdom insurance check-in, wear non-dangling clothes, and never use camera flash inside the enclosures.",
+    mapsUrl: "https://maps.google.com/?q=Tiger+Kingdom+Chiang+Mai",
+    thaiText: "คุ้มเสือ แม่ริม และ โป่งแยง ซิปไลน์ เชียงใหม่",
+    thaiPhonetic: "Khum Suea Mae Rim / Pong Yang",
+    driverNote: "ไปคุ้มเสือ แม่ริม และโป่งแยงจังเกิ้ลโคสเตอร์ / To Tiger Kingdom & Pongyang Coaster"
   },
   {
     day: 14,
@@ -341,17 +393,21 @@ const days = [
     weekday: "Mon",
     dateNum: "28",
     month: "Dec",
-    location: "Chiang Mai · Highlands & Monk's Trail",
-    title: "Ethical Elephant Sanctuary & Monk's Trail jungle hike to Doi Suthep",
+    location: "Chiang Mai · Mae Taeng Valley & Monk's Trail",
+    title: "Mae Taeng Ethical Elephants + Bua Thong Sticky Waterfalls & Monk's Trail to Doi Suthep",
     stay: "🛏 Chiang Mai Old City · Night 3 of 4 (Stamps Backpackers or Hostel Lullaby)",
-    morning: "Join a half-day morning visit to a true no-riding, no-hooks Ethical Elephant Sanctuary (such as Elephant Nature Park or a vetted small-group sanctuary). Prepare fruit/herbal vitamin balls and walk alongside rescued elephants through the river valley.",
-    afternoon: "Return to Chiang Mai by early afternoon. Take a Grab to the base of Suthep Mountain and hike the shaded 45-minute Monk's Trail (marked by orange monk robes tied around trees) up to Wat Pha Lat—a serene 14th-century stone temple hidden inside a jungle waterfall.",
+    morning: "Half-day morning visit to a vetted Ethical Elephant Sanctuary in the Mae Taeng valley. Prepare herbal vitamin balls, walk alongside rescued elephants through the forest river, and observe natural behavior with zero riding or hooks.",
+    afternoon: "Since you are already in Mae Taeng, take a quick 15-minute hop to Bua Thong 'Sticky Waterfalls'! Climb barefoot straight up the mineral-crusted limestone cascades (grippy like rubber sponges!). Head south back to town by 3:00 PM and start the shaded 45-minute Monk's Trail hike to Wat Pha Lat hidden in the jungle.",
     evening: "Flag down a red songthaew (฿40) outside Wat Pha Lat for the final winding climb up to gilded Wat Phra That Doi Suthep to hear evening monk chanting and watch the city lights come on across the Chiang Mai valley, then grab jazz drinks at North Gate Jazz Co-Op.",
     spend: "฿2,200–3,000 including half-day ethical elephant sanctuary (฿1,700–2,400), Doi Suthep entry (฿50), songthaews and meals",
     minSpend: 2200,
     maxSpend: 3000,
-    transport: "Sanctuary pickup included; Grab to Monk's Trailhead; shared red songthaew back to Old City (฿60).",
-    tip: "Book a half-day morning elephant sanctuary rather than a full-day tour so you have the golden afternoon hours free for the Monk's Trail hike."
+    transport: "Sanctuary pickup included; red truck between Mae Taeng stops; Grab to Monk's Trailhead.",
+    tip: "Pairing Sticky Waterfalls with the Mae Taeng Elephant Sanctuary saves you 2 hours of backtracking compared to squeezing it into the Mae Rim day. Wear closed-toe shoes for Monk's Trail.",
+    mapsUrl: "https://maps.google.com/?q=Bua+Tong+Waterfalls+Chiang+Mai",
+    thaiText: "น้ำตกบัวตอง (น้ำตกเจ็ดสี) และ วัดผาลาด เชียงใหม่",
+    thaiPhonetic: "Nam Tok Bua Tong / Wat Pha Lat",
+    driverNote: "ไปน้ำตกบัวตอง แม่แตง และทางขึ้นวัดผาลาด / To Bua Thong Waterfalls & Wat Pha Lat"
   },
   {
     day: 15,
@@ -370,7 +426,11 @@ const days = [
     minSpend: 1400,
     maxSpend: 2200,
     transport: "Doi Inthanon minivan tour; tuk-tuk to Chiang Mai Railway Station; overnight train to Bangkok.",
-    tip: "Book Train #10 (Lower Berth) 60–90 days ahead on the official D-Ticket SRT website (dticket.railway.co.th). If sold out for Dec 29, sleep one more night in Chiang Mai and fly CNX → DMK on Dec 30 morning."
+    tip: "Book Train #10 (Lower Berth) 60–90 days ahead on the official D-Ticket SRT website (dticket.railway.co.th). Lower berths have larger windows and extra room. Sleeper train AC is cold—keep a light hoodie accessible in your daypack.",
+    mapsUrl: "https://maps.google.com/?q=Chiang+Mai+Railway+Station",
+    thaiText: "สถานีรถไฟเชียงใหม่ (รถไฟด่วนพิเศษ CNR ขบวน 10)",
+    thaiPhonetic: "Sathani Rotfai Chiang Mai",
+    driverNote: "ไปสถานีรถไฟเชียงใหม่ / To Chiang Mai Railway Station"
   },
   {
     day: 16,
@@ -389,7 +449,11 @@ const days = [
     minSpend: 1600,
     maxSpend: 2800,
     transport: "MRT Blue Line + BTS Skytrain (avoid road taxis in pre-NYE Bangkok traffic).",
-    tip: "Bring your physical passport or clear photo to Tichuca Rooftop Bar and arrive around 5:30 PM right as it opens to skip the 90-minute evening queue."
+    tip: "Bring your physical passport or clear photo to Tichuca Rooftop Bar and arrive around 5:30 PM right as it opens to skip the 90-minute evening queue.",
+    mapsUrl: "https://maps.google.com/?q=King+Power+Mahanakhon",
+    thaiText: "คิง เพาเวอร์ มหานคร (BTS ช่องนนทรี) และ ตลาดน้อย",
+    thaiPhonetic: "King Power Mahanakhon / Talad Noi",
+    driverNote: "ไปตึกคิงเพาเวอร์ มหานคร (BTS ช่องนนทรี) / To King Power Mahanakhon"
   },
   {
     day: 17,
@@ -408,7 +472,11 @@ const days = [
     minSpend: 1200,
     maxSpend: 3500,
     transport: "BTS and MRT operate extended hours until 2:00 AM on New Year's Eve; walking is fastest inside Old Town.",
-    tip: "Do not rely on Grab or taxis between 11:30 PM and 2:30 AM on NYE—stay along the MRT Blue Line or within walking distance of your hostel."
+    tip: "Do not rely on Grab or taxis between 11:30 PM and 2:30 AM on NYE—stay along the MRT Blue Line or within walking distance of your hostel.",
+    mapsUrl: "https://maps.google.com/?q=ICONSIAM+Bangkok",
+    thaiText: "ไอคอนสยาม ถนนเจริญนคร (งานเคาท์ดาวน์ปีใหม่)",
+    thaiPhonetic: "ICONSIAM, Thanon Charoen Nakhon",
+    driverNote: "ไปไอคอนสยาม ถนนเจริญนคร (BTS เจริญนคร) / To ICONSIAM"
   },
   {
     day: 18,
@@ -427,7 +495,11 @@ const days = [
     minSpend: 700,
     maxSpend: 1500,
     transport: "MRT Blue Line to Lumphini / Queen Sirikit National Convention Centre / Sam Yan.",
-    tip: "If eating at Jeh O Chula on Banthat Thong Road, book a virtual queue ticket on the QueQ app 60–90 minutes before heading over."
+    tip: "If eating at Jeh O Chula on Banthat Thong Road, book a virtual queue ticket on the QueQ app 60–90 minutes before heading over.",
+    mapsUrl: "https://maps.google.com/?q=Benchakitti+Forest+Park",
+    thaiText: "สวนป่าเบญจกิติ และ สวนลุมพินี (MRT คลองเตย / ลุมพินี)",
+    thaiPhonetic: "Suan Benchakitti / Suan Lumphini",
+    driverNote: "ไปสวนเบญจกิติ สะพานเขียว / To Benchakitti Forest Park"
   },
   {
     day: 19,
@@ -446,7 +518,11 @@ const days = [
     minSpend: 2400,
     maxSpend: 3400,
     transport: "SRT Train to Ayutthaya; walk or 5-min Grab from Sam Yot hostel to Rajadamnern Stadium.",
-    tip: "Book Club Class Sections 8 or 9 (~฿1,800) on rajadamnern.com for the best elevated central view of both the ring and the overhead dome show."
+    tip: "Book Club Class Sections 8 or 9 (~฿1,800) on rajadamnern.com for the best elevated central view of both the ring and the overhead dome show.",
+    mapsUrl: "https://maps.google.com/?q=Rajadamnern+Muay+Thai+Stadium",
+    thaiText: "สนามมวยราชดำเนิน ถนนราชดำเนินนอก",
+    thaiPhonetic: "Sanam Muay Rajadamnern",
+    driverNote: "ไปสนามมวยราชดำเนิน ถนนราชดำเนินนอก / To Rajadamnern Stadium"
   },
   {
     day: 20,
@@ -465,7 +541,11 @@ const days = [
     minSpend: 1200,
     maxSpend: 2500,
     transport: "MRT Blue Line to Kamphaeng Phet; BTS Sukhumvit Line to Siam/National Stadium.",
-    tip: "Hit Chatuchak Market between 9:30 AM and 12:30 PM before the tin-roof alleys heat up, and bargain politely by 20–30% when buying multiple items."
+    tip: "Hit Chatuchak Market between 9:30 AM and 12:30 PM before the tin-roof alleys heat up, and bargain politely by 20–30% when buying multiple items.",
+    mapsUrl: "https://maps.google.com/?q=Chatuchak+Weekend+Market",
+    thaiText: "ตลาดนัดจตุจักร (MRT กำแพงเพชร)",
+    thaiPhonetic: "Talat Nat Chatuchak",
+    driverNote: "ไปตลาดนัดจตุจักร (ลง MRT กำแพงเพชร) / To Chatuchak Weekend Market"
   },
   {
     day: 21,
@@ -484,11 +564,23 @@ const days = [
     minSpend: 500,
     maxSpend: 1200,
     transport: "MRT + Airport Rail Link (for BKK) or SRT Red Line / Grab (for DMK).",
-    tip: "Save ฿100–200 in small notes for airport transit and use your Priority Pass lounge access at Suvarnabhumi (Miracle Lounge / Coral Lounge) before boarding."
+    tip: "Save ฿100–200 in small notes for airport transit and use your Priority Pass lounge access at Suvarnabhumi (Miracle Lounge / Coral Lounge) before boarding.",
+    mapsUrl: "https://maps.google.com/?q=Suvarnabhumi+Airport",
+    thaiText: "ท่าอากาศยานสุวรรณภูมิ (อาคารผู้โดยสารขาออก)",
+    thaiPhonetic: "Tha Akatsayan Suvarnabhumi",
+    driverNote: "ไปสนามบินสุวรรณภูมิ ชั้น 4 ขาออก / To Suvarnabhumi Airport Departures"
   }
 ];
 
 const checklistItems = [
+  {
+    id: "chk-tdac",
+    cat: "flights",
+    catLabel: "Flights, Visa & EDC",
+    title: "Submit Thailand Digital Arrival Card (TDAC)",
+    meta: "Mandatory 2026 rule · Free at tdac.immigration.go.th within 72 hrs before arrival (12–15 Dec) · Generates QR code",
+    cost: "Free (Mandatory)"
+  },
   {
     id: "chk-visa",
     cat: "flights",
@@ -510,7 +602,7 @@ const checklistItems = [
     cat: "flights",
     catLabel: "Flights, Visa & EDC",
     title: "Buy Official EDC Thailand 3-Day Pass (Rhythm Park Phuket)",
-    meta: "18–20 Dec 2026 · edcthailand.frontgatetickets.com",
+    meta: "18–20 Dec 2026 · edcthailand.frontgatetickets.com · RFID wristband",
     cost: "฿9,500–11,500"
   },
   {
@@ -526,7 +618,7 @@ const checklistItems = [
     cat: "flights",
     catLabel: "Flights, Visa & EDC",
     title: "Book Domestic Flight #2: Surat Thani (URT) → Chiang Mai (CNX)",
-    meta: "26 Dec · Check Thai AirAsia direct URT→CNX time vs lake return",
+    meta: "26 Dec morning (~10:35 AM direct Thai AirAsia flight) · Check-in after Khao Sok village night",
     cost: "฿2,100–2,800"
   },
   {
@@ -536,6 +628,22 @@ const checklistItems = [
     title: "Book CNR Overnight Sleeper Train #10: Chiang Mai → Bangkok",
     meta: "29 Dec evening · 2nd Class AC Lower Berth (dticket.railway.co.th)",
     cost: "฿1,050"
+  },
+  {
+    id: "chk-bank-endorse",
+    cat: "flights",
+    catLabel: "Flights, Visa & EDC",
+    title: "Endorse Passport Travel Quota & Activate Card E-Commerce",
+    meta: "Visit BD bank branch for annual travel quota endorsement; enable International POS & E-Com on app (Citytouch)",
+    cost: "Free"
+  },
+  {
+    id: "chk-bank-backup",
+    cat: "flights",
+    catLabel: "Flights, Visa & EDC",
+    title: "Carry Backup Card (2nd Bank) + Post-2013 Blue-Ribbon $100 USD Bills",
+    meta: "Exchange USD at SuperRich Basement B Floor at BKK Airport to dodge the ฿220 ATM fee",
+    cost: "Cash / Card"
   },
   {
     id: "chk-stay-bkk1",
@@ -562,11 +670,19 @@ const checklistItems = [
     cost: "฿1,800–2,600"
   },
   {
+    id: "chk-stay-cheowlan",
+    cat: "stays",
+    catLabel: "Hostels & Stays",
+    title: "Book Cheow Lan Lake Floating Bungalow (Christmas Eve: 24–25 Dec)",
+    meta: "Overwater raft house overnight booked via 2D1N tour package",
+    cost: "฿2,500 + ฿300 park fee"
+  },
+  {
     id: "chk-stay-khaosok",
     cat: "stays",
     catLabel: "Hostels & Stays",
-    title: "Book Khao Sok Village Hostel (1 Night: 24–25 Dec)",
-    meta: "Coco Khao Sok Hostel (Night 2 on Dec 25 is in the Floating Raft House)",
+    title: "Book Khao Sok Village Hostel (Christmas Night: 25–26 Dec)",
+    meta: "Coco Khao Sok Hostel · Enables 7:00 AM minivan to URT airport for 10:35 AM flight",
     cost: "฿450–600"
   },
   {
@@ -589,8 +705,8 @@ const checklistItems = [
     id: "chk-tour-elephants",
     cat: "tours",
     catLabel: "Tours & Tickets",
-    title: "Reserve Chiang Mai Half-Day Ethical Elephant Sanctuary (28 Dec AM)",
-    meta: "Book 2 weeks ahead · Leaves afternoon free for Monk's Trail hike",
+    title: "Reserve Mae Taeng Half-Day Ethical Elephant Sanctuary (28 Dec AM)",
+    meta: "Book 2 weeks ahead · Pair with Bua Thong Sticky Waterfalls in the same valley!",
     cost: "฿1,800–2,400"
   },
   {
@@ -626,20 +742,12 @@ const checklistItems = [
     cost: "฿1,200–1,500"
   },
   {
-    id: "chk-tour-cheowlan",
-    cat: "tours",
-    catLabel: "Tours & Tickets",
-    title: "Book 2D1N Cheow Lan Lake Floating Raft House at Coco Khao Sok (24 Dec)",
-    meta: "Covers 25–26 Dec boat, floating bungalow, 4 meals, Nam Talu cave trek & safari",
-    cost: "฿2,500 + ฿300 park fee"
-  },
-  {
     id: "chk-tour-tiger",
     cat: "tours",
     catLabel: "Tours & Tickets",
-    title: "Mae Rim Loop: Tiger Kingdom (9 AM) + Pongyang Zipline/Bungee + Sticky Waterfalls (27 Dec)",
+    title: "Mae Rim Loop: Tiger Kingdom (9 AM) + Pongyang Zipline + 50m Bungee (27 Dec)",
     meta: "Walk-in at 9:00 AM sharp for Giant Tiger shoulder/back pose + ~฿400 photo package",
-    cost: "฿2,500–3,500 total"
+    cost: "฿2,400–3,500 total"
   },
   {
     id: "chk-tour-inthanon",
@@ -654,7 +762,7 @@ const checklistItems = [
     cat: "packing",
     catLabel: "Packing & Gear",
     title: "Closed-Toe Grip Sneakers / Trail Shoes + Water Sandals",
-    meta: "Mandatory for Railay Hidden Lagoon rope climb, Tiger Cave 1,260 steps & Nam Talu Cave",
+    meta: "Mandatory for Railay Hidden Lagoon rope climb, Tiger Cave 1,260 steps & Monk's Trail",
     cost: "Gear"
   },
   {
@@ -669,7 +777,7 @@ const checklistItems = [
     id: "chk-pack-power",
     cat: "packing",
     catLabel: "Packing & Gear",
-    title: "10,000–20,000mAh Power Bank + Combination Padlock",
+    title: "10,000–20,000mAh Power Bank + Rain Poncho + Combination Padlock",
     meta: "Essential for 3 nights of EDC Phuket, overnight sleeper train & hostel lockers",
     cost: "Gear"
   },
@@ -709,8 +817,8 @@ const checklistItems = [
     id: "chk-pack-docs",
     cat: "packing",
     catLabel: "Packing & Gear",
-    title: "Offline Folder: Passport Photo, e-Visa Printout, EDC QR & Endorsed Cards",
-    meta: "Tiger Kingdom, Tichuca & EDC require passport ID; carry USD/THB cash + multi-currency card",
+    title: "Offline Folder: Passport Photo, e-Visa Printout, TDAC QR & Endorsed Cards",
+    meta: "Tiger Kingdom, Tichuca & EDC require passport ID; carry USD cash + multi-currency card",
     cost: "Docs"
   }
 ];
@@ -720,10 +828,11 @@ const hostels = [
     base: "Bangkok (Nights 1–2 & 16–20)",
     dates: "15–16 Dec & 30 Dec–3 Jan (7 nights)",
     rate: "฿550–950 / night",
+    mapsQuery: "Once Again Hostel Bangkok",
     picks: [
-      { name: "Luk Hostel (Chinatown / Yaowarat)", note: "Right on Yaowarat food street with Rise Cafe downstairs and a social rooftop bar." },
-      { name: "Once Again Hostel (Sam Yot / Old Town)", note: "5 mins from Sam Yot MRT, Giant Swing, Grand Palace, and Rajadamnern Stadium." },
-      { name: "Jam Hostel Bangkok (Phra Sumen)", note: "Super social backpacker vibe near Rambuttri/Khao San without the sleepless noise." }
+      { name: "Luk Hostel (Chinatown / Yaowarat)", note: "Right on Yaowarat food street with Rise Cafe downstairs and a social rooftop bar.", maps: "https://maps.google.com/?q=Luk+Hostel+Bangkok" },
+      { name: "Once Again Hostel (Sam Yot / Old Town)", note: "5 mins from Sam Yot MRT, Giant Swing, Grand Palace, and Rajadamnern Stadium.", maps: "https://maps.google.com/?q=Once+Again+Hostel+Bangkok" },
+      { name: "Jam Hostel Bangkok (Phra Sumen)", note: "Super social backpacker vibe near Rambuttri/Khao San without the sleepless noise.", maps: "https://maps.google.com/?q=Jam+Hostel+Bangkok" }
     ],
     rule: "Base near Sam Yot MRT or Wat Mangkon MRT so temples, Chinatown, Rajadamnern Muay Thai, and Wat Arun NYE are all walkable."
   },
@@ -731,10 +840,11 @@ const hostels = [
     base: "Phuket · EDC Week (Nights 3–6)",
     dates: "17–20 Dec (4 nights)",
     rate: "฿800–1,600 / night (EDC surge)",
+    mapsQuery: "ChillHub Hostel Phuket",
     picks: [
-      { name: "ChillHub Hostel Phuket (Bang Tao)", note: "Modern pod beds 5 mins from Bang Tao Beach & 10 mins from Rhythm Park EDC venue." },
-      { name: "Hanuman VIP Hostel (Cherng Talay)", note: "Top-rated clean dorms right in Cherng Talay near Boat Avenue & festival routes." },
-      { name: "Lub d Phuket Patong (Patong)", note: "Pick ONLY if you pre-book the Official EDC Return Shuttle Pass and want Patong beach life." }
+      { name: "ChillHub Hostel Phuket (Bang Tao)", note: "Modern pod beds 5 mins from Bang Tao Beach & 10 mins from Rhythm Park EDC venue.", maps: "https://maps.google.com/?q=ChillHub+Hostel+Phuket" },
+      { name: "Hanuman VIP Hostel (Cherng Talay)", note: "Top-rated clean dorms right in Cherng Talay near Boat Avenue & festival routes.", maps: "https://maps.google.com/?q=Hanuman+VIP+Hostel+Phuket" },
+      { name: "Lub d Phuket Patong (Patong)", note: "Pick ONLY if you pre-book the Official EDC Return Shuttle Pass and want Patong beach life.", maps: "https://maps.google.com/?q=Lub+d+Phuket+Patong" }
     ],
     rule: "EDC Thailand is at Rhythm Park in Thalang (Bang Tao/Laguna). Staying in Bang Tao saves ฿4,000–6,000 in 2:00 AM Patong taxi surge fares."
   },
@@ -742,33 +852,36 @@ const hostels = [
     base: "Krabi · Ao Nang (Nights 7–9)",
     dates: "21–23 Dec (3 nights)",
     rate: "฿500–900 / night",
+    mapsQuery: "Whoopers Hostel Ao Nang",
     picks: [
-      { name: "Whoopers Hostel By The Beach (9.1★)", note: "Privacy curtains, steps from Nopparat Thara beach, night market, and boat piers." },
-      { name: "Base Party Hostel Ao Nang", note: "Swimming pool, beachfront location, and daily group island/bar crawls for solo travellers." },
-      { name: "Tan Hostel x Cafe", note: "Boutique, stylish café-hostel in central Ao Nang with super comfortable bunks." }
+      { name: "Whoopers Hostel By The Beach (9.1★)", note: "Privacy curtains, steps from Nopparat Thara beach, night market, and boat piers.", maps: "https://maps.google.com/?q=Whoopers+Hostel+Ao+Nang" },
+      { name: "Base Party Hostel Ao Nang", note: "Swimming pool, beachfront location, and daily group island/bar crawls for solo travellers.", maps: "https://maps.google.com/?q=Base+Ao+Nang" },
+      { name: "Tan Hostel x Cafe", note: "Boutique, stylish café-hostel in central Ao Nang with super comfortable bunks.", maps: "https://maps.google.com/?q=Tan+Hostel+x+Cafe+Krabi" }
     ],
     rule: "Stay within the central Ao Nang / Nopparat Thara beachfront zone for free island-tour pickups and ฿100 walk-up Railay longtail boats."
   },
   {
     base: "Khao Sok & Cheow Lan Lake (Nights 10–11)",
     dates: "24–25 Dec (2 nights)",
-    rate: "฿450 (Village) + ฿2,500 (2D1N Lake Pkg)",
+    rate: "฿2,500 (Lake Pkg) + ฿450 (Village)",
+    mapsQuery: "Coco Khao Sok Hostel",
     picks: [
-      { name: "Coco Khao Sok Hostel (Night 1: 24 Dec)", note: "100m from the National Park entrance; books the 2D1N Lake tour directly & stores big bags free." },
-      { name: "Cheow Lan Lake Floating Raft House (Night 2: 25 Dec)", note: "Overwater bungalow on the emerald lake—bed, 4 meals, boat & cave trek included in the ฿2,500–2,800 tour." }
+      { name: "Cheow Lan Lake Floating Raft House (Night 1: 24 Dec)", note: "Christmas Eve on the emerald lake—bed, 4 meals, boat & cave trek included in the ฿2,500–2,800 tour.", maps: "https://maps.google.com/?q=Cheow+Lan+Lake+Raft+House" },
+      { name: "Coco Khao Sok Hostel (Night 2: 25 Dec)", note: "100m from National Park entrance; village base unlocks the 7:00 AM transfer to URT for the direct flight north.", maps: "https://maps.google.com/?q=Coco+Khao+Sok+Hostel" }
     ],
-    rule: "Never pre-book Khao Sok lake packages on international aggregator sites for $200+—book the standard ฿2,500–2,800 2D1N package through your village hostel."
+    rule: "Do the 2D1N floating raft house on 24–25 Dec and sleep in the village on 25 Dec. This unlocks the 7:00 AM transfer to Surat Thani airport for the direct 10:35 AM flight to Chiang Mai!"
   },
   {
     base: "Chiang Mai + Overnight Train (Nights 12–15)",
     dates: "26–29 Dec (3 hostel nights + 1 sleeper train)",
     rate: "฿450–800 / night",
+    mapsQuery: "Stamps Backpackers Chiang Mai",
     picks: [
-      { name: "Stamps Backpackers (Chaiyapoom / Old City)", note: "#1 solo-traveller social board in Chiang Mai to split Mae Rim Tiger/Zipline/Waterfall taxis." },
-      { name: "Hostel Lullaby (Old City South)", note: "Award-winning quiet comfort with free breakfast, free bicycles, and cooking classes." },
-      { name: "CNR Special Express Train #10 (Night of 29 Dec)", note: "2nd Class AC Lower Berth (~฿1,050) from Chiang Mai to Bangkok—replaces 1 flight + 1 hostel night." }
+      { name: "Stamps Backpackers (Chaiyapoom / Old City)", note: "#1 solo-traveller social board in Chiang Mai to split Mae Rim Tiger/Zipline taxis.", maps: "https://maps.google.com/?q=Stamps+Backpackers+Chiang+Mai" },
+      { name: "Hostel Lullaby (Old City South)", note: "Award-winning quiet comfort with free breakfast, free bicycles, and cooking classes.", maps: "https://maps.google.com/?q=Hostel+Lullaby+Chiang+Mai" },
+      { name: "CNR Special Express Train #10 (Night of 29 Dec)", note: "2nd Class AC Lower Berth (~฿1,050) from Chiang Mai to Bangkok—replaces 1 flight + 1 hostel night.", maps: "https://maps.google.com/?q=Chiang+Mai+Railway+Station" }
     ],
-    rule: "Use your hostel's whiteboard on Dec 26 evening to form a 4-person group for tomorrow's Mae Rim loop (Tiger Kingdom + Zipline/Bungee + Sticky Waterfalls)."
+    rule: "Use your hostel's whiteboard on Dec 26 evening to form a 4-person group for tomorrow's Mae Rim loop (Tiger Kingdom + Pongyang Zipline/Bungee)."
   }
 ];
 
@@ -781,7 +894,7 @@ const budgetRows = [
   },
   {
     category: "2. Domestic Flights, Vans & Sleeper Train",
-    details: "BKK→HKT flight (฿1,500), Phuket Smart Bus (฿100), Phuket→Krabi→Khao Sok→URT vans (฿1,400), direct URT→CNX flight (฿2,400), CNX→BKK Sleeper Train #10 (฿1,050)",
+    details: "BKK→HKT flight (฿1,500), Phuket Smart Bus (฿100), Phuket→Krabi→Khao Sok→URT vans (฿1,400), direct URT→CNX morning flight (฿2,400), CNX→BKK Sleeper Train #10 (฿1,050)",
     thb: "฿6,450 – 8,500",
     bdt: "৳23,670 – 31,200"
   },
@@ -793,13 +906,13 @@ const budgetRows = [
   },
   {
     category: "4. Hostels & Stays (19 Bed Nights)",
-    details: "18 social hostel dorm nights across Bangkok, Bang Tao, Ao Nang, Khao Sok & Chiang Mai (Night 11 is in the Lake pkg; Night 15 is on the Sleeper Train)",
+    details: "18 social hostel dorm nights across Bangkok, Bang Tao, Ao Nang, Khao Sok & Chiang Mai (Night 10 is in the Lake pkg; Night 15 is on the Sleeper Train)",
     thb: "฿11,500 – 16,000",
     bdt: "৳42,200 – 58,720"
   },
   {
     category: "5. Signature Bucket-List Experiences",
-    details: "Cheow Lan 2D1N Lake Raft House (฿2,800), Tiger Kingdom Giant/Cub + Photo (฿1,500), Mae Rim Zipline/Bungee (฿1,800), Krabi 7-Islands Plankton + Railay Climb (฿2,400), Ethical Elephants (฿2,000), Doi Inthanon (฿1,300), Rajadamnern RWS Muay Thai (฿1,800), Mahanakhon SkyWalk + Temples (฿2,280)",
+    details: "Cheow Lan 2D1N Lake Raft House (฿2,800), Tiger Kingdom Giant/Cub + Photo (฿1,500), Mae Rim Zipline/Bungee (฿1,800), Krabi 7-Islands Plankton + Railay Climb (฿2,400), Mae Taeng Elephants + Sticky Waterfalls (฿2,200), Doi Inthanon (฿1,300), Rajadamnern RWS Muay Thai (฿1,800), Mahanakhon SkyWalk + Temples (฿2,280)",
     thb: "฿15,880 – 19,200",
     bdt: "৳58,280 – 70,465"
   },
@@ -816,7 +929,7 @@ const bookingSteps = [
     step: "01",
     timing: "Book Immediately (Oct – Nov 2026)",
     title: "Thailand e-Visa, Return DAC↔BKK Flights & EDC Thailand 3-Day Pass",
-    desc: "Lock in your official EDC Thailand 3-Day ticket (edcthailand.frontgatetickets.com) and round-trip Dhaka–Bangkok flights first, then submit your Thailand e-Visa application with your flight and first-night Bangkok hostel confirmation."
+    desc: "Lock in your official EDC Thailand 3-Day ticket (edcthailand.frontgatetickets.com) and round-trip Dhaka–Bangkok flights first, then submit your Thailand e-Visa application with flight & first-night hostel PDF. Submit TDAC online 72 hrs before departure."
   },
   {
     step: "02",
@@ -828,7 +941,7 @@ const bookingSteps = [
     step: "03",
     timing: "4–6 Weeks Out (Nov 2026)",
     title: "Two Domestic Flights: Bangkok → Phuket (17 Dec) & Surat Thani → Chiang Mai (26 Dec)",
-    desc: "Book a morning DMK/BKK → HKT flight for 17 Dec and the direct Thai AirAsia URT → CNX flight for 26 Dec (include 20kg checked luggage when purchasing the ticket—airport desk baggage fees cost double)."
+    desc: "Book a morning DMK/BKK → HKT flight for 17 Dec and the direct Thai AirAsia morning flight URT → CNX for 26 Dec (include 20kg checked luggage when purchasing ticket online to save 50% vs airport desk)."
   },
   {
     step: "04",
@@ -853,12 +966,43 @@ const bookingSteps = [
     <title>Thailand, Unfiltered. · 21-Day Interactive Solo Tour & Live Expense Tracker</title>
     <meta
       name="description"
-      content="Interactive 21-day solo itinerary, live THB-to-BDT daily expense logger, and mobile booking checklist for EDC Thailand, Krabi, Khao Sok, Chiang Mai, and Bangkok NYE."
+      content="Interactive 21-day solo itinerary, live THB-to-BDT daily expense logger, offline PWA, and mobile booking checklist for EDC Thailand, Krabi, Khao Sok, Chiang Mai, and Bangkok NYE."
     />
+    <meta name="theme-color" content="#0c0f0d" />
+    <link rel="manifest" href="/thailand-grand-tour/manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="/thailand-grand-tour/favicon.svg" />
+    <link rel="apple-touch-icon" href="/thailand-grand-tour/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://zaedtonmoy.github.io/thailand-grand-tour/" />
+    <meta property="og:title" content="Thailand, Unfiltered. · 21-Day Solo Grand Tour & Live Expense Tracker" />
+    <meta
+      property="og:description"
+      content="Battle-tested 21-day solo itinerary for EDC Thailand, Krabi glowing plankton, Khao Sok floating bungalows, Mae Rim tigers, and Bangkok NYE 2027. Includes live THB→BDT expense logger & checklist."
+    />
+    <meta
+      property="og:image"
+      content="https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1200&q=80"
+    />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://zaedtonmoy.github.io/thailand-grand-tour/" />
+    <meta name="twitter:title" content="Thailand, Unfiltered. · 21-Day Solo Grand Tour" />
+    <meta
+      name="twitter:description"
+      content="Interactive 21-day itinerary, live THB/BDT expense logger, and offline phone checklist."
+    />
+    <meta
+      name="twitter:image"
+      content="https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1200&q=80"
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;700&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -871,16 +1015,38 @@ const bookingSteps = [
           <a href="#itinerary">Daily plan</a>
           <a href="#expenses">Expense logger</a>
           <a href="#checklist">Checklist</a>
+          <a href="#nutrition">7-Eleven nutrition</a>
           <a href="#stays">Hostels</a>
-          <a href="#budget">Budget</a>
-          <a href="#book">Booking order</a>
+          <a href="#emergency">Emergency &amp; tips</a>
         </nav>
         <div class="topbar-pills">
           <a href="#expenses" class="nav-wallet-pill" id="top-wallet-pill">৳160.4k left</a>
-          <a href="#checklist" class="nav-cta" id="top-progress-pill">Checklist · 0/28</a>
+          <a href="#checklist" class="nav-cta" id="top-progress-pill">Checklist · 0/30</a>
         </div>
       </div>
     </div>
+
+    <!-- LIVE "TODAY IS DAY X" JUMP BANNER -->
+    <aside class="live-today-banner" id="live-today-banner" aria-label="Today's itinerary jump bar">
+      <div class="container live-today-inner">
+        <div class="live-today-info">
+          <span class="live-indicator-dot"></span>
+          <span id="live-today-text"><strong>Trip Timeline:</strong> 15 Dec 2026 – 4 Jan 2027</span>
+        </div>
+        <div class="live-today-actions">
+          <label for="day-jump-select" class="sr-only">Quick Jump to Day</label>
+          <select id="day-jump-select" class="day-jump-dropdown" title="Jump directly to any day">
+            <option value="">Jump to Day ↓</option>
+            {days.map((d) => (
+              <option value={`day-${d.day}`}>Day {d.day}: {d.dateNum} {d.month} · {d.cityLabel}</option>
+            ))}
+          </select>
+          <button type="button" class="btn-today-jump" id="live-jump-btn">
+            📍 Jump to Day 1 ↓
+          </button>
+        </div>
+      </div>
+    </aside>
 
     <main>
       <!-- HERO HEADER -->
@@ -891,14 +1057,16 @@ const bookingSteps = [
             <h1>Thailand,<br /><em>unfiltered.</em></h1>
             <p class="hero-lead">
               A battle-tested, 21-day solo route covering <strong>EDC Thailand in Phuket</strong>,
-              bioluminescent plankton &amp; limestone climbing in <strong>Krabi</strong>, floating
-              raft houses on <strong>Cheow Lan Lake</strong>, <strong>Tiger Kingdom &amp; Mae Rim adrenaline</strong> in
-              Chiang Mai, <strong>Rajadamnern Muay Thai</strong>, and <strong>Bangkok's New Year's Eve 2027</strong>.
+              bioluminescent plankton &amp; limestone climbing in <strong>Krabi</strong>, Christmas Eve
+              floating raft houses on <strong>Cheow Lan Lake</strong>, <strong>Tiger Kingdom &amp; Mae Rim adrenaline</strong>,
+              <strong>Mae Taeng ethical elephants &amp; Sticky Waterfalls</strong>, <strong>Rajadamnern Muay Thai</strong>, and
+              <strong>Bangkok's New Year's Eve 2027</strong>.
             </p>
             <div class="hero-actions">
               <a href="#itinerary" class="btn-primary">Filter the 21-day plan ↓</a>
               <a href="#expenses" class="btn-secondary">Live THB/BDT Expense Logger ฿</a>
               <a href="#checklist" class="btn-secondary">Phone Checklist ✓</a>
+              <a href="#emergency" class="btn-secondary">Emergency &amp; Scams ⚠️</a>
             </div>
           </div>
         </div>
@@ -917,8 +1085,8 @@ const bookingSteps = [
             <span>Target budget · Live THB→BDT tracker below</span>
           </div>
           <div class="stat-card">
-            <strong>5 bases + 1</strong>
-            <span>Tap any base below to filter days</span>
+            <strong>Offline PWA</strong>
+            <span>Works in Cheow Lan Lake &amp; boats without signal</span>
           </div>
         </div>
       </header>
@@ -932,8 +1100,8 @@ const bookingSteps = [
           </div>
           <p class="section-sub">
             Zero wasted backtracking: fly south for EDC Phuket, sweep overland through Krabi to Khao
-            Sok Lake, fly direct from Surat Thani (URT) to Chiang Mai, and ride the overnight
-            sleeper train back into Bangkok for New Year's Eve.
+            Sok Lake, sleep in the village to catch the 10:35 AM direct flight out of Surat Thani (URT) to
+            Chiang Mai, and ride the CNR Overnight Sleeper Train back into Bangkok for New Year's Eve.
           </p>
         </div>
 
@@ -969,50 +1137,91 @@ const bookingSteps = [
             <h2>The "unfiltered" moments<br />built into this route.</h2>
           </div>
           <p class="section-sub">
-            Funded entirely by cutting Phuket surge taxis, flying out of Surat Thani (URT) instead
-            of backtracking, and taking the CNR Overnight Sleeper Train from Chiang Mai to Bangkok.
+            Funded entirely by cutting Phuket surge taxis, dodging Thai ATM markups via SuperRich, flying direct
+            from Surat Thani (URT) to Chiang Mai, and taking the CNR Sleeper Train.
           </p>
         </div>
 
         <div class="highlights-grid">
           <div class="highlight-box">
             <span class="hl-badge">Day 13 · Chiang Mai (Mae Rim)</span>
-            <h3>🐅 Giant Tiger Shoulder / Back Photos + Cubs</h3>
+            <h3>🐅 Giant Tiger Shoulder Photos + 50m Bungee</h3>
             <p>
-              Arrive at <strong>Tiger Kingdom Mae Rim at 9:00 AM sharp</strong> when big cats are
-              active. Trainers guide you to crouch and lean right across a 200kg Giant or White
-              Tiger's shoulders/back, or hold a playful 2–4 month cub on your shoulder and lap.
+              Arrive at <strong>Tiger Kingdom Mae Rim at 9:00 AM sharp</strong> when cats are active. Trainers guide
+              you to crouch right across a Giant Tiger's back/shoulders. Follow up with the <strong>Pongyang Jungle Coaster</strong>
+              and <strong>50m Bungee Jump at X-Centre</strong>, getting back by 4:00 PM for the Sunday Walking Street.
             </p>
           </div>
           <div class="highlight-box">
-            <span class="hl-badge">Day 13 · Mae Rim Valley Loop</span>
-            <h3>🎢 Jungle Coaster, 36-Platform Zipline &amp; Sticky Waterfalls</h3>
+            <span class="hl-badge">Day 14 · Mae Taeng Valley</span>
+            <h3>🐘 Ethical Elephants + Bua Thong Sticky Waterfalls</h3>
             <p>
-              15 minutes up the same road as Tiger Kingdom: ride the high-speed
-              <strong>Pongyang Jungle Coaster &amp; Zipline</strong> (or jump the <strong>50m Bungee at X-Centre</strong>),
-              then climb barefoot straight up the mineral-grippy <strong>Bua Thong Sticky Waterfalls</strong>.
+              Pairing the <strong>Ethical Elephant Sanctuary</strong> with <strong>Bua Thong Sticky Waterfalls</strong> in
+              the same northern valley saves 2 hours of transit! Climb barefoot straight up mineral cascades, then hike
+              the Monk's Trail to Wat Pha Lat for sunset chanting.
             </p>
           </div>
           <div class="highlight-box">
             <span class="hl-badge">Days 8–9 · Krabi &amp; Railay</span>
-            <h3>✨ Glowing Plankton Night Swim &amp; Cliff Climbing</h3>
+            <h3>✨ Glowing Plankton Night Swim &amp; Railay Climbing</h3>
             <p>
               Skip the crowded 9 AM boat for the <strong>7-Islands Sunset BBQ + Bioluminescent Plankton night snorkel</strong>,
-              followed by a half-day <strong>top-rope limestone rock climb at Railay</strong> and rope scramble to the Hidden Lagoon.
+              followed by a half-day <strong>top-rope limestone rock climb at Railay</strong> and secret Princess Lagoon scramble.
             </p>
           </div>
           <div class="highlight-box">
-            <span class="hl-badge">Days 11 &amp; 19 · Khao Sok &amp; Bangkok</span>
+            <span class="hl-badge">Days 10 &amp; 19 · Khao Sok &amp; Bangkok</span>
             <h3>🥊 Cheow Lan Floating Bungalow &amp; Rajadamnern RWS</h3>
             <p>
-              Spend Christmas night on an <strong>overwater raft house in Cheow Lan Lake</strong> (cave trek + dusk safari included),
-              and wrap up in Bangkok with <strong>Saturday Night RWS Muay Thai at Rajadamnern Stadium</strong> (dome light show + free-flow beer).
+              Spend Christmas Eve on an <strong>overwater raft house in Cheow Lan Lake</strong>, and wrap up Bangkok with
+              <strong>Saturday Night RWS Muay Thai at Rajadamnern Stadium</strong> (stadium dome projection show + free-flow beer).
             </p>
           </div>
         </div>
       </section>
 
-      <!-- INTERACTIVE 21-DAY ITINERARY (WITH INLINE EXPENSE LOGGER ON EVERY DAY CARD) -->
+      <!-- 7-ELEVEN HIGH-PROTEIN & NUTRITION HACK -->
+      <section id="nutrition" class="section container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Gym &amp; fitness continuity on the road</div>
+            <h2>The ฿109 7-Eleven Protein Hack:<br />64g clean protein anywhere.</h2>
+          </div>
+          <p class="section-sub">
+            Don't lug a bulky 2kg tub of protein powder across 5 cities. Thai 7-Elevens are open 24/7 on almost every street
+            corner and stock clean, ready-to-eat bodybuilding staples.
+          </p>
+        </div>
+
+        <div class="nutrition-grid">
+          <div class="nutri-card">
+            <span class="nutri-badge">Staple #1 · ฿49</span>
+            <h3>Meiji High-Protein Milk</h3>
+            <p class="nutri-stat"><strong>28g Protein</strong> · Zero added sugar</p>
+            <p class="nutri-desc">Available in chocolate, strawberry, and café mocha in the dairy chillers. Drink one after morning workouts or festival nights.</p>
+          </div>
+          <div class="nutri-card">
+            <span class="nutri-badge">Staple #2 · ฿40</span>
+            <h3>CP Roasted / Steamed Chicken Breast</h3>
+            <p class="nutri-stat"><strong>24g Protein</strong> · ~110 kcal</p>
+            <p class="nutri-desc">Found in the refrigerated ready-meal section. Staff heat it up in 45 seconds—tender, clean chicken breast with herbs or black pepper.</p>
+          </div>
+          <div class="nutri-card">
+            <span class="nutri-badge">Staple #3 · ฿20</span>
+            <h3>7-Eleven 2-Pack Soft-Boiled Eggs</h3>
+            <p class="nutri-stat"><strong>12g Protein</strong> · Healthy fats &amp; choline</p>
+            <p class="nutri-desc">Onsen-style soft-boiled eggs packed with seasoning soy sauce. Perfect portable recovery snack on minivans or island boats.</p>
+          </div>
+          <div class="nutri-card highlight-nutri">
+            <span class="nutri-badge gold">The 3-Item Daily Combo</span>
+            <h3>64g Clean Protein for ฿109 (~৳400)</h3>
+            <p class="nutri-stat"><strong>2x Milk + Chicken</strong> = 80g+ protein under ฿150</p>
+            <p class="nutri-desc">Add 5g creatine in your morning water bottle + 7-Eleven electrolyte sachets (฿6 each) to maintain muscle fullness during 3 days of EDC dancing and jungle hikes.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE 21-DAY ITINERARY -->
       <section id="itinerary" class="section container">
         <div class="section-head">
           <div>
@@ -1020,8 +1229,8 @@ const bookingSteps = [
             <h2>Filter by city, log actual THB,<br />and track completed days.</h2>
           </div>
           <p class="section-sub">
-            Type what you spend in THB directly at the bottom of any day card below—it automatically
-            syncs with the <strong>Live BDT Expense Logger</strong> and updates your remaining budget.
+            Tap <strong>📍 Maps</strong> to navigate, or tap <strong>🇹🇭 Show Driver</strong> for high-contrast Thai script
+            to show taxi, songthaew, or boat drivers without language barriers.
           </p>
         </div>
 
@@ -1072,6 +1281,7 @@ const bookingSteps = [
             days.map((d) => (
               <article
                 class="day-card"
+                id={`day-${d.day}`}
                 data-day-id={`day-${d.day}`}
                 data-day-num={d.day}
                 data-cities={d.cities}
@@ -1100,7 +1310,39 @@ const bookingSteps = [
                     </div>
                   </div>
                   <h3>{d.title}</h3>
-                  <p class="stay-pill">{d.stay}</p>
+                  <div class="stay-actions-bar">
+                    <span class="stay-pill">{d.stay}</span>
+                    <div class="day-action-chips">
+                      <a
+                        href={d.mapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="chip-action-btn maps-btn"
+                        title="Open key destination in Google Maps"
+                      >
+                        📍 Maps
+                      </a>
+                      <button
+                        type="button"
+                        class="chip-action-btn thai-btn"
+                        data-show-thai={d.day}
+                        title="Show Thai script and pronunciation to driver"
+                      >
+                        🇹🇭 Show Driver
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- SHOW DRIVER THAI SCRIPT CARD (EXPANDABLE) -->
+                  <div class="driver-thai-card" id={`thai-card-${d.day}`} style="display: none;">
+                    <div class="driver-thai-header">
+                      <span>🇹🇭 Show screen to taxi / songthaew / boat driver</span>
+                      <button type="button" class="close-thai-btn" data-close-thai={d.day}>✕</button>
+                    </div>
+                    <div class="driver-thai-text">{d.thaiText}</div>
+                    <div class="driver-phonetic">🗣️ Phonetic: <em>{d.thaiPhonetic}</em></div>
+                    <div class="driver-instruction">📌 {d.driverNote}</div>
+                  </div>
 
                   <div class="time-blocks">
                     <div class="time-slot">
@@ -1271,7 +1513,7 @@ const bookingSteps = [
           </div>
         </div>
 
-        <!-- COLLAPSIBLE / EDITABLE PRE-TRIP FIXED COSTS -->
+        <!-- PRE-TRIP FIXED COSTS -->
         <div class="exp-subcard">
           <div class="exp-subcard-head">
             <div>
@@ -1397,15 +1639,15 @@ const bookingSteps = [
             <h2>Booking &amp; packing checklist<br />for your 21-day tour.</h2>
           </div>
           <p class="section-sub">
-            Tap any item below as you book flights, lock in hostels, or pack your gear. Your
-            progress is stored locally in your phone browser so it stays checked even offline.
+            Tap any item below as you book flights, lock in hostels, or pack your gear. Includes mandatory
+            2026 <strong>Thailand Digital Arrival Card (TDAC)</strong> and Bangladesh bank endorsement.
           </p>
         </div>
 
         <div class="checklist-dashboard">
           <div class="chk-progress-header">
             <div>
-              <strong id="chk-count-label">0 of 28 completed (0%)</strong>
+              <strong id="chk-count-label">0 of 30 completed (0%)</strong>
               <span id="chk-status-sub">Tap items below to check them off on your phone</span>
             </div>
             <div class="chk-dashboard-actions">
@@ -1423,16 +1665,16 @@ const bookingSteps = [
 
           <div class="chk-tabs" role="tablist" aria-label="Filter checklist categories">
             <button type="button" class="chk-tab active" data-chk-filter="all">
-              All Items (28)
+              All Items (30)
             </button>
             <button type="button" class="chk-tab" data-chk-filter="flights">
-              1. Flights, Visa &amp; EDC (6)
+              1. Flights, Visa &amp; Banking (9)
             </button>
             <button type="button" class="chk-tab" data-chk-filter="stays">
               2. Hostels &amp; Stays (6)
             </button>
             <button type="button" class="chk-tab" data-chk-filter="tours">
-              3. Tours &amp; Tickets (8)
+              3. Tours &amp; Tickets (7)
             </button>
             <button type="button" class="chk-tab" data-chk-filter="packing">
               4. Packing &amp; Gear (8)
@@ -1469,7 +1711,7 @@ const bookingSteps = [
           </div>
           <p class="section-sub">
             Every hostel below is picked for solo-traveller atmosphere, lockable pod beds, and
-            strategic proximity to transit or festival/pier gates during peak December week.
+            strategic proximity to transit or festival gates. Tap <strong>📍 Maps</strong> on any pick.
           </p>
         </div>
 
@@ -1487,7 +1729,15 @@ const bookingSteps = [
                 <ul class="hostel-picks">
                   {h.picks.map((p) => (
                     <li>
-                      <strong>{p.name}:</strong> {p.note}
+                      <div class="hostel-pick-title">
+                        <strong>{p.name}</strong>
+                        {p.maps && (
+                          <a href={p.maps} target="_blank" rel="noopener noreferrer" class="hostel-maps-link">
+                            📍 Maps
+                          </a>
+                        )}
+                      </div>
+                      <span>{p.note}</span>
                     </li>
                   ))}
                 </ul>
@@ -1508,9 +1758,8 @@ const bookingSteps = [
             <h2>How to fit every bucket-list<br />activity inside ৳250k–350k.</h2>
           </div>
           <p class="section-sub">
-            Calculated at <strong>1 THB ≈ 3.67 BDT</strong>. By cutting out the 4 biggest tourist
-            money traps (Patong EDC surge taxis, Khao Sok online markups, Phuket flight
-            backtracking, and a peak-holiday CNX→BKK flight), you save <strong>~฿11,000 (৳40,370)</strong>.
+            Calculated at <strong>1 THB ≈ 3.67 BDT</strong>. By dodging airport ATMs with SuperRich, cutting Phuket surge taxis,
+            booking the lake package locally, and flying direct from Surat Thani to Chiang Mai, you save <strong>~฿12,500 (৳45,800)</strong>.
           </p>
         </div>
 
@@ -1557,8 +1806,8 @@ const bookingSteps = [
             <h2>Exact booking order:<br />what to lock in vs. leave flexible.</h2>
           </div>
           <p class="section-sub">
-            Mid-December to January 4 is Thailand's busiest travel window of the year. Lock in fixed
-            bottlenecks early, and keep island/jungle tours flexible for on-the-ground bargaining.
+            Mid-December to January 4 is Thailand's busiest travel window. Lock in fixed bottlenecks early,
+            and keep island/jungle tours flexible for on-the-ground bargaining.
           </p>
         </div>
 
@@ -1573,6 +1822,67 @@ const bookingSteps = [
               </article>
             ))
           }
+        </div>
+      </section>
+
+      <!-- EMERGENCY CONTACTS & 4 GOLDEN SCAM RULES -->
+      <section id="emergency" class="section container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Emergency hotlines &amp; street safety</div>
+            <h2>Emergency quick-card &amp;<br />the 4 golden rules for Thailand.</h2>
+          </div>
+          <p class="section-sub">
+            Keep this section saved on your phone. If you ever run into a problem with transport, health, or scams,
+            these verified numbers connect you directly to English-speaking assistance.
+          </p>
+        </div>
+
+        <div class="emergency-grid">
+          <div class="emg-contact-card">
+            <div class="emg-icon">👮</div>
+            <div class="emg-info">
+              <h3>Tourist Police Hotline</h3>
+              <p class="emg-phone"><a href="tel:1155">1155</a></p>
+              <small>24/7 English-speaking tourist police across all 77 provinces.</small>
+            </div>
+          </div>
+
+          <div class="emg-contact-card">
+            <div class="emg-icon">🚑</div>
+            <div class="emg-info">
+              <h3>Medical Emergency &amp; Ambulance</h3>
+              <p class="emg-phone"><a href="tel:1669">1669</a></p>
+              <small>National medical emergency dispatch (General Police: 191).</small>
+            </div>
+          </div>
+
+          <div class="emg-contact-card">
+            <div class="emg-icon">🇧🇩</div>
+            <div class="emg-info">
+              <h3>Bangladesh Embassy Bangkok</h3>
+              <p class="emg-phone"><a href="tel:+6623905107">+66 2 390 5107</a></p>
+              <small>47/8 Soi Ekkamai 30, Sukhumvit 63, Bangkok (Near BTS Ekkamai).</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="scam-rules-card">
+          <h3>The 4 Golden Rules to Avoid Traps</h3>
+          <ol class="scam-rules-list">
+            <li>
+              <strong>Never surrender your physical passport as a rental deposit:</strong> For motorbikes, jet skis, or equipment, reputable rental shops accept a clear photocopy of your passport photo page + a cash deposit (฿1,000–3,000). Handing over your original passport leaves you vulnerable to inflated extortion charges for preexisting scratches.
+            </li>
+            <li>
+              <strong>Never use camera flash inside tiger enclosures:</strong> At Tiger Kingdom Mae Rim, turn flash completely off and avoid sudden movements behind big cats. Always approach from behind under direct trainer guidance.
+            </li>
+            <li>
+              <strong>Book Sleeper Trains only on the official D-Ticket portal:</strong> Fake agency websites charge up to 50% markups on SRT Train #10 sleeper berths. Book directly at <a href="https://dticket.railway.co.th" target="_blank" rel="noopener noreferrer">dticket.railway.co.th</a>.
+            </li>
+            <li>
+              <strong>Exchange USD at SuperRich Basement B Floor to dodge ATM fees:</strong> Never withdraw multiple small amounts from Thai ATMs (each withdrawal charges ฿220 fee). Carry clean, crisp $100 USD bills from Dhaka and exchange them at SuperRich Thailand.
+            </li>
+          </ol>
         </div>
       </section>
     </main>
@@ -1591,13 +1901,13 @@ const bookingSteps = [
         <span>✅</span>
         <small id="mob-nav-chk-count">Checklist</small>
       </a>
-      <a href="#stays" class="mob-nav-item">
-        <span>🛏️</span>
-        <small>Hostels</small>
+      <a href="#nutrition" class="mob-nav-item">
+        <span>🥛</span>
+        <small>Nutrition</small>
       </a>
-      <a href="#budget" class="mob-nav-item">
-        <span>📊</span>
-        <small>Budget</small>
+      <a href="#emergency" class="mob-nav-item">
+        <span>🚨</span>
+        <small>Emergency</small>
       </a>
     </nav>
 
@@ -1611,6 +1921,15 @@ const bookingSteps = [
     <!-- CLIENT-SIDE INTERACTIVITY SCRIPT -->
     <script is:inline>
       (function () {
+        // Register PWA Service Worker for offline survival in Cheow Lan Lake & Andaman boats
+        if ("serviceWorker" in navigator) {
+          window.addEventListener("load", () => {
+            navigator.serviceWorker
+              .register("/thailand-grand-tour/sw.js")
+              .catch(() => {});
+          });
+        }
+
         const CHK_STORAGE_KEY = "thailand_grand_tour_v2_checks";
         const DAYS_STORAGE_KEY = "thailand_grand_tour_v2_done_days";
         const EXP_STORAGE_KEY = "thailand_grand_tour_v3_expenses";
@@ -1621,7 +1940,110 @@ const bookingSteps = [
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
-        // --- 1. EXPENSE LOGGER STATE & INITIALIZATION ---
+        // --- LIVE "TODAY IS DAY X" CALCULATION & QUICK JUMP ---
+        const tourDates = {
+          "2026-12-15": 1,
+          "2026-12-16": 2,
+          "2026-12-17": 3,
+          "2026-12-18": 4,
+          "2026-12-19": 5,
+          "2026-12-20": 6,
+          "2026-12-21": 7,
+          "2026-12-22": 8,
+          "2026-12-23": 9,
+          "2026-12-24": 10,
+          "2026-12-25": 11,
+          "2026-12-26": 12,
+          "2026-12-27": 13,
+          "2026-12-28": 14,
+          "2026-12-29": 15,
+          "2026-12-30": 16,
+          "2026-12-31": 17,
+          "2027-01-01": 18,
+          "2027-01-02": 19,
+          "2027-01-03": 20,
+          "2027-01-04": 21
+        };
+
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, "0");
+        const dd = String(today.getDate()).padStart(2, "0");
+        const todayKey = `${yyyy}-${mm}-${dd}`;
+        const activeDayNum = tourDates[todayKey] || 1;
+
+        const liveTodayText = document.getElementById("live-today-text");
+        const liveJumpBtn = document.getElementById("live-jump-btn");
+        const dayJumpSelect = document.getElementById("day-jump-select");
+
+        if (tourDates[todayKey]) {
+          if (liveTodayText) {
+            liveTodayText.innerHTML = `<strong>TODAY: Day ${activeDayNum} of 21</strong> · Ready to roll in Thailand!`;
+          }
+          if (liveJumpBtn) {
+            liveJumpBtn.textContent = `📍 Jump to Today (Day ${activeDayNum}) ↓`;
+            liveJumpBtn.setAttribute("data-target-day", `day-${activeDayNum}`);
+          }
+        } else {
+          if (liveTodayText) {
+            liveTodayText.innerHTML = `<strong>Trip Timeline:</strong> 15 Dec 2026 – 4 Jan 2027 (Pre-Trip Planning Mode)`;
+          }
+          if (liveJumpBtn) {
+            liveJumpBtn.textContent = "📍 Jump to Day 1 ↓";
+            liveJumpBtn.setAttribute("data-target-day", "day-1");
+          }
+        }
+
+        if (liveJumpBtn) {
+          liveJumpBtn.addEventListener("click", () => {
+            const targetId = liveJumpBtn.getAttribute("data-target-day") || "day-1";
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+              targetEl.classList.add("highlight-flash");
+              setTimeout(() => targetEl.classList.remove("highlight-flash"), 2000);
+            }
+          });
+        }
+
+        if (dayJumpSelect) {
+          dayJumpSelect.addEventListener("change", (e) => {
+            const dayId = e.target.value;
+            if (dayId) {
+              const targetEl = document.getElementById(dayId);
+              if (targetEl) {
+                targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+                targetEl.classList.add("highlight-flash");
+                setTimeout(() => targetEl.classList.remove("highlight-flash"), 2000);
+              }
+            }
+          });
+        }
+
+        // --- THAI SCRIPT DRIVER CARDS TOGGLE ---
+        document.querySelectorAll("[data-show-thai]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const dayNum = btn.getAttribute("data-show-thai");
+            const card = document.getElementById(`thai-card-${dayNum}`);
+            if (card) {
+              const isHidden = card.style.display === "none";
+              card.style.display = isHidden ? "block" : "none";
+              btn.textContent = isHidden ? "🇹🇭 Hide Thai" : "🇹🇭 Show Driver";
+            }
+          });
+        });
+
+        document.querySelectorAll("[data-close-thai]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const dayNum = btn.getAttribute("data-close-thai");
+            const card = document.getElementById(`thai-card-${dayNum}`);
+            const showBtn = document.querySelector(`[data-show-thai="${dayNum}"]`);
+            if (card) card.style.display = "none";
+            if (showBtn) showBtn.textContent = "🇹🇭 Show Driver";
+          });
+        });
+
+        // --- EXPENSE LOGGER STATE & INITIALIZATION ---
         let expState = {
           targetBDT: 320000,
           rate: 3.67,
@@ -1652,7 +2074,7 @@ const bookingSteps = [
           } catch (e) {}
         }
 
-        // --- 2. ITINERARY CITY FILTER & COMPLETED DAYS ---
+        // --- ITINERARY CITY FILTER & COMPLETED DAYS ---
         const filterPills = document.querySelectorAll("[data-city-filter]");
         const jumpButtons = document.querySelectorAll("[data-jump-btn]");
         const dayCards = document.querySelectorAll(".day-card");
@@ -1788,7 +2210,7 @@ const bookingSteps = [
           });
         }
 
-        // --- 3. EXPENSE LOGGER RECALCULATION & TWO-WAY SYNC ---
+        // --- EXPENSE LOGGER RECALCULATION & TWO-WAY SYNC ---
         const targetBdtInput = document.getElementById("exp-target-bdt");
         const rateInput = document.getElementById("exp-rate-input");
         const includeFixedToggle = document.getElementById("include-fixed-toggle");
@@ -2196,7 +2618,7 @@ const bookingSteps = [
           });
         }
 
-        // --- 4. BOOKING & PACKING CHECKLIST ---
+        // --- BOOKING & PACKING CHECKLIST ---
         const chkInputs = document.querySelectorAll(".chk-input");
         const chkRows = document.querySelectorAll(".chk-row");
         const chkTabs = document.querySelectorAll("[data-chk-filter]");
@@ -2331,7 +2753,7 @@ const bookingSteps = [
       }
 
       body {
-        padding-bottom: 4.2rem;
+        padding-bottom: 4.5rem;
       }
 
       .container {
@@ -2344,7 +2766,7 @@ const bookingSteps = [
         position: sticky;
         top: 0;
         z-index: 100;
-        background: rgba(12, 15, 13, 0.9);
+        background: rgba(12, 15, 13, 0.92);
         backdrop-filter: blur(14px);
         border-bottom: 1px solid var(--border);
       }
@@ -2353,7 +2775,7 @@ const bookingSteps = [
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0.9rem 0;
+        padding: 0.85rem 0;
         gap: 0.8rem;
       }
 
@@ -2371,14 +2793,14 @@ const bookingSteps = [
 
       .nav-links {
         display: flex;
-        gap: 1.25rem;
+        gap: 1.15rem;
         flex-wrap: wrap;
       }
 
       .nav-links a {
         color: var(--muted);
         text-decoration: none;
-        font-size: 0.86rem;
+        font-size: 0.85rem;
         font-weight: 500;
         transition: color 0.2s;
       }
@@ -2399,8 +2821,8 @@ const bookingSteps = [
         border: 1px solid rgba(52, 211, 153, 0.35);
         text-decoration: none;
         font-weight: 700;
-        font-size: 0.8rem;
-        padding: 0.42rem 0.85rem;
+        font-size: 0.78rem;
+        padding: 0.38rem 0.8rem;
         border-radius: 999px;
         white-space: nowrap;
       }
@@ -2410,15 +2832,95 @@ const bookingSteps = [
         color: #0c0f0d;
         text-decoration: none;
         font-weight: 700;
-        font-size: 0.8rem;
-        padding: 0.45rem 0.9rem;
+        font-size: 0.78rem;
+        padding: 0.4rem 0.85rem;
         border-radius: 999px;
         white-space: nowrap;
       }
 
+      /* Live Today Banner */
+      .live-today-banner {
+        background: linear-gradient(90deg, #18221c 0%, #1a261f 100%);
+        border-bottom: 1px solid rgba(52, 211, 153, 0.3);
+        padding: 0.65rem 0;
+        font-size: 0.85rem;
+      }
+
+      .live-today-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .live-today-info {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: var(--text);
+      }
+
+      .live-indicator-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--emerald);
+        box-shadow: 0 0 10px var(--emerald);
+        animation: pulseDot 2s infinite;
+      }
+
+      @keyframes pulseDot {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.85); }
+      }
+
+      .live-today-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+
+      .day-jump-dropdown {
+        background: var(--bg-card);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 0.78rem;
+        padding: 0.35rem 0.65rem;
+        outline: none;
+        cursor: pointer;
+      }
+
+      .btn-today-jump {
+        background: var(--emerald-soft);
+        color: var(--emerald);
+        border: 1px solid rgba(52, 211, 153, 0.4);
+        padding: 0.35rem 0.85rem;
+        border-radius: 8px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.18s;
+      }
+
+      .btn-today-jump:hover {
+        background: var(--emerald);
+        color: #0c0f0d;
+      }
+
+      .highlight-flash {
+        animation: flashHighlight 1.8s ease;
+      }
+
+      @keyframes flashHighlight {
+        0% { outline: 3px solid var(--accent); box-shadow: 0 0 25px rgba(245, 158, 11, 0.6); }
+        100% { outline: 3px solid transparent; box-shadow: none; }
+      }
+
       /* Hero */
       .hero {
-        padding: 4rem 0 3rem;
+        padding: 3.5rem 0 2.5rem;
         border-bottom: 1px solid var(--border);
       }
 
@@ -2442,7 +2944,7 @@ const bookingSteps = [
       }
 
       h1 {
-        font-size: clamp(2.6rem, 6vw, 4.6rem);
+        font-size: clamp(2.5rem, 5.5vw, 4.4rem);
         margin-bottom: 1.2rem;
       }
 
@@ -2453,8 +2955,8 @@ const bookingSteps = [
       }
 
       .hero-lead {
-        max-width: 720px;
-        font-size: 1.08rem;
+        max-width: 740px;
+        font-size: 1.05rem;
         color: var(--muted);
         margin-bottom: 1.8rem;
       }
@@ -2465,18 +2967,18 @@ const bookingSteps = [
 
       .hero-actions {
         display: flex;
-        gap: 0.85rem;
+        gap: 0.75rem;
         flex-wrap: wrap;
-        margin-bottom: 2.8rem;
+        margin-bottom: 2.6rem;
       }
 
       .btn-primary,
       .btn-secondary {
         display: inline-block;
-        padding: 0.75rem 1.3rem;
+        padding: 0.72rem 1.25rem;
         border-radius: 999px;
         font-weight: 700;
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         text-decoration: none;
       }
 
@@ -2500,7 +3002,7 @@ const bookingSteps = [
       .stat-card {
         background: var(--bg-elevated);
         border: 1px solid var(--border);
-        padding: 1.2rem 1.35rem;
+        padding: 1.15rem 1.25rem;
         border-radius: 16px;
         display: flex;
         flex-direction: column;
@@ -2509,18 +3011,18 @@ const bookingSteps = [
 
       .stat-card strong {
         font-family: "Fraunces", serif;
-        font-size: 1.6rem;
+        font-size: 1.55rem;
         color: var(--text);
       }
 
       .stat-card span {
-        font-size: 0.84rem;
+        font-size: 0.82rem;
         color: var(--muted);
       }
 
       /* Sections */
       .section {
-        padding: 4.2rem 0;
+        padding: 4rem 0;
         border-bottom: 1px solid var(--border);
       }
 
@@ -2547,9 +3049,9 @@ const bookingSteps = [
       }
 
       .section-sub {
-        max-width: 520px;
+        max-width: 540px;
         color: var(--muted);
-        font-size: 0.95rem;
+        font-size: 0.94rem;
       }
 
       /* Route Grid */
@@ -2672,8 +3174,61 @@ const bookingSteps = [
       }
 
       .highlight-box p {
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         color: var(--muted);
+      }
+
+      /* 7-Eleven Nutrition Section */
+      .nutrition-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.2rem;
+      }
+
+      .nutri-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 1.35rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .nutri-card.highlight-nutri {
+        border-color: rgba(52, 211, 153, 0.45);
+        background: linear-gradient(160deg, rgba(20, 36, 28, 0.9), rgba(16, 22, 18, 0.9));
+      }
+
+      .nutri-badge {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        background: var(--accent-soft);
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        width: fit-content;
+      }
+
+      .nutri-badge.gold {
+        color: var(--emerald);
+        background: var(--emerald-soft);
+      }
+
+      .nutri-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .nutri-stat {
+        color: var(--emerald);
+        font-size: 0.9rem;
+      }
+
+      .nutri-desc {
+        color: var(--muted);
+        font-size: 0.86rem;
       }
 
       /* Interactive Filter Bar */
@@ -2681,11 +3236,11 @@ const bookingSteps = [
         position: sticky;
         top: 57px;
         z-index: 80;
-        background: rgba(16, 21, 18, 0.95);
+        background: rgba(16, 21, 18, 0.96);
         backdrop-filter: blur(12px);
         border: 1px solid var(--border);
         border-radius: 16px;
-        padding: 1rem 1.15rem;
+        padding: 0.95rem 1.15rem;
         margin-bottom: 1.6rem;
         box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
       }
@@ -2696,7 +3251,6 @@ const bookingSteps = [
         overflow-x: auto;
         padding-bottom: 0.65rem;
         scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
       }
 
       .filter-pills::-webkit-scrollbar {
@@ -2707,7 +3261,7 @@ const bookingSteps = [
         background: var(--bg-card);
         color: var(--muted);
         border: 1px solid var(--border);
-        padding: 0.5rem 0.95rem;
+        padding: 0.48rem 0.95rem;
         border-radius: 999px;
         font-size: 0.84rem;
         font-weight: 600;
@@ -2746,12 +3300,8 @@ const bookingSteps = [
         flex-wrap: wrap;
         padding-top: 0.65rem;
         border-top: 1px solid var(--border);
-        font-size: 0.85rem;
+        font-size: 0.84rem;
         color: var(--muted);
-      }
-
-      .filter-summary-text strong {
-        color: var(--text);
       }
 
       .filter-view-actions {
@@ -2897,6 +3447,15 @@ const bookingSteps = [
         margin-bottom: 0.45rem;
       }
 
+      .stay-actions-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+      }
+
       .stay-pill {
         display: inline-block;
         font-size: 0.84rem;
@@ -2904,7 +3463,84 @@ const bookingSteps = [
         background: var(--emerald-soft);
         padding: 0.25rem 0.75rem;
         border-radius: 999px;
+      }
+
+      .day-action-chips {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+      }
+
+      .chip-action-btn {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 0.3rem 0.65rem;
+        border-radius: 8px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.18s;
+      }
+
+      .chip-action-btn.maps-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .chip-action-btn.thai-btn:hover {
+        border-color: var(--emerald);
+        color: var(--emerald);
+      }
+
+      /* Driver Thai Script Card */
+      .driver-thai-card {
+        background: #111a14;
+        border: 2px solid var(--emerald);
+        border-radius: 14px;
+        padding: 1.15rem;
         margin-bottom: 1.1rem;
+      }
+
+      .driver-thai-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.6rem;
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--emerald);
+      }
+
+      .close-thai-btn {
+        background: transparent;
+        border: none;
+        color: var(--muted);
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .driver-thai-text {
+        font-family: "Noto Sans Thai", sans-serif;
+        font-size: 1.45rem;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.3;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+      }
+
+      .driver-phonetic {
+        font-size: 0.85rem;
+        color: var(--accent);
+        margin-bottom: 0.35rem;
+      }
+
+      .driver-instruction {
+        font-size: 0.82rem;
+        color: var(--muted);
       }
 
       .time-blocks {
@@ -3020,11 +3656,6 @@ const bookingSteps = [
         padding: 0.45rem 0.65rem;
       }
 
-      .day-note-input:focus,
-      .ledger-note-input:focus {
-        border-color: var(--accent);
-      }
-
       .inline-exp-status {
         font-size: 0.8rem;
         font-weight: 700;
@@ -3047,8 +3678,9 @@ const bookingSteps = [
 
       /* Compact Mode for Phone */
       .days-list.compact-mode .time-blocks,
-      .days-list.compact-mode .booking-tip-box {
-        display: none;
+      .days-list.compact-mode .booking-tip-box,
+      .days-list.compact-mode .driver-thai-card {
+        display: none !important;
       }
 
       .days-list.compact-mode .day-card {
@@ -3511,16 +4143,40 @@ const bookingSteps = [
       }
 
       .hostel-picks {
-        padding-left: 1.1rem;
+        list-style: none;
         color: var(--muted);
         font-size: 0.88rem;
         display: flex;
         flex-direction: column;
-        gap: 0.48rem;
+        gap: 0.75rem;
       }
 
-      .hostel-picks strong {
+      .hostel-pick-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 0.15rem;
+      }
+
+      .hostel-pick-title strong {
         color: var(--text);
+      }
+
+      .hostel-maps-link {
+        font-size: 0.72rem;
+        color: var(--accent);
+        text-decoration: none;
+        background: var(--bg-elevated);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        padding: 0.15rem 0.45rem;
+        border-radius: 6px;
+        font-weight: 700;
+      }
+
+      .hostel-maps-link:hover {
+        background: var(--accent);
+        color: #0c0f0d;
       }
 
       .hostel-rule {
@@ -3615,6 +4271,77 @@ const bookingSteps = [
         color: var(--muted);
       }
 
+      /* Emergency Section */
+      .emergency-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .emg-contact-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.35rem;
+        display: flex;
+        align-items: center;
+        gap: 1.1rem;
+      }
+
+      .emg-icon {
+        font-size: 2.2rem;
+      }
+
+      .emg-info h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .emg-phone a {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--emerald);
+        text-decoration: none;
+      }
+
+      .emg-info small {
+        display: block;
+        color: var(--muted);
+        font-size: 0.78rem;
+        margin-top: 0.25rem;
+      }
+
+      .scam-rules-card {
+        background: var(--bg-card);
+        border: 1px solid rgba(248, 113, 113, 0.4);
+        border-radius: 18px;
+        padding: 1.6rem;
+      }
+
+      .scam-rules-card h3 {
+        color: var(--danger);
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      .scam-rules-list {
+        padding-left: 1.3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .scam-rules-list strong {
+        color: var(--text);
+      }
+
+      .scam-rules-list a {
+        color: var(--accent);
+      }
+
       /* Mobile Floating Bottom App Bar */
       .mobile-bottom-nav {
         display: none;
@@ -3643,6 +4370,20 @@ const bookingSteps = [
         .filter-bar-sticky {
           top: 53px;
           padding: 0.8rem 0.9rem;
+        }
+
+        .live-today-inner {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.5rem;
+        }
+
+        .live-today-actions {
+          justify-content: space-between;
+        }
+
+        .day-jump-dropdown {
+          flex: 1;
         }
 
         .day-card {
@@ -3708,7 +4449,7 @@ const bookingSteps = [
         }
 
         .mob-nav-item small {
-          font-size: 0.66rem;
+          font-size: 0.65rem;
           font-weight: 600;
           color: var(--text);
         }

@@ -1,0 +1,19 @@
+{
+  "name": "Thailand Grand Tour · 21-Day Solo Guide",
+  "short_name": "ThailandTour",
+  "description": "Interactive 21-day solo itinerary, live THB/BDT expense logger, and mobile booking checklist for Thailand.",
+  "start_url": "/thailand-grand-tour/",
+  "scope": "/thailand-grand-tour/",
+  "display": "standalone",
+  "background_color": "#0c0f0d",
+  "theme_color": "#0c0f0d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/thailand-grand-tour/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
