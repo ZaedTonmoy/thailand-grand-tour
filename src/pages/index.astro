@@ -1,88 +1,3718 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+// src/pages/index.astro
+// Thailand, Unfiltered. — Interactive 21-Day Solo Grand Tour + Live THB/BDT Expense Logger
+
+const routeBases = [
+  {
+    dates: "15–16 Dec · 30 Dec–3 Jan",
+    name: "Bangkok",
+    cityKey: "bangkok",
+    image: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1000&q=85",
+    alt: "Bangkok city and temples",
+    summary: "Grand Palace, Yaowarat street food, Mahanakhon 314m glass skywalk, Rajadamnern Muay Thai dome show, and ICONSIAM / Wat Arun New Year's Eve fireworks.",
+    tags: ["Culture", "Muay Thai", "NYE 2027", "Rooftops"]
+  },
+  {
+    dates: "17–20 Dec",
+    name: "Phuket (EDC)",
+    cityKey: "phuket",
+    image: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?auto=format&fit=crop&w=1000&q=85",
+    alt: "Phuket beach and coastline",
+    tags: ["EDC Thailand", "Bang Tao Base", "Jungle ATV", "Beach Clubs"],
+    summary: "Three nights Under the Electric Sky at Rhythm Park (Thalang) plus Big Buddha jungle ATV rides and daytime recovery at Bang Tao beach clubs."
+  },
+  {
+    dates: "21–23 Dec",
+    name: "Krabi & Railay",
+    cityKey: "krabi",
+    image: "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1000&q=85",
+    alt: "Krabi limestone islands and longtail boat",
+    tags: ["Bioluminescent Plankton", "Rock Climbing", "Hidden Lagoon", "1,260-Step Temple"],
+    summary: "Ao Nang base, 7-Islands sunset BBQ & glowing plankton night swim, limestone rock climbing at Railay, and the 1,260-step Tiger Cave Temple climb."
+  },
+  {
+    dates: "24–25 Dec",
+    name: "Khao Sok Lake",
+    cityKey: "khaosok",
+    image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=1000&q=85",
+    alt: "Khao Sok rainforest and Cheow Lan Lake",
+    tags: ["Floating Raft House", "Night Safari", "Cave Trek", "River Tubing"],
+    summary: "Oldest evergreen rainforest in the world, Sok River tubing, night wildlife jungle safari, and a Christmas overnight in a floating bungalow on Cheow Lan Lake."
+  },
+  {
+    dates: "26–29 Dec",
+    name: "Chiang Mai",
+    cityKey: "chiangmai",
+    image: "https://images.unsplash.com/photo-1512553353614-82a7370096dc?auto=format&fit=crop&w=1000&q=85",
+    alt: "Chiang Mai mountain temple",
+    tags: ["Tiger Kingdom", "Zipline / Bungee", "Sticky Waterfalls", "Elephants"],
+    summary: "Close-up Giant Tiger shoulder/back photos in Mae Rim, Pongyang Jungle Coaster & 50m bungee, Bua Thong Sticky Waterfalls, Monk's Trail hike, and Doi Inthanon."
+  },
+  {
+    dates: "2 Jan day trip",
+    name: "Ayutthaya",
+    cityKey: "ayutthaya",
+    image: "https://images.unsplash.com/photo-1598970605070-a38a6ccd6a1d?auto=format&fit=crop&w=1000&q=85",
+    alt: "Ayutthaya ancient temple ruins",
+    tags: ["UNESCO Ruins", "Cycling", "Morning Train"],
+    summary: "Ancient Siamese capital ruins explored by train and bicycle—Wat Mahathat's Buddha head in tree roots and riverside Wat Chaiwatthanaram."
+  }
+];
+
+const fixedCostDefaults = [
+  {
+    id: "fix-intl-flight",
+    label: "1. International Flights (DAC ↔ BKK/DMK)",
+    note: "Round-trip airfare + luggage",
+    defaultTHB: 13000
+  },
+  {
+    id: "fix-dom-transit",
+    label: "2. Domestic Flights, Vans & Sleeper Train",
+    note: "BKK→HKT flight, URT→CNX flight, vans & Sleeper Train #10",
+    defaultTHB: 6800
+  },
+  {
+    id: "fix-edc-pass",
+    label: "3. EDC Thailand 3-Day GA Pass",
+    note: "Official 18–20 Dec festival pass at Rhythm Park",
+    defaultTHB: 10500
+  },
+  {
+    id: "fix-hostels",
+    label: "4. All 18 Hostel Dorm Nights",
+    note: "Bangkok (7n), Phuket (4n), Krabi (3n), Khao Sok (1n), Chiang Mai (3n)",
+    defaultTHB: 13200
+  }
+];
 
 const days = [
-{date:"Tue 15 Dec",place:"Bangkok",title:"Arrive, check in & Chinatown",stay:"Bangkok · Night 1 of 2",morning:"Travel day: fly Dhaka to Bangkok. Compare flights into BKK and DMK; check which airport your ticket uses.",afternoon:"Check into a hostel around Old Town, Sam Yot or Chinatown. Keep plans light, get a Thai SIM/eSIM and withdraw a small amount of cash.",evening:"Walk Yaowarat Road for street food. Try a few small dishes rather than committing to a large restaurant meal.",cost:"฿500–1,200 excluding flight and bed",transport:"Airport rail/taxi depending on airport and arrival time; use official taxi queues or a reputable ride-hailing app.",book:"Book the first night near your arrival airport only if landing late; otherwise Old Town/Chinatown is more useful for sightseeing."},
-{date:"Wed 16 Dec",place:"Bangkok",title:"Grand Palace, Wat Pho & river sunset",stay:"Bangkok · Night 2 of 2",morning:"Go early to the Grand Palace and Wat Phra Kaew. Dress with shoulders and knees covered; verify opening hours and ticket prices before setting out.",afternoon:"Visit Wat Pho, then take a public Chao Phraya boat to the Wat Arun area. Avoid anyone outside temples offering suspiciously cheap tours.",evening:"Watch sunset by the river and eat in Chinatown or around Tha Tien. If you're tired, skip one temple rather than rush all three.",cost:"฿900–1,800 including temple entry, boats and meals; excludes bed",transport:"Use MRT/BTS and river boats where practical; use a taxi only for awkward late-night routes.",book:"Usually possible independently. Check official temple ticket pages and opening notices."},
-{date:"Thu 17 Dec",place:"Phuket",title:"Fly to Phuket & prepare for EDC",stay:"Phuket · Festival base, night 1 of 4",morning:"Take a morning flight Bangkok → Phuket if possible. Allow time for airport transfer, baggage and check-in.",afternoon:"Check into your hostel, buy water/snacks and confirm the exact EDC venue, entry rules, shuttle pickup and return plan.",evening:"Have dinner near your accommodation and get an early night. Do not assume the beach, Patong or the venue are close together in Phuket traffic.",cost:"฿1,000–2,500 excluding flight and bed",transport:"Airport bus or pre-booked/shared transfer; compare the fare and journey time to your actual hostel.",book:"Secure a refundable hostel for 17–20 Dec only after checking festival transport options."},
-{date:"Fri 18 Dec",place:"Phuket · EDC",title:"EDC Thailand — day 1",stay:"Phuket · Festival base, night 2 of 4",morning:"Sleep, have a substantial breakfast and check the official festival schedule and prohibited-items list.",afternoon:"Keep the afternoon flexible. Eat before leaving, charge your phone and carry ID and ticket according to the organiser's instructions.",evening:"Festival time. Agree a meeting point with friends you make, keep your phone secure and use official transport or a prearranged ride home.",cost:"฿1,000–2,500 for food and local transport, plus ticket; excludes bed",transport:"Use the organiser's currently published shuttle/transport details if available. Confirm late-night return arrangements before entering.",book:"Official ticketing: edcthailand.frontgatetickets.com. Ticket stock, price, venue details and schedule must be checked live."},
-{date:"Sat 19 Dec",place:"Phuket · EDC",title:"EDC day 2 — recovery first",stay:"Phuket · Festival base, night 3 of 4",morning:"Sleep in, rehydrate and eat a proper meal. Do not schedule an expensive early excursion after a late festival night.",afternoon:"Optional easy beach or café time close to your accommodation. Avoid a boat tour if you're exhausted or sea conditions are poor.",evening:"Return for day two. Keep a little emergency cash and a charged phone separate from your main wallet.",cost:"฿900–2,000 for food and local transport, plus ticket; excludes bed",transport:"Repeat the verified festival transport plan. Don't count on finding a cheap taxi at closing time.",book:"Check the official festival app/site for set times and venue announcements."},
-{date:"Sun 20 Dec",place:"Phuket · EDC",title:"EDC day 3 & final festival night",stay:"Phuket · Festival base, night 4 of 4",morning:"Easy breakfast and a low-pressure day. Check out only if your accommodation allows luggage storage and you have a safe plan.",afternoon:"Rest, eat and charge devices. Keep the next day's transfer in mind; avoid booking a very early departure.",evening:"Enjoy the final festival night and use your planned transport back.",cost:"฿900–2,000 for food and local transport, plus ticket; excludes bed",transport:"Prearrange your return. Share your route with someone you trust.",book:"Three-day pass is usually simplest if attending all three days; confirm current availability and age/ID requirements."},
-{date:"Mon 21 Dec",place:"Krabi · Ao Nang",title:"Transfer to Krabi & beach evening",stay:"Ao Nang · Night 1 of 3",morning:"Travel Phuket → Krabi by booked minivan/ferry combination or road transfer. Choose a service with clear pickup details.",afternoon:"Check into an Ao Nang hostel, walk the beach and book any island tour for the next day after checking weather.",evening:"Dinner around Ao Nang and an easy stroll. Keep valuables secure in shared accommodation.",cost:"฿1,000–2,200 including transfer, food and small expenses; excludes bed",transport:"Allow roughly 3–5 hours door-to-door depending on route, stops and traffic; verify the specific operator's schedule.",book:"Hostel around central Ao Nang is convenient for tour pickups and restaurants."},
-{date:"Tue 22 Dec",place:"Krabi · Islands",title:"Four Islands or Hong Islands tour",stay:"Ao Nang · Night 2 of 3",morning:"Take a reputable group boat tour. Confirm whether national park fees, lunch, snorkel gear and hotel pickup are included.",afternoon:"Snorkel or swim only where conditions and guides say it is safe. Bring reef-safe sun protection and a dry bag.",evening:"Return, shower and eat at an Ao Nang night market or local restaurant.",cost:"฿1,500–2,800 including a group tour, park fees if applicable and meals; excludes bed",transport:"Tour pickup is easiest if your hostel is in the Ao Nang service area.",book:"Book with clear inclusions and cancellation terms; avoid promising a particular island if sea conditions change."},
-{date:"Wed 23 Dec",place:"Krabi · Railay",title:"Railay Beach, viewpoints or kayaking",stay:"Ao Nang · Night 3 of 3",morning:"Take a longtail boat to Railay when the sea is suitable. Check return-boat times before walking away from the pier.",afternoon:"Choose beach time, a guided kayak or a hike only if conditions and your fitness make sense. Some viewpoints are steep and slippery.",evening:"Return to Ao Nang and prepare for the inland transfer tomorrow.",cost:"฿700–1,800 including boats, food and an optional activity; excludes bed",transport:"Longtail boats run from the Ao Nang area; schedules and fares can change with sea conditions.",book:"No need to prepay every activity; keep the day flexible for weather."},
-{date:"Thu 24 Dec",place:"Khao Sok village",title:"Travel inland to the rainforest",stay:"Khao Sok village · Night 1 of 2",morning:"Take a scheduled transfer from Krabi/Ao Nang to Khao Sok. Check exact pickup point and baggage allowance.",afternoon:"Check into a village guesthouse/hostel, arrange the next day's lake trip and ask what to pack or leave behind.",evening:"Eat in the village and take a short guided night walk only with a reputable guide; wildlife sightings are never guaranteed.",cost:"฿1,200–2,800 including transfer, meals and a simple activity; excludes bed",transport:"Allow around 3–5 hours depending on service and pickup route. Confirm directly with the operator.",book:"A village stay is the budget option. Compare full lake tour packages rather than only the room price."},
-{date:"Fri 25 Dec",place:"Cheow Lan Lake",title:"Lake boat trip & floating raft house",stay:"Khao Sok / lake · Night 2 of 2",morning:"Join a prearranged Cheow Lan Lake trip. Confirm whether the national park fee, boat, meals, guide and overnight room are included.",afternoon:"Enjoy the lake scenery, a guided cave or nature outing only if open and safe, and kayaking if provided.",evening:"Stay in a floating raft house if budget allows, or return to the village if using a day-trip package. Basic lake rooms can be simple and connectivity limited.",cost:"฿2,500–5,500 for an overnight package is a planning estimate; check inclusions carefully",transport:"The pier transfer is normally bundled into the tour or arranged separately. Confirm the meeting point and luggage plan.",book:"Christmas dates can sell out. Ask about room type, meals, shared/private bathroom, weather cancellation and park fees."},
-{date:"Sat 26 Dec",place:"Transfer to Chiang Mai",title:"South to north — the long travel day",stay:"Chiang Mai · Night 1 of 4",morning:"Transfer from Khao Sok to Surat Thani Airport or another confirmed departure point. Keep generous buffer time.",afternoon:"Fly to Chiang Mai if a suitable connection exists; some itineraries may require a connection through Bangkok. Do not assume a direct flight operates on your date.",evening:"Check into an Old City hostel, eat nearby and rest. If flights are badly timed, consider changing the itinerary rather than risking a missed connection.",cost:"฿2,500–5,500 for transfers, flight and meals, before bed; fare varies widely",transport:"This is the itinerary's biggest logistics risk. Check actual flight schedules and transfer times before paying for the lake stay.",book:"Book the flight only after matching it to the confirmed Khao Sok checkout/transfer schedule."},
-{date:"Sun 27 Dec",place:"Chiang Mai",title:"Old City temples & Doi Suthep",stay:"Chiang Mai · Night 2 of 4",morning:"Walk the Old City and visit a few temples. Dress respectfully and check entry rules at each site.",afternoon:"Visit Wat Phra That Doi Suthep if weather and time allow. Use a reputable red truck/songthaew, tour or ride-hailing option.",evening:"Explore the Sunday Walking Street market if operating on the date; otherwise choose a night market and local northern Thai food.",cost:"฿700–1,600 including local transport, meals and small entry fees; excludes bed",transport:"The Old City is walkable; Doi Suthep needs a separate uphill trip.",book:"Usually easy to arrange locally. Check the market schedule and mountain weather."},
-{date:"Mon 28 Dec",place:"Chiang Mai",title:"Ethical elephant sanctuary day",stay:"Chiang Mai · Night 3 of 4",morning:"Take the sanctuary's confirmed pickup if included. Read the operator's welfare policy before paying.",afternoon:"Choose observation-led care and natural behaviour. Avoid riding, performances and forced interaction; be wary of marketing claims that cannot be substantiated.",evening:"Return to Chiang Mai, rest and have dinner near the hostel.",cost:"฿2,000–4,000 for a day visit is a planning estimate; verify transport, meals and programme inclusions",transport:"Many tours include round-trip transfer; confirm pickup zone and duration.",book:"Book directly with a transparent operator, check reviews from multiple sources and read the cancellation policy."},
-{date:"Tue 29 Dec",place:"Chiang Mai · Doi Inthanon",title:"Mountain, waterfalls & park landscapes",stay:"Chiang Mai · Night 4 of 4",morning:"Join a small-group day trip or arrange a driver to Doi Inthanon National Park.",afternoon:"Visit selected waterfalls, viewpoints and permitted trails. Bring a light jacket; it can be cool at altitude.",evening:"Return to town, pack and confirm tomorrow's flight to Bangkok.",cost:"฿1,400–2,800 for a group tour or more for private transport; check park fees and lunch inclusion",transport:"A long day trip; expect several hours on the road each way depending on stops.",book:"Reserve a tour with clear pickup and park-fee inclusions, especially in the holiday period."},
-{date:"Wed 30 Dec",place:"Bangkok",title:"Fly back & settle in",stay:"Bangkok · Night 1 of 5",morning:"Fly Chiang Mai → Bangkok. Choose the airport that best matches your next plans and check luggage fees.",afternoon:"Check into an Old Town, Chinatown or transit-friendly hostel. Keep your NYE route in mind.",evening:"Eat nearby and verify official New Year's Eve countdown information, access rules and transport service hours.",cost:"฿1,200–3,000 including domestic flight, transfer and food; fare varies; excludes bed",transport:"Allow buffer for airport transfers and holiday traffic.",book:"Reserve your Bangkok hostel for 30 Dec–3 Jan early; New Year dates are busy."},
-{date:"Thu 31 Dec",place:"Bangkok · New Year's Eve",title:"Countdown night",stay:"Bangkok · Night 2 of 5",morning:"Sleep in, have brunch and keep daytime activities close to your base.",afternoon:"Choose one countdown venue, such as ICONSIAM or CentralWorld, only after checking the official 2026 event announcements, entry process and restrictions.",evening:"Arrive early. Set a meeting point, keep your phone charged and decide your return route before crowds build.",cost:"฿1,000–3,500 depending on food, transport and any paid event; excludes bed",transport:"Expect heavy traffic and crowded rail stations. Check official transit operating hours and don't rely on last-minute taxis.",book:"Don't buy tickets or packages from unofficial sellers. Some countdown events are free but may require registration."},
-{date:"Fri 1 Jan",place:"Bangkok",title:"Recovery day & easy city exploring",stay:"Bangkok · Night 3 of 5",morning:"Sleep in and have a late breakfast. Keep this day light after New Year's Eve.",afternoon:"Choose a mall, riverside walk, massage from a reputable establishment or a café crawl.",evening:"Eat at a night market or Chinatown if open; have an early night before Ayutthaya.",cost:"฿600–1,500 excluding bed",transport:"Use MRT/BTS where operating; check holiday service notices.",book:"No need to prebook most low-key activities."},
-{date:"Sat 2 Jan",place:"Ayutthaya",title:"Ancient capital day trip",stay:"Bangkok · Night 4 of 5",morning:"Take an early train or a reputable small-group tour from Bangkok. Confirm the station and departure time the day before.",afternoon:"Explore selected temple ruins. Hire a licensed local guide or use a planned route; bring water and sun protection.",evening:"Return to Bangkok and eat near your hostel.",cost:"฿900–2,200 including return transport, entry fees and meals; private tours cost more",transport:"Train plus local tuk-tuk/bicycle or a guided van. Compare total cost, not just the train ticket.",book:"Check train schedules and temple opening times close to the date."},
-{date:"Sun 3 Jan",place:"Bangkok",title:"Choose your own finale",stay:"Bangkok · Night 5 of 5",morning:"Pick one: Thai cooking class, a food tour, shopping, a museum or a relaxed neighbourhood walk.",afternoon:"Leave time to pack, check in for your return flight and confirm the airport transfer.",evening:"Have a final Thai meal and keep essentials, passport and travel documents together.",cost:"฿800–2,500 depending on chosen activity; excludes bed",transport:"Choose an activity that doesn't put you far from your airport transfer route.",book:"Book a class or guided tour only after checking inclusions and cancellation terms."},
-{date:"Mon 4 Jan",place:"Return to Dhaka",title:"Airport & fly home",stay:"Departure day",morning:"Check your airline's airport and check-in deadline. Leave a generous buffer for Bangkok traffic.",afternoon:"Return to Dhaka according to your flight schedule.",evening:"Keep boarding pass, passport and required travel documents accessible.",cost:"฿300–1,200 for airport transport and food; excludes flight",transport:"BKK and DMK are different airports. Verify the airport on your ticket before leaving.",book:"Confirm baggage allowance and online check-in with your airline."}
+  {
+    day: 1,
+    cities: "bangkok",
+    cityLabel: "Bangkok",
+    weekday: "Tue",
+    dateNum: "15",
+    month: "Dec",
+    location: "Bangkok · Old Town & Chinatown",
+    title: "Arrive, check in & Yaowarat street food crawl",
+    stay: "🛏 Bangkok · Night 1 of 2 (Luk Hostel or Once Again Hostel)",
+    morning: "Travel day: fly Dhaka (DAC) → Bangkok (BKK or DMK). Activate your Thai tourist eSIM and withdraw initial cash in a single ATM transaction to minimise the ฿220 Thai ATM fee.",
+    afternoon: "Take the Airport Rail Link + MRT (from BKK) or A1/A4 Bus + MRT (from DMK) to Sam Yot / Wat Mangkon. Check into your hostel and freshen up.",
+    evening: "Walk Yaowarat Road (Chinatown) once the neon signs light up after 6:00 PM. Sample Michelin-recognised street stalls—crispy pork belly pepper soup at Guay Jab Ouan Pochana, grilled river prawns, and mango sticky rice.",
+    spend: "฿600–1,200 excluding flight and bed",
+    minSpend: 600,
+    maxSpend: 1200,
+    transport: "Airport Rail Link + MRT Blue Line to Sam Yot/Wat Mangkon; walk Chinatown on foot.",
+    tip: "Landing early with energy to spare? Tuesday night features the fast-paced 'Rajadamnern Knockout' Muay Thai card just 2 km from Sam Yot."
+  },
+  {
+    day: 2,
+    cities: "bangkok",
+    cityLabel: "Bangkok",
+    weekday: "Wed",
+    dateNum: "16",
+    month: "Dec",
+    location: "Bangkok · Rattanakosin Island",
+    title: "Grand Palace, Wat Pho, Wat Arun & Chao Phraya sunset",
+    stay: "🛏 Bangkok · Night 2 of 2 (Luk Hostel or Once Again Hostel)",
+    morning: "Arrive at the Grand Palace & Wat Phra Kaew (Emerald Buddha) by 8:30 AM sharp to beat tour buses and midday heat. Shoulders and knees must be covered (light trousers or elephant pants).",
+    afternoon: "Walk 10 minutes south to Wat Pho to see the 46-metre Reclining Buddha and get a traditional 1-hour Thai massage at the historic Wat Pho Massage School. Cross the river by ฿5 shuttle boat to climb the porcelain spires of Wat Arun.",
+    evening: "Cross back to Tha Tien pier for sunset views facing Wat Arun, then explore Rambuttri Alley or Phra Athit Road for casual backpacker drinks before tomorrow's morning flight.",
+    spend: "฿1,100–1,900 including Grand Palace (฿500), Wat Pho (฿300), Wat Arun (฿200), ferries and meals",
+    minSpend: 1100,
+    maxSpend: 1900,
+    transport: "Walk or MRT to Sanam Chai Station; Chao Phraya river cross-ferries.",
+    tip: "Ignore anyone outside the Grand Palace claiming it is 'closed today for a royal ceremony'—that is Bangkok's oldest tuk-tuk scam."
+  },
+  {
+    day: 3,
+    cities: "phuket",
+    cityLabel: "Phuket (EDC)",
+    weekday: "Thu",
+    dateNum: "17",
+    month: "Dec",
+    location: "Phuket · Bang Tao / Cherng Talay",
+    title: "Fly to Phuket, Big Buddha Jungle ATV & EDC prep",
+    stay: "🛏 Phuket (Bang Tao / Cherng Talay) · Festival base, night 1 of 4",
+    morning: "Catch a morning flight Bangkok → Phuket (HKT). Outside the terminal, board the orange Phuket Smart Bus (฿100 flat fare) straight to Bang Tao / Cherng Talay instead of paying ฿800+ for an airport taxi.",
+    afternoon: "Check into ChillHub Hostel or Hanuman VIP Hostel (only 10 mins from Rhythm Park EDC venue). Optional afternoon adrenaline kick: 1-hour Jungle ATV Quad-Bike ride up the rubber-plantation trails in Phuket (฿1,200–1,500).",
+    evening: "Stock up on electrolyte packets, snacks, and water at 7-Eleven. Confirm your EDC wristband pickup rules at Rhythm Park and have dinner near Boat Avenue / Porto de Phuket.",
+    spend: "฿1,000–2,500 excluding flight and bed (add ฿1,300 if doing Jungle ATV)",
+    minSpend: 1000,
+    maxSpend: 2500,
+    transport: "Phuket Smart Bus from HKT airport; Bolt or InDrive app for local rides.",
+    tip: "Do NOT base yourself in Patong if you want cheap transport—EDC Thailand is at Rhythm Park in Thalang (Bang Tao/Laguna), and 2:00 AM Patong taxis charge ฿1,500–2,000+."
+  },
+  {
+    day: 4,
+    cities: "phuket",
+    cityLabel: "Phuket (EDC)",
+    weekday: "Fri",
+    dateNum: "18",
+    month: "Dec",
+    location: "Phuket · EDC Thailand",
+    title: "EDC Thailand — Day 1 Under the Electric Sky",
+    stay: "🛏 Phuket (Bang Tao / Cherng Talay) · Festival base, night 2 of 4",
+    morning: "Sleep in, eat a high-protein breakfast, and double-check the prohibited items list, set times, and stage map (kineticFIELD, circuitGROUNDS, Neon Garden) on the Insomniac app.",
+    afternoon: "Head to Bang Tao Beach for a swim or meet solo festivalgoers at your hostel. Eat a substantial meal around 3:30 PM, pack a 10,000mAh power bank, earplugs, and a physical passport/ID (strict 20+ check).",
+    evening: "EDC Thailand Day 1 at Rhythm Park (gates 3:00 PM – midnight). Collect your wristband early before sunset crowds peak. Walk 10 minutes past the exit bottleneck at closing to hail a Bolt or group songthaew with hostel mates.",
+    spend: "฿1,200–2,500 for food, drinks and local transport; excludes EDC pass and bed",
+    minSpend: 1200,
+    maxSpend: 2500,
+    transport: "Shared Bolt/InDrive from Bang Tao hostel (10 mins) or Official EDC Shuttle if staying farther out.",
+    tip: "Keep your phone on a tether/lanyard inside your zippered front chest bag during mainstage crowd surges."
+  },
+  {
+    day: 5,
+    cities: "phuket",
+    cityLabel: "Phuket (EDC)",
+    weekday: "Sat",
+    dateNum: "19",
+    month: "Dec",
+    location: "Phuket · EDC Thailand",
+    title: "Beach club recovery & EDC Thailand — Day 2",
+    stay: "🛏 Phuket (Bang Tao / Cherng Talay) · Festival base, night 3 of 4",
+    morning: "Sleep in until noon, rehydrate with electrolytes and fresh coconut water, and grab a big brunch near Bang Tao.",
+    afternoon: "Daytime recovery on Bang Tao Beach or check out an EDC Week daytime beach session at Café del Mar Phuket or Catch Beach Club (both right on Bang Tao Beach, 10 minutes from the festival grounds).",
+    evening: "EDC Thailand Day 2 at Rhythm Park. Catch sunset sets, explore the art installations and carnival rides, and stick to your pre-arranged return transport plan.",
+    spend: "฿1,000–2,200 for food, beach club drink and local transport; excludes bed",
+    minSpend: 1000,
+    maxSpend: 2200,
+    transport: "Walk to Bang Tao beach clubs; shared Bolt/shuttle to Rhythm Park.",
+    tip: "Leave a backup ฿1,000 note and backup card locked inside your hostel locker separate from your festival wallet."
+  },
+  {
+    day: 6,
+    cities: "phuket",
+    cityLabel: "Phuket (EDC)",
+    weekday: "Sun",
+    dateNum: "20",
+    month: "Dec",
+    location: "Phuket · EDC Thailand",
+    title: "Thai massage reset & EDC Thailand — Day 3 Finale",
+    stay: "🛏 Phuket (Bang Tao / Cherng Talay) · Festival base, night 4 of 4",
+    morning: "Late recovery breakfast. Confirm tomorrow's late-morning minivan/ferry pickup to Krabi so you don't have to rush out at 7:00 AM.",
+    afternoon: "Book a 90-minute foot and shoulder Thai massage (฿400–500) near Cherng Talay to loosen up after two nights on your feet, then pack most of your main bag before leaving for the venue.",
+    evening: "EDC Thailand Day 3 closing night and midnight fireworks finale at Rhythm Park.",
+    spend: "฿1,100–2,200 including massage, meals and festival transport; excludes bed",
+    minSpend: 1100,
+    maxSpend: 2200,
+    transport: "Shared ride or shuttle to/from Rhythm Park.",
+    tip: "Book the 10:30 AM or 11:30 AM Phuket → Ao Nang transfer for tomorrow rather than the 7:30 AM departure so you get proper sleep after closing night."
+  },
+  {
+    day: 7,
+    cities: "krabi",
+    cityLabel: "Krabi & Railay",
+    weekday: "Mon",
+    dateNum: "21",
+    month: "Dec",
+    location: "Krabi · Ao Nang",
+    title: "Transfer to Krabi, Tiger Cave Temple 1,260 steps & Ao Nang beach",
+    stay: "🛏 Ao Nang · Night 1 of 3 (Whoopers Hostel or Base Party Hostel)",
+    morning: "Door-to-door minivan or speedboat transfer from Phuket to Ao Nang, Krabi (~3.5 hours by road or 2 hours by speedboat across Phang Nga Bay).",
+    afternoon: "Check into your Ao Nang hostel. Head 25 minutes inland to Wat Tham Suea (Tiger Cave Temple) around 3:30 PM to climb the steep 1,260 limestone steps past wild macaques to the 278m summit Buddha for panoramic golden-hour views over Krabi's karst towers.",
+    evening: "Return to Ao Nang for a beachfront seafood dinner at the Landmark Night Market and watch the free fire-spinning show on Ao Nang Beach.",
+    spend: "฿1,000–2,000 including Phuket→Krabi transfer, songthaew/Grab to Tiger Cave Temple and dinner",
+    minSpend: 1000,
+    maxSpend: 2000,
+    transport: "Pre-booked minivan/boat from Phuket; Grab/songthaew to Tiger Cave Temple.",
+    tip: "Do not carry plastic bags or visible snacks up the Tiger Cave Temple stairs—the monkeys will snatch them immediately."
+  },
+  {
+    day: 8,
+    cities: "krabi",
+    cityLabel: "Krabi & Railay",
+    weekday: "Tue",
+    dateNum: "22",
+    month: "Dec",
+    location: "Krabi · Andaman Islands",
+    title: "7-Islands Sunset BBQ & Bioluminescent Plankton Night Swim",
+    stay: "🛏 Ao Nang · Night 2 of 3 (Whoopers Hostel or Base Party Hostel)",
+    morning: "Enjoy a slow morning by the hostel pool or café-hopping along Ao Nang beach road (alternatively, take an early morning boat to Koh Hong's 360° viewpoint and emerald lagoon).",
+    afternoon: "Depart at 1:00 PM on the 7-Islands Sunset Tour (Tup Sandbar, Chicken Island, Poda Island, Taming snorkeling reef, and Phra Nang Cave). Afternoon departure skips the 9:00 AM speedboat crowds and gives you golden-hour light.",
+    evening: "Eat a beach BBQ dinner on Phra Nang/Poda at sunset, then jump into the dark water near Railay after nightfall to snorkel surrounded by glowing bioluminescent plankton before cruising back to Ao Nang at 8:00 PM.",
+    spend: "฿1,400–2,300 including 7-Islands tour (฿1,000–1,200), National Park fee (฿400) and meals",
+    minSpend: 1400,
+    maxSpend: 2300,
+    transport: "Free songthaew pickup and drop-off directly from your Ao Nang hostel.",
+    tip: "Book the 7-Islands tour in person at an Ao Nang street booth or hostel desk the evening before—you can easily negotiate ฿200–300 off online prices."
+  },
+  {
+    day: 9,
+    cities: "krabi",
+    cityLabel: "Krabi & Railay",
+    weekday: "Wed",
+    dateNum: "23",
+    month: "Dec",
+    location: "Krabi · Railay Peninsula",
+    title: "Railay limestone rock climbing, Hidden Lagoon scramble & sea kayaking",
+    stay: "🛏 Ao Nang · Night 3 of 3 (Whoopers Hostel or Base Party Hostel)",
+    morning: "Catch a ฿100 shared longtail boat (15 mins) from Ao Nang Beach to Railay West. Join a 4-hour guided beginner/intermediate top-rope rock climbing session on world-famous vertical limestone cliffs overlooking the turquoise Andaman Sea.",
+    afternoon: "Hike the vertical mud-and-rope jungle scramble up to the East Railay Viewpoint and down into the secret cliff-enclosed Princess Lagoon (check tide tables first!), or rent a clear sea kayak (฿200/hr) to paddle around Phra Nang Cave sea stacks.",
+    evening: "Drink a cold shake at Tonsai/Railay Sunset Bar, take the last regular longtail boat back to Ao Nang (6:00 PM), and pack a small 2-day overnight bag for Khao Sok.",
+    spend: "฿1,400–2,400 including longtail boats (฿200 RT), half-day rock climbing (฿1,200) and meals",
+    minSpend: 1400,
+    maxSpend: 2400,
+    transport: "Shared public longtail boats from Ao Nang beachfront.",
+    tip: "Wear closed-toe sneakers with grip for the Railay Viewpoint & Lagoon rope climb—never attempt it in flip-flops or right after rain."
+  },
+  {
+    day: 10,
+    cities: "khaosok",
+    cityLabel: "Khao Sok",
+    weekday: "Thu",
+    dateNum: "24",
+    month: "Dec",
+    location: "Khao Sok Rainforest Village",
+    title: "Transfer to Khao Sok, Sok River tubing & Christmas Eve Night Jungle Safari",
+    stay: "🛏 Khao Sok Village · Night 1 of 2 (Coco Khao Sok Hostel)",
+    morning: "Take the morning direct minivan from Ao Nang to Khao Sok Village (~3.5 hours, ฿450). Check into Coco Khao Sok Hostel (100m from the park headquarters) and confirm your 2D1N Cheow Lan Lake overnight package for tomorrow.",
+    afternoon: "Float down the emerald Sok River on an inner tube or bamboo raft (฿500) beneath towering limestone cliffs where macaques and hornbills perch in the canopy, then visit the cliffside Monkey Cave Temple.",
+    evening: "Join a 2-hour guided Night Jungle Safari (฿600) with headlamps into Khao Sok National Park—one of Earth's oldest rainforests—to spot slow lorises, civets, giant forest scorpions, and sleeping vibrant kingfishers.",
+    spend: "฿1,500–2,200 including minivan transfer, river tubing, night safari and meals",
+    minSpend: 1500,
+    maxSpend: 2200,
+    transport: "Direct tourist minivan from Ao Nang hostel to Khao Sok entrance.",
+    tip: "Store your large backpack for free in Coco Khao Sok Hostel's luggage room tomorrow morning and bring only a small dry bag out to the lake."
+  },
+  {
+    day: 11,
+    cities: "khaosok",
+    cityLabel: "Khao Sok",
+    weekday: "Fri",
+    dateNum: "25",
+    month: "Dec",
+    location: "Khao Sok · Cheow Lan Lake",
+    title: "Christmas on Cheow Lan Lake — Floating Raft House Overnight",
+    stay: "🛏 Cheow Lan Lake · Night 2 of 2 (Overwater Floating Bungalow)",
+    morning: "8:30 AM pickup to Ratchaprapha Dam Pier. Board a traditional longtail boat cruising across emerald-green waters past the iconic 'Three Brothers' limestone needles (Khao Sam Kloe) to your floating raft house.",
+    afternoon: "Dive straight off your bungalow porch for a swim and paddle a kayak into quiet rainforest coves. After lunch, trek through dense jungle and wade waist-deep through the subterranean river of Nam Talu Cave (or take the easier Coral Cave boat trip).",
+    evening: "Head out on a dusk wildlife boat safari scanning the shoreline for wild elephants, gaur, and gibbons, followed by a southern Thai crispy turmeric fish feast and total stargazing over the water (zero cell signal).",
+    spend: "฿2,800–3,200 all-inclusive (covers 2D1N boat, floating bungalow bed, 4 meals, cave trek, kayaks + ฿300 park fee)",
+    minSpend: 2800,
+    maxSpend: 3200,
+    transport: "Minivan + longtail boat charter included in the 2D1N lake package.",
+    tip: "Verify your Dec 26 Surat Thani (URT) → Chiang Mai (CNX) flight departure time first: the 2D1N lake tour returns to the pier at 1:30–2:00 PM (reaching URT airport by ~3:45 PM). If your direct URT→CNX flight is in the morning, do the full-day lake tour on Dec 25 and sleep in Khao Sok village so you can take the 7:00 AM transfer to URT."
+  },
+  {
+    day: 12,
+    cities: "khaosok chiangmai",
+    cityLabel: "Chiang Mai",
+    weekday: "Sat",
+    dateNum: "26",
+    month: "Dec",
+    location: "Cheow Lan Lake → Surat Thani → Chiang Mai",
+    title: "Dawn mist gibbon safari & fly north to Chiang Mai",
+    stay: "🛏 Chiang Mai Old City · Night 1 of 4 (Stamps Backpackers or Hostel Lullaby)",
+    morning: "Wake at 6:30 AM as low clouds drift across the limestone karsts for a sunrise longtail boat safari listening to wild gibbon calls in the canopy, followed by breakfast and a final lake swim.",
+    afternoon: "Return to Ratchaprapha Pier and take a 70-minute minivan/taxi to Surat Thani Airport (URT) to fly north to Chiang Mai (CNX)—saving a costly backtrack to Phuket/Krabi.",
+    evening: "Land in Chiang Mai (20°C cooler mountain air!), take a ฿150 Grab (15 mins) to your Old City hostel, and head out to the Wua Lai Road Saturday Night Walking Street Market for northern sai oua sausage and khao soi.",
+    spend: "฿1,000–1,800 for URT airport transfer, CNX Grab and Saturday Night Market food; excludes flight and bed",
+    minSpend: 1000,
+    maxSpend: 1800,
+    transport: "Minivan from Cheow Lan Pier to URT Airport; flight to CNX; Grab to Old City.",
+    tip: "Surat Thani Airport (URT) is only 1 hour east of Cheow Lan Lake—always fly out of URT rather than backtracking 3 hours to Phuket or Krabi."
+  },
+  {
+    day: 13,
+    cities: "chiangmai",
+    cityLabel: "Chiang Mai",
+    weekday: "Sun",
+    dateNum: "27",
+    month: "Dec",
+    location: "Chiang Mai · Mae Rim Valley",
+    title: "Tiger Kingdom shoulder photos, Jungle Coaster / 50m Bungee, Sticky Waterfalls & Sunday Market",
+    stay: "🛏 Chiang Mai Old City · Night 2 of 4 (Stamps Backpackers or Hostel Lullaby)",
+    morning: "Arrive at Tiger Kingdom Mae Rim at 9:00 AM sharp right when gates open—when the Giant Tigers, rare White Tigers, and Smallest Cubs are most alert and playful. Trainers guide you inside the enclosure to crouch/lean right across the Giant Tiger's shoulders and back (or hold a cub on your lap/shoulder). Pay the ~฿300–500 in-cage photographer add-on for low-angle wide shots.",
+    afternoon: "Continue 15 minutes up the Mae Rim mountain road to Pongyang Jungle Coaster & Zipline (36 platforms + high-speed alpine coaster) OR hit Chiang Mai X-Centre for a 50-metre Bungee Jump over a jungle lagoon. Finish the loop by climbing barefoot straight up the mineral-crusted limestone cascades of Bua Thong 'Sticky Waterfalls' (free entry).",
+    evening: "Return to Tha Phae Gate by 5:30 PM for Chiang Mai's famous Sunday Walking Street Night Market—stretching 1.5 km down Ratchadamnoen Road through illuminated temples, live Lanna musicians, and street food stalls.",
+    spend: "฿2,600–4,200 including Tiger Kingdom (฿900–1,500), Zipline/Coaster or Bungee (฿1,200–2,000), shared songthaew and market feast",
+    minSpend: 2600,
+    maxSpend: 4200,
+    transport: "Team up with 3–4 hostel mates from Stamps Backpackers' social board to split a red songthaew or Grab charter (฿1,200–1,500 split = ~฿350 each) for the full Mae Rim loop.",
+    tip: "Bring a photo of your passport on your phone for Tiger Kingdom insurance check-in, wear non-dangling clothes, and never use camera flash inside the enclosures."
+  },
+  {
+    day: 14,
+    cities: "chiangmai",
+    cityLabel: "Chiang Mai",
+    weekday: "Mon",
+    dateNum: "28",
+    month: "Dec",
+    location: "Chiang Mai · Highlands & Monk's Trail",
+    title: "Ethical Elephant Sanctuary & Monk's Trail jungle hike to Doi Suthep",
+    stay: "🛏 Chiang Mai Old City · Night 3 of 4 (Stamps Backpackers or Hostel Lullaby)",
+    morning: "Join a half-day morning visit to a true no-riding, no-hooks Ethical Elephant Sanctuary (such as Elephant Nature Park or a vetted small-group sanctuary). Prepare fruit/herbal vitamin balls and walk alongside rescued elephants through the river valley.",
+    afternoon: "Return to Chiang Mai by early afternoon. Take a Grab to the base of Suthep Mountain and hike the shaded 45-minute Monk's Trail (marked by orange monk robes tied around trees) up to Wat Pha Lat—a serene 14th-century stone temple hidden inside a jungle waterfall.",
+    evening: "Flag down a red songthaew (฿40) outside Wat Pha Lat for the final winding climb up to gilded Wat Phra That Doi Suthep to hear evening monk chanting and watch the city lights come on across the Chiang Mai valley, then grab jazz drinks at North Gate Jazz Co-Op.",
+    spend: "฿2,200–3,000 including half-day ethical elephant sanctuary (฿1,700–2,400), Doi Suthep entry (฿50), songthaews and meals",
+    minSpend: 2200,
+    maxSpend: 3000,
+    transport: "Sanctuary pickup included; Grab to Monk's Trailhead; shared red songthaew back to Old City (฿60).",
+    tip: "Book a half-day morning elephant sanctuary rather than a full-day tour so you have the golden afternoon hours free for the Monk's Trail hike."
+  },
+  {
+    day: 15,
+    cities: "chiangmai",
+    cityLabel: "Chiang Mai",
+    weekday: "Tue",
+    dateNum: "29",
+    month: "Dec",
+    location: "Chiang Mai · Doi Inthanon → Overnight Sleeper Train",
+    title: "Roof of Thailand (Doi Inthanon) & CNR Overnight Sleeper Train to Bangkok",
+    stay: "🚆 Night 15: CNR Special Express Sleeper Train #10 (2nd Class AC Lower Berth)",
+    morning: "Embark on an early excursion to Doi Inthanon National Park—the highest peak in Thailand (2,565m). Hike the sun-dappled Kew Mae Pan or Pha Dok Siao cloud-forest trail past terraced Karen hill-tribe coffee farms and roaring Wachirathan Waterfall.",
+    afternoon: "Visit the twin Royal Pagodas perched above the clouds, return to Chiang Mai by 4:30 PM, grab a final bowl of Khao Soi Mae Sai, and collect your backpack from your hostel.",
+    evening: "Board the modern red-and-white CNR Special Express Sleeper Train #10 at Chiang Mai Railway Station (~6:00 PM departure). An attendant converts your wide lower seat into a curtained bed with crisp linens—saving both a domestic flight and a hostel night!",
+    spend: "฿2,400–3,200 including Doi Inthanon tour/park fee (฿1,300) and 2nd Class AC Lower Berth sleeper ticket (฿1,050 in fixed transit)",
+    minSpend: 1400,
+    maxSpend: 2200,
+    transport: "Doi Inthanon minivan tour; tuk-tuk to Chiang Mai Railway Station; overnight train to Bangkok.",
+    tip: "Book Train #10 (Lower Berth) 60–90 days ahead on the official D-Ticket SRT website (dticket.railway.co.th). If sold out for Dec 29, sleep one more night in Chiang Mai and fly CNX → DMK on Dec 30 morning."
+  },
+  {
+    day: 16,
+    cities: "bangkok",
+    cityLabel: "Bangkok",
+    weekday: "Wed",
+    dateNum: "30",
+    month: "Dec",
+    location: "Bangkok · Talad Noi, Silom & Thonglor",
+    title: "Talad Noi street art, Mahanakhon 314m Glass SkyWalk & Tichuca Rooftop",
+    stay: "🛏 Bangkok · Night 1 of 5 (Once Again Hostel or Luk Hostel)",
+    morning: "Roll into Krung Thep Aphiwat Central Terminal at ~6:50 AM. Hop directly onto the MRT Blue Line to Sam Yot/Wat Mangkon, drop your bag at your hostel, and explore the vintage mechanic alleys, Chinese shrines, and antique riverside cafés (Hong Sieng Kong) of Talad Noi.",
+    afternoon: "Rest during the midday heat, then take the BTS to Chong Nonsi at 4:00 PM for King Power Mahanakhon SkyWalk—stepping out onto the transparent glass floor tray 314 metres (78 floors) above the Bangkok skyline for sunset.",
+    evening: "Head to Thonglor (BTS Thong Lo) to grab drinks beneath the iconic glowing LED kinetic 'jellyfish tree' at Tichuca Rooftop Bar (or Octave Rooftop at Marriott Sukhumvit) before eating late-night boat noodles.",
+    spend: "฿1,600–2,800 including Mahanakhon SkyWalk ticket (฿1,080), rooftop cocktail/mocktail and MRT/BTS fares",
+    minSpend: 1600,
+    maxSpend: 2800,
+    transport: "MRT Blue Line + BTS Skytrain (avoid road taxis in pre-NYE Bangkok traffic).",
+    tip: "Bring your physical passport or clear photo to Tichuca Rooftop Bar and arrive around 5:30 PM right as it opens to skip the 90-minute evening queue."
+  },
+  {
+    day: 17,
+    cities: "bangkok",
+    cityLabel: "Bangkok",
+    weekday: "Thu",
+    dateNum: "31",
+    month: "Dec",
+    location: "Bangkok · New Year's Eve 2027",
+    title: "New Year's Eve 2027 — Chao Phraya River Fireworks & Countdown",
+    stay: "🛏 Bangkok · Night 2 of 5 (Once Again Hostel or Luk Hostel)",
+    morning: "Easy morning: stroll through Pak Khlong Talad (Bangkok's 24-hour flower market piled high with marigolds and orchids) and grab specialty coffee around Song Wat Road.",
+    afternoon: "Take an afternoon nap and get ready early. Thailand has declared an extended 5-day New Year holiday (31 Dec – 4 Jan), so major countdown avenues close to vehicles by 4:30 PM.",
+    evening: "Choose your NYE Countdown battleplan: (A) ICONSIAM 'Amazing Thailand Countdown 2027' for the massive 1,400-metre Chao Phraya eco-fireworks, drone show & concerts (arrive via BTS Gold Line before 5:30 PM); (B) CentralWorld ('Times Square of Asia' street countdown); or (C) a Tha Tien / Phra Athit riverside bar facing Wat Arun so you can walk straight back to your Old Town hostel after midnight.",
+    spend: "฿1,200–3,500 depending on food, drinks and rooftop/bar cover",
+    minSpend: 1200,
+    maxSpend: 3500,
+    transport: "BTS and MRT operate extended hours until 2:00 AM on New Year's Eve; walking is fastest inside Old Town.",
+    tip: "Do not rely on Grab or taxis between 11:30 PM and 2:30 AM on NYE—stay along the MRT Blue Line or within walking distance of your hostel."
+  },
+  {
+    day: 18,
+    cities: "bangkok",
+    cityLabel: "Bangkok",
+    weekday: "Fri",
+    dateNum: "1",
+    month: "Jan",
+    location: "Bangkok · Parks & Night Markets",
+    title: "New Year's Day reset, Lumphini monitor lizards, Benchakitti Skywalk & Jodd Fairs",
+    stay: "🛏 Bangkok · Night 3 of 5 (Once Again Hostel or Luk Hostel)",
+    morning: "Sleep in after NYE and enjoy a slow brunch. Head to Lumphini Park to walk around the lake and spot giant Asian water monitor lizards (up to 2 metres long) sunbathing along the banks.",
+    afternoon: "Walk the elevated 'Green Mile' pedestrian bridge connecting Lumphini Park directly into Benchakitti Forest Park's architectural treetop skywalks and wetlands—the best free urban photography spot in Bangkok.",
+    evening: "Take the MRT to Jodd Fairs Night Market (or Banthat Thong Road, Bangkok's hottest local food street near Chulalongkorn University) to feast on Leng Saap (volcano tower of spicy lime-chili pork spine ribs) and Jeh O Chula mama tom yum.",
+    spend: "฿700–1,500 for street food feast, snacks and MRT rides",
+    minSpend: 700,
+    maxSpend: 1500,
+    transport: "MRT Blue Line to Lumphini / Queen Sirikit National Convention Centre / Sam Yan.",
+    tip: "If eating at Jeh O Chula on Banthat Thong Road, book a virtual queue ticket on the QueQ app 60–90 minutes before heading over."
+  },
+  {
+    day: 19,
+    cities: "bangkok ayutthaya",
+    cityLabel: "Ayutthaya + Bangkok",
+    weekday: "Sat",
+    dateNum: "2",
+    month: "Jan",
+    location: "Ayutthaya Day Trip + Rajadamnern Stadium",
+    title: "Ayutthaya Ancient Ruins by bike & Saturday Rajadamnern World Series Muay Thai",
+    stay: "🛏 Bangkok · Night 4 of 5 (Once Again Hostel or Luk Hostel)",
+    morning: "Take a morning train from Krung Thep Aphiwat (or Hua Lamphong) to Ayutthaya (~1 hour, ฿20–60). Rent a bicycle (฿60/day) across from the station pier or hire a tuk-tuk to explore UNESCO brick stupas: Wat Mahathat (Buddha head entwined in banyan tree roots), Wat Ratchaburana's crypt, and Wat Phra Si Sanphet.",
+    afternoon: "Eat Ayutthaya boat noodles and roti sai mai (spun sugar crepes), visit riverside Wat Chaiwatthanaram, and catch the 3:00 PM train or minivan back to Bangkok.",
+    evening: "Saturday Night Main Event: Walk or take a 5-minute Grab from your Old Town hostel to Rajadamnern Stadium (gates open 6:00 PM) for Rajadamnern World Series (RWS)—featuring elite international Muay Thai fights, the world's largest in-stadium dome projection light show explaining 1,000 years of Muay Thai history, and free-flow draft beer included!",
+    spend: "฿2,400–3,400 including Ayutthaya train/temple passes (฿350) and Rajadamnern RWS Club Class ticket (฿1,800)",
+    minSpend: 2400,
+    maxSpend: 3400,
+    transport: "SRT Train to Ayutthaya; walk or 5-min Grab from Sam Yot hostel to Rajadamnern Stadium.",
+    tip: "Book Club Class Sections 8 or 9 (~฿1,800) on rajadamnern.com for the best elevated central view of both the ring and the overhead dome show."
+  },
+  {
+    day: 20,
+    cities: "bangkok",
+    cityLabel: "Bangkok",
+    weekday: "Sun",
+    dateNum: "3",
+    month: "Jan",
+    location: "Bangkok · Chatuchak & Siam",
+    title: "Chatuchak Weekend Market, Jim Thompson House & farewell Bangkok feast",
+    stay: "🛏 Bangkok · Night 5 of 5 (Once Again Hostel or Luk Hostel)",
+    morning: "Take the MRT straight to Kamphaeng Phet Station (exits inside Chatuchak Weekend Market—only open fully on Saturdays and Sundays!). Browse over 15,000 stalls for vintage shirts, Thai streetwear, Muay Thai shorts, ceramics, and coconut ice cream.",
+    afternoon: "Ride the BTS to National Stadium to tour the teakwood jungle compound of the Jim Thompson House Museum (฿200), then cool off inside Siam Discovery / Siam Paragon or take a ฿20 canal boat down the Saen Saep Canal like a local commuter.",
+    evening: "Final night in Thailand: enjoy a farewell riverside dinner or hit Soi Nana (Chinatown's craft bar alley—Teens of Thailand, Ba Hao, Asia Today) just 5 minutes on foot from Luk Hostel.",
+    spend: "฿1,200–2,500 including Jim Thompson House, shopping souvenirs, street food and craft drinks",
+    minSpend: 1200,
+    maxSpend: 2500,
+    transport: "MRT Blue Line to Kamphaeng Phet; BTS Sukhumvit Line to Siam/National Stadium.",
+    tip: "Hit Chatuchak Market between 9:30 AM and 12:30 PM before the tin-roof alleys heat up, and bargain politely by 20–30% when buying multiple items."
+  },
+  {
+    day: 21,
+    cities: "bangkok",
+    cityLabel: "Bangkok",
+    weekday: "Mon",
+    dateNum: "4",
+    month: "Jan",
+    location: "Bangkok → Dhaka",
+    title: "Final Big C souvenir run & fly home to Dhaka",
+    stay: "✈️ End of 21-day tour · Fly Bangkok (BKK/DMK) → Dhaka (DAC)",
+    morning: "Pack your bags, do a final snack/souvenir sweep (Thai tea tins, dried mango, herbal inhalers) at Big C Ratchadamri or Chinatown, and check out of your hostel.",
+    afternoon: "Head to Suvarnabhumi (BKK) via MRT + Airport Rail Link (50 mins total, ฿65) or Don Mueang (DMK) via MRT + Red Line / A1 Bus, arriving 3 hours before your international departure back to Dhaka.",
+    evening: "Land in Dhaka with 21 days of festival memories, island dives, rainforest lake nights, and northern mountain adventures completed.",
+    spend: "฿500–1,200 for airport transit, last meal and small souvenirs",
+    minSpend: 500,
+    maxSpend: 1200,
+    transport: "MRT + Airport Rail Link (for BKK) or SRT Red Line / Grab (for DMK).",
+    tip: "Save ฿100–200 in small notes for airport transit and use your Priority Pass lounge access at Suvarnabhumi (Miracle Lounge / Coral Lounge) before boarding."
+  }
 ];
 
-const stays = [
-{city:"Bangkok",area:"Old Town / Chinatown",price:"฿250–800 per dorm bed/night",why:"Best for temples, street food and river access. Choose a hostel with lockers, recent reviews and a clear late check-in policy.",links:[["Hostelworld Bangkok","https://www.hostelworld.com/hostels/asia/thailand/bangkok/"],["Booking.com Bangkok","https://www.booking.com/searchresults.html?ss=Bangkok%2C+Thailand"]]},
-{city:"Phuket",area:"Choose by EDC transport first",price:"฿400–1,200+ per dorm bed/night",why:"Do not book purely for Patong beach. Check the current festival venue, official shuttle pickup and late-night return. Four festival nights are worth reserving early.",links:[["Hostelworld Phuket","https://www.hostelworld.com/hostels/asia/thailand/phuket/"],["Booking.com Phuket","https://www.booking.com/searchresults.html?ss=Phuket%2C+Thailand"]]},
-{city:"Krabi",area:"Central Ao Nang",price:"฿250–700 per dorm bed/night",why:"Convenient for tour pickups, restaurants and longtail boats. Check whether the hostel is within the operator's pickup zone.",links:[["Hostelworld Krabi","https://www.hostelworld.com/hostels/asia/thailand/krabi/"],["Booking.com Ao Nang","https://www.booking.com/searchresults.html?ss=Ao+Nang%2C+Krabi"]]},
-{city:"Khao Sok",area:"Khao Sok village",price:"฿300–900+ for a basic bed/room",why:"Budget base for the rainforest. A lake overnight is usually a tour package, so compare the full cost including boat, meals, transfers and park fees.",links:[["Booking.com Khao Sok","https://www.booking.com/searchresults.html?ss=Khao+Sok%2C+Thailand"],["Tourism Authority of Thailand","https://www.tourismthailand.org/"]]},
-{city:"Chiang Mai",area:"Old City",price:"฿250–700 per dorm bed/night",why:"Walkable temples, cafés and night markets; good base for shared tours. Check tour pickup arrangements for mountain and sanctuary days.",links:[["Hostelworld Chiang Mai","https://www.hostelworld.com/hostels/asia/thailand/chiang-mai/"],["Booking.com Chiang Mai","https://www.booking.com/searchresults.html?ss=Chiang+Mai%2C+Thailand"]]}
+const checklistItems = [
+  {
+    id: "chk-visa",
+    cat: "flights",
+    catLabel: "Flights, Visa & EDC",
+    title: "Apply for Thailand Tourist e-Visa (DAC)",
+    meta: "Oct–Nov 2026 · Requires flight + first-night hotel PDF",
+    cost: "~৳4,500–5,500"
+  },
+  {
+    id: "chk-intl-flight",
+    cat: "flights",
+    catLabel: "Flights, Visa & EDC",
+    title: "Book Round-Trip Flights: Dhaka (DAC) ↔ Bangkok (BKK/DMK)",
+    meta: "15 Dec 2026 outbound · 4 Jan 2027 return",
+    cost: "฿11,500–15,000"
+  },
+  {
+    id: "chk-edc-pass",
+    cat: "flights",
+    catLabel: "Flights, Visa & EDC",
+    title: "Buy Official EDC Thailand 3-Day Pass (Rhythm Park Phuket)",
+    meta: "18–20 Dec 2026 · edcthailand.frontgatetickets.com",
+    cost: "฿9,500–11,500"
+  },
+  {
+    id: "chk-dom-hkt",
+    cat: "flights",
+    catLabel: "Flights, Visa & EDC",
+    title: "Book Domestic Flight #1: Bangkok (DMK/BKK) → Phuket (HKT)",
+    meta: "17 Dec morning · Include 20kg checked bag online",
+    cost: "฿1,400–2,000"
+  },
+  {
+    id: "chk-dom-cnx",
+    cat: "flights",
+    catLabel: "Flights, Visa & EDC",
+    title: "Book Domestic Flight #2: Surat Thani (URT) → Chiang Mai (CNX)",
+    meta: "26 Dec · Check Thai AirAsia direct URT→CNX time vs lake return",
+    cost: "฿2,100–2,800"
+  },
+  {
+    id: "chk-sleeper-train",
+    cat: "flights",
+    catLabel: "Flights, Visa & EDC",
+    title: "Book CNR Overnight Sleeper Train #10: Chiang Mai → Bangkok",
+    meta: "29 Dec evening · 2nd Class AC Lower Berth (dticket.railway.co.th)",
+    cost: "฿1,050"
+  },
+  {
+    id: "chk-stay-bkk1",
+    cat: "stays",
+    catLabel: "Hostels & Stays",
+    title: "Book Bangkok Hostel — Leg 1 (2 Nights: 15–17 Dec)",
+    meta: "Luk Hostel (Chinatown) or Once Again Hostel (Sam Yot MRT)",
+    cost: "฿1,200–1,800"
+  },
+  {
+    id: "chk-stay-hkt",
+    cat: "stays",
+    catLabel: "Hostels & Stays",
+    title: "Book Phuket EDC Base Hostel in Bang Tao / Cherng Talay (4 Nights: 17–21 Dec)",
+    meta: "ChillHub Hostel Bang Tao or Hanuman VIP (10 mins from Rhythm Park)",
+    cost: "฿3,600–6,000"
+  },
+  {
+    id: "chk-stay-krabi",
+    cat: "stays",
+    catLabel: "Hostels & Stays",
+    title: "Book Krabi Ao Nang Hostel (3 Nights: 21–24 Dec)",
+    meta: "Whoopers Hostel By The Beach or Base Party Hostel Ao Nang",
+    cost: "฿1,800–2,600"
+  },
+  {
+    id: "chk-stay-khaosok",
+    cat: "stays",
+    catLabel: "Hostels & Stays",
+    title: "Book Khao Sok Village Hostel (1 Night: 24–25 Dec)",
+    meta: "Coco Khao Sok Hostel (Night 2 on Dec 25 is in the Floating Raft House)",
+    cost: "฿450–600"
+  },
+  {
+    id: "chk-stay-cnx",
+    cat: "stays",
+    catLabel: "Hostels & Stays",
+    title: "Book Chiang Mai Old City Hostel (3 Nights: 26–29 Dec)",
+    meta: "Stamps Backpackers or Hostel Lullaby (Night 4 is on Sleeper Train #10)",
+    cost: "฿1,500–2,400"
+  },
+  {
+    id: "chk-stay-bkk2",
+    cat: "stays",
+    catLabel: "Hostels & Stays",
+    title: "Book Bangkok NYE Hostel — Leg 2 (5 Nights: 30 Dec–4 Jan)",
+    meta: "Lock in early before NYE sellout in Old Town / Chinatown",
+    cost: "฿3,200–4,800"
+  },
+  {
+    id: "chk-tour-elephants",
+    cat: "tours",
+    catLabel: "Tours & Tickets",
+    title: "Reserve Chiang Mai Half-Day Ethical Elephant Sanctuary (28 Dec AM)",
+    meta: "Book 2 weeks ahead · Leaves afternoon free for Monk's Trail hike",
+    cost: "฿1,800–2,400"
+  },
+  {
+    id: "chk-tour-muaythai",
+    cat: "tours",
+    catLabel: "Tours & Tickets",
+    title: "Book Rajadamnern Stadium RWS Muay Thai Ticket (Sat, 2 Jan Evening)",
+    meta: "rajadamnern.com · Pick Club Class Section 8 or 9 (includes dome show + free-flow beer)",
+    cost: "฿1,800"
+  },
+  {
+    id: "chk-tour-mahanakhon",
+    cat: "tours",
+    catLabel: "Tours & Tickets",
+    title: "Book Mahanakhon SkyWalk 4:00 PM Sunset Slot (30 Dec)",
+    meta: "314m glass floor tray above Bangkok before Tichuca Rooftop Bar",
+    cost: "฿1,080"
+  },
+  {
+    id: "chk-tour-plankton",
+    cat: "tours",
+    catLabel: "Tours & Tickets",
+    title: "Book Krabi 7-Islands Sunset BBQ + Bioluminescent Plankton Tour (On Arrival 21 Dec)",
+    meta: "Bargain in-person at Ao Nang booth for 22 Dec (1:00 PM – 8:00 PM)",
+    cost: "฿1,000 + ฿400 park fee"
+  },
+  {
+    id: "chk-tour-railayclimb",
+    cat: "tours",
+    catLabel: "Tours & Tickets",
+    title: "Book Half-Day Railay Limestone Rock Climbing (23 Dec AM)",
+    meta: "4-hour morning beginner/intermediate top-rope climb at Railay",
+    cost: "฿1,200–1,500"
+  },
+  {
+    id: "chk-tour-cheowlan",
+    cat: "tours",
+    catLabel: "Tours & Tickets",
+    title: "Book 2D1N Cheow Lan Lake Floating Raft House at Coco Khao Sok (24 Dec)",
+    meta: "Covers 25–26 Dec boat, floating bungalow, 4 meals, Nam Talu cave trek & safari",
+    cost: "฿2,500 + ฿300 park fee"
+  },
+  {
+    id: "chk-tour-tiger",
+    cat: "tours",
+    catLabel: "Tours & Tickets",
+    title: "Mae Rim Loop: Tiger Kingdom (9 AM) + Pongyang Zipline/Bungee + Sticky Waterfalls (27 Dec)",
+    meta: "Walk-in at 9:00 AM sharp for Giant Tiger shoulder/back pose + ~฿400 photo package",
+    cost: "฿2,500–3,500 total"
+  },
+  {
+    id: "chk-tour-inthanon",
+    cat: "tours",
+    catLabel: "Tours & Tickets",
+    title: "Book Doi Inthanon National Park Day Tour (29 Dec)",
+    meta: "Kew Mae Pan cloud trail + Twin Pagodas + Wachirathan Waterfall",
+    cost: "฿1,300"
+  },
+  {
+    id: "chk-pack-shoes",
+    cat: "packing",
+    catLabel: "Packing & Gear",
+    title: "Closed-Toe Grip Sneakers / Trail Shoes + Water Sandals",
+    meta: "Mandatory for Railay Hidden Lagoon rope climb, Tiger Cave 1,260 steps & Nam Talu Cave",
+    cost: "Gear"
+  },
+  {
+    id: "chk-pack-drybag",
+    cat: "packing",
+    catLabel: "Packing & Gear",
+    title: "10L–15L Waterproof Dry Bag + Phone Lanyard/Tether",
+    meta: "Protects camera/phone on Krabi longtail boats, Khao Sok lake & EDC mainstage",
+    cost: "Gear"
+  },
+  {
+    id: "chk-pack-power",
+    cat: "packing",
+    catLabel: "Packing & Gear",
+    title: "10,000–20,000mAh Power Bank + Combination Padlock",
+    meta: "Essential for 3 nights of EDC Phuket, overnight sleeper train & hostel lockers",
+    cost: "Gear"
+  },
+  {
+    id: "chk-pack-esim",
+    cat: "packing",
+    catLabel: "Packing & Gear",
+    title: "Thai eSIM (AIS / DTAC 30-Day Unlimited) + Priority Pass Card",
+    meta: "Install eSIM before flying; carry Priority Pass for DAC & BKK airport lounges",
+    cost: "฿600–900"
+  },
+  {
+    id: "chk-pack-apps",
+    cat: "packing",
+    catLabel: "Packing & Gear",
+    title: "Install Thailand Apps: Grab, Bolt, InDrive, 12Go, QueQ & Insomniac",
+    meta: "Bolt/InDrive save 30–40% over Grab in Phuket & Chiang Mai",
+    cost: "Free"
+  },
+  {
+    id: "chk-pack-supps",
+    cat: "packing",
+    catLabel: "Packing & Gear",
+    title: "Electrolyte Sachets, Creatine Travel Tub, Mosquito Spray & Earplugs",
+    meta: "Electrolytes for EDC recovery + DEET spray for Khao Sok night safari",
+    cost: "Gear"
+  },
+  {
+    id: "chk-pack-jacket",
+    cat: "packing",
+    catLabel: "Packing & Gear",
+    title: "Light Hoodie / Windbreaker + Long Temple Trousers",
+    meta: "Doi Inthanon summit drops to 8–12°C in December mornings; sleeper train AC is cold",
+    cost: "Gear"
+  },
+  {
+    id: "chk-pack-docs",
+    cat: "packing",
+    catLabel: "Packing & Gear",
+    title: "Offline Folder: Passport Photo, e-Visa Printout, EDC QR & Endorsed Cards",
+    meta: "Tiger Kingdom, Tichuca & EDC require passport ID; carry USD/THB cash + multi-currency card",
+    cost: "Docs"
+  }
 ];
 
-const costs = [
-["Dhaka ↔ Thailand international flight","৳35,000–65,000"],
-["Thai visa / entry allowance","৳0–12,000 (verify current rules)"],
-["20 nights: hostels + lake stay","৳30,000–55,000"],
-["Domestic flight(s)","৳12,000–28,000"],
-["Ground transport & transfers","৳20,000–35,000"],
-["Meals, snacks & water","৳25,000–40,000"],
-["EDC ticket allowance","৳30,000–45,000"],
-["Tours & activities","৳25,000–45,000"],
-["SIM, insurance, laundry & incidentals","৳8,000–15,000"],
-["Contingency reserve","৳25,000–35,000"]
+const hostels = [
+  {
+    base: "Bangkok (Nights 1–2 & 16–20)",
+    dates: "15–16 Dec & 30 Dec–3 Jan (7 nights)",
+    rate: "฿550–950 / night",
+    picks: [
+      { name: "Luk Hostel (Chinatown / Yaowarat)", note: "Right on Yaowarat food street with Rise Cafe downstairs and a social rooftop bar." },
+      { name: "Once Again Hostel (Sam Yot / Old Town)", note: "5 mins from Sam Yot MRT, Giant Swing, Grand Palace, and Rajadamnern Stadium." },
+      { name: "Jam Hostel Bangkok (Phra Sumen)", note: "Super social backpacker vibe near Rambuttri/Khao San without the sleepless noise." }
+    ],
+    rule: "Base near Sam Yot MRT or Wat Mangkon MRT so temples, Chinatown, Rajadamnern Muay Thai, and Wat Arun NYE are all walkable."
+  },
+  {
+    base: "Phuket · EDC Week (Nights 3–6)",
+    dates: "17–20 Dec (4 nights)",
+    rate: "฿800–1,600 / night (EDC surge)",
+    picks: [
+      { name: "ChillHub Hostel Phuket (Bang Tao)", note: "Modern pod beds 5 mins from Bang Tao Beach & 10 mins from Rhythm Park EDC venue." },
+      { name: "Hanuman VIP Hostel (Cherng Talay)", note: "Top-rated clean dorms right in Cherng Talay near Boat Avenue & festival routes." },
+      { name: "Lub d Phuket Patong (Patong)", note: "Pick ONLY if you pre-book the Official EDC Return Shuttle Pass and want Patong beach life." }
+    ],
+    rule: "EDC Thailand is at Rhythm Park in Thalang (Bang Tao/Laguna). Staying in Bang Tao saves ฿4,000–6,000 in 2:00 AM Patong taxi surge fares."
+  },
+  {
+    base: "Krabi · Ao Nang (Nights 7–9)",
+    dates: "21–23 Dec (3 nights)",
+    rate: "฿500–900 / night",
+    picks: [
+      { name: "Whoopers Hostel By The Beach (9.1★)", note: "Privacy curtains, steps from Nopparat Thara beach, night market, and boat piers." },
+      { name: "Base Party Hostel Ao Nang", note: "Swimming pool, beachfront location, and daily group island/bar crawls for solo travellers." },
+      { name: "Tan Hostel x Cafe", note: "Boutique, stylish café-hostel in central Ao Nang with super comfortable bunks." }
+    ],
+    rule: "Stay within the central Ao Nang / Nopparat Thara beachfront zone for free island-tour pickups and ฿100 walk-up Railay longtail boats."
+  },
+  {
+    base: "Khao Sok & Cheow Lan Lake (Nights 10–11)",
+    dates: "24–25 Dec (2 nights)",
+    rate: "฿450 (Village) + ฿2,500 (2D1N Lake Pkg)",
+    picks: [
+      { name: "Coco Khao Sok Hostel (Night 1: 24 Dec)", note: "100m from the National Park entrance; books the 2D1N Lake tour directly & stores big bags free." },
+      { name: "Cheow Lan Lake Floating Raft House (Night 2: 25 Dec)", note: "Overwater bungalow on the emerald lake—bed, 4 meals, boat & cave trek included in the ฿2,500–2,800 tour." }
+    ],
+    rule: "Never pre-book Khao Sok lake packages on international aggregator sites for $200+—book the standard ฿2,500–2,800 2D1N package through your village hostel."
+  },
+  {
+    base: "Chiang Mai + Overnight Train (Nights 12–15)",
+    dates: "26–29 Dec (3 hostel nights + 1 sleeper train)",
+    rate: "฿450–800 / night",
+    picks: [
+      { name: "Stamps Backpackers (Chaiyapoom / Old City)", note: "#1 solo-traveller social board in Chiang Mai to split Mae Rim Tiger/Zipline/Waterfall taxis." },
+      { name: "Hostel Lullaby (Old City South)", note: "Award-winning quiet comfort with free breakfast, free bicycles, and cooking classes." },
+      { name: "CNR Special Express Train #10 (Night of 29 Dec)", note: "2nd Class AC Lower Berth (~฿1,050) from Chiang Mai to Bangkok—replaces 1 flight + 1 hostel night." }
+    ],
+    rule: "Use your hostel's whiteboard on Dec 26 evening to form a 4-person group for tomorrow's Mae Rim loop (Tiger Kingdom + Zipline/Bungee + Sticky Waterfalls)."
+  }
+];
+
+const budgetRows = [
+  {
+    category: "1. International Flights (DAC ↔ BKK/DMK)",
+    details: "Round-trip Dhaka to Bangkok booked 6–8 weeks out (Thai AirAsia / US-Bangla / Biman)",
+    thb: "฿11,500 – 15,000",
+    bdt: "৳42,200 – 55,050"
+  },
+  {
+    category: "2. Domestic Flights, Vans & Sleeper Train",
+    details: "BKK→HKT flight (฿1,500), Phuket Smart Bus (฿100), Phuket→Krabi→Khao Sok→URT vans (฿1,400), direct URT→CNX flight (฿2,400), CNX→BKK Sleeper Train #10 (฿1,050)",
+    thb: "฿6,450 – 8,500",
+    bdt: "৳23,670 – 31,200"
+  },
+  {
+    category: "3. EDC Thailand 3-Day Pass + Local Rides",
+    details: "18–20 Dec 3-Day GA Pass at Rhythm Park Phuket + shared Bang Tao rides/shuttles",
+    thb: "฿10,500 – 12,800",
+    bdt: "৳38,535 – 46,975"
+  },
+  {
+    category: "4. Hostels & Stays (19 Bed Nights)",
+    details: "18 social hostel dorm nights across Bangkok, Bang Tao, Ao Nang, Khao Sok & Chiang Mai (Night 11 is in the Lake pkg; Night 15 is on the Sleeper Train)",
+    thb: "฿11,500 – 16,000",
+    bdt: "৳42,200 – 58,720"
+  },
+  {
+    category: "5. Signature Bucket-List Experiences",
+    details: "Cheow Lan 2D1N Lake Raft House (฿2,800), Tiger Kingdom Giant/Cub + Photo (฿1,500), Mae Rim Zipline/Bungee (฿1,800), Krabi 7-Islands Plankton + Railay Climb (฿2,400), Ethical Elephants (฿2,000), Doi Inthanon (฿1,300), Rajadamnern RWS Muay Thai (฿1,800), Mahanakhon SkyWalk + Temples (฿2,280)",
+    thb: "฿15,880 – 19,200",
+    bdt: "৳58,280 – 70,465"
+  },
+  {
+    category: "6. Daily Food, Night Markets, MRT & SIM",
+    details: "21 days of street food, night markets, cafés, festival drinks, local BTS/MRT/songthaews & eSIM (~฿1,000–1,250/day)",
+    thb: "฿21,000 – 26,250",
+    bdt: "৳77,070 – 96,340"
+  }
+];
+
+const bookingSteps = [
+  {
+    step: "01",
+    timing: "Book Immediately (Oct – Nov 2026)",
+    title: "Thailand e-Visa, Return DAC↔BKK Flights & EDC Thailand 3-Day Pass",
+    desc: "Lock in your official EDC Thailand 3-Day ticket (edcthailand.frontgatetickets.com) and round-trip Dhaka–Bangkok flights first, then submit your Thailand e-Visa application with your flight and first-night Bangkok hostel confirmation."
+  },
+  {
+    step: "02",
+    timing: "60–90 Days Out (Oct – Nov 2026)",
+    title: "Phuket Bang Tao Hostel (17–20 Dec), Bangkok NYE Hostel (30 Dec–3 Jan) & Sleeper Train #10",
+    desc: "Book a refundable dorm in Bang Tao/Cherng Talay (10 mins from Rhythm Park) before festival surge wipes out budget beds, secure your Bangkok Old Town hostel spanning New Year's Eve, and grab a 2nd Class AC Lower Berth on CNR Sleeper Train #10 (29 Dec) via dticket.railway.co.th."
+  },
+  {
+    step: "03",
+    timing: "4–6 Weeks Out (Nov 2026)",
+    title: "Two Domestic Flights: Bangkok → Phuket (17 Dec) & Surat Thani → Chiang Mai (26 Dec)",
+    desc: "Book a morning DMK/BKK → HKT flight for 17 Dec and the direct Thai AirAsia URT → CNX flight for 26 Dec (include 20kg checked luggage when purchasing the ticket—airport desk baggage fees cost double)."
+  },
+  {
+    step: "04",
+    timing: "2 Weeks Out (Early Dec 2026)",
+    title: "Ethical Elephant Sanctuary (28 Dec) & Rajadamnern Stadium RWS Muay Thai (2 Jan)",
+    desc: "True no-riding elephant sanctuaries in Chiang Mai and Club Class seats for Saturday Night RWS at Rajadamnern Stadium sell out during Christmas/New Year week—reserve both online."
+  },
+  {
+    step: "05",
+    timing: "Book On the Ground in Thailand (24–48 Hours Ahead)",
+    title: "Krabi 7-Islands Plankton Tour, Khao Sok 2D1N Lake Raft House & Mae Rim Tiger/Zipline Loop",
+    desc: "Never overpay on international tour sites for Krabi boats or Khao Sok lake packages—book your 7-Islands Plankton tour in Ao Nang, your ฿2,500 2D1N Lake package at Coco Khao Sok Hostel, and walk right into Tiger Kingdom Mae Rim at 9:00 AM."
+  }
 ];
 ---
-<BaseLayout title="Thailand, Unfiltered — Zaed's Detailed Travel Plan" description="A detailed, editable 21-day Thailand itinerary with hostel areas, activity plans, booking links and estimated costs.">
-<div class="nav"><div class="wrap navin"><a class="brand" href="#top">THAILAND<span>, UNFILTERED.</span></a><nav class="navlinks"><a href="#itinerary">Daily plan</a><a href="#stays">Hostels</a><a href="#budget">Budget</a><a href="#book">Booking order</a></nav><a class="btn" href="#itinerary">Start planning ↓</a></div></div>
-<main id="top">
-<header class="hero wrap"><div class="heroimg"><div class="herotext"><span class="eyebrow">15 DEC 2026 — 4 JAN 2027 · SOLO TRIP</span><h1>Thailand,<br><em>unfiltered.</em></h1><p>A practical, day-by-day plan for EDC Thailand, island adventures, rainforest, northern mountains, hostels and Bangkok's New Year's Eve. Costs are planning estimates until checked against live bookings.</p><div class="actions"><a class="btn" href="#itinerary">Explore the daily plan ↓</a><a class="btn ghost" href="https://edcthailand.frontgatetickets.com/" target="_blank" rel="noreferrer">Official EDC tickets ↗</a></div></div></div><div class="stats"><div class="stat"><strong>21 days</strong><span>15 Dec – 4 Jan inclusive</span></div><div class="stat"><strong>20 nights</strong><span>Mostly hostel dorms</span></div><div class="stat"><strong>৳250–350k</strong><span>Target total budget</span></div><div class="stat"><strong>5 bases</strong><span>Bangkok · Phuket · Krabi · Khao Sok · Chiang Mai</span></div></div></header>
 
-<section id="overview" class="wrap"><div class="sectionhead"><div><div class="label">Route at a glance</div><h2>Save on beds.<br/>Spend on experiences.</h2></div><p>Hostels work well for this solo trip. The two places not to cut corners are Phuket during EDC (transport matters) and the Khao Sok lake trip (compare the full package, not just the room).</p></div><div class="routegrid">
-<article class="place"><img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1000&q=85" alt="Bangkok city" loading="lazy"><div class="placebody"><div class="label">15–16 Dec · 30 Dec–3 Jan</div><h3>Bangkok</h3><p>Temples, Chinatown food, river boats, New Year's Eve and Ayutthaya day trip.</p><div class="chips"><span class="chip">Culture</span><span class="chip">Food</span><span class="chip">NYE</span></div></div></article>
-<article class="place"><img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?auto=format&fit=crop&w=1000&q=85" alt="Phuket beach" loading="lazy"><div class="placebody"><div class="label">17–20 Dec</div><h3>Phuket</h3><p>Three EDC festival days plus recovery time. Book the hostel around transport, not just beach access.</p><div class="chips"><span class="chip">EDC</span><span class="chip">Beach</span></div></div></article>
-<article class="place"><img src="https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1000&q=85" alt="Krabi islands" loading="lazy"><div class="placebody"><div class="label">21–23 Dec</div><h3>Krabi</h3><p>Ao Nang base, island tour, Railay Beach and longtail boats.</p><div class="chips"><span class="chip">Islands</span><span class="chip">Kayak</span></div></div></article>
-<article class="place"><img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=1000&q=85" alt="Tropical rainforest" loading="lazy"><div class="placebody"><div class="label">24–25 Dec</div><h3>Khao Sok</h3><p>Rainforest village and Cheow Lan Lake. Optional floating raft-house night.</p><div class="chips"><span class="chip">Jungle</span><span class="chip">Lake</span></div></div></article>
-<article class="place"><img src="https://images.unsplash.com/photo-1512553353614-82a7370096dc?auto=format&fit=crop&w=1000&q=85" alt="Chiang Mai temple" loading="lazy"><div class="placebody"><div class="label">26–29 Dec</div><h3>Chiang Mai</h3><p>Old City, Doi Suthep, ethical elephant sanctuary and Doi Inthanon.</p><div class="chips"><span class="chip">Culture</span><span class="chip">Mountains</span></div></div></article>
-<article class="place"><img src="https://images.unsplash.com/photo-1598970605070-a38a6ccd6a1d?auto=format&fit=crop&w=1000&q=85" alt="Ayutthaya ruins" loading="lazy"><div class="placebody"><div class="label">2 Jan day trip</div><h3>Ayutthaya</h3><p>Historic temple ruins on a train-based or guided day trip from Bangkok.</p><div class="chips"><span class="chip">History</span><span class="chip">Photos</span></div></div></article>
-</div></section>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thailand, Unfiltered. · 21-Day Interactive Solo Tour & Live Expense Tracker</title>
+    <meta
+      name="description"
+      content="Interactive 21-day solo itinerary, live THB-to-BDT daily expense logger, and mobile booking checklist for EDC Thailand, Krabi, Khao Sok, Chiang Mai, and Bangkok NYE."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body id="top">
+    <!-- STICKY TOPBAR -->
+    <div class="topbar-wrap">
+      <div class="topbar container">
+        <a href="#top" class="brand">THAILAND<span>, UNFILTERED.</span></a>
+        <nav class="nav-links">
+          <a href="#itinerary">Daily plan</a>
+          <a href="#expenses">Expense logger</a>
+          <a href="#checklist">Checklist</a>
+          <a href="#stays">Hostels</a>
+          <a href="#budget">Budget</a>
+          <a href="#book">Booking order</a>
+        </nav>
+        <div class="topbar-pills">
+          <a href="#expenses" class="nav-wallet-pill" id="top-wallet-pill">৳160.4k left</a>
+          <a href="#checklist" class="nav-cta" id="top-progress-pill">Checklist · 0/28</a>
+        </div>
+      </div>
+    </div>
 
-<section id="itinerary" class="wrap"><div class="sectionhead"><div><div class="label">The actual day-by-day plan</div><h2>What to do, when<br/>to go, what to spend.</h2></div><p>Daily costs below are per person and generally exclude accommodation unless stated. Thai baht (฿) figures are estimates; live fares, tour inclusions and opening times can change.</p></div>
-<div class="timeline">{days.map((d,i)=><article class="day"><div class="date"><span>{d.date.split(" ")[0]}</span><strong>{d.date.split(" ")[1]}</strong><span>{d.date.split(" ")[2]}</span></div><div class="daycontent"><div class="daytop"><small>{d.place}</small><span class="daycount">DAY {i+1} / 21</span></div><h3>{d.title}</h3><p class="stayline">🛏 {d.stay}</p><div class="schedule"><div><b>Morning</b><p>{d.morning}</p></div><div><b>Afternoon</b><p>{d.afternoon}</p></div><div><b>Evening</b><p>{d.evening}</p></div></div><div class="detailrow"><b>Estimated spend</b><span>{d.cost}</span></div><div class="detailrow"><b>Getting around</b><span>{d.transport}</span></div><div class="booktip"><b>Booking tip</b><p>{d.book}</p></div></div></article>)}</div></section>
+    <main>
+      <!-- HERO HEADER -->
+      <header class="hero container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <span class="eyebrow">15 DEC 2026 — 4 JAN 2027 · SOLO GRAND TOUR</span>
+            <h1>Thailand,<br /><em>unfiltered.</em></h1>
+            <p class="hero-lead">
+              A battle-tested, 21-day solo route covering <strong>EDC Thailand in Phuket</strong>,
+              bioluminescent plankton &amp; limestone climbing in <strong>Krabi</strong>, floating
+              raft houses on <strong>Cheow Lan Lake</strong>, <strong>Tiger Kingdom &amp; Mae Rim adrenaline</strong> in
+              Chiang Mai, <strong>Rajadamnern Muay Thai</strong>, and <strong>Bangkok's New Year's Eve 2027</strong>.
+            </p>
+            <div class="hero-actions">
+              <a href="#itinerary" class="btn-primary">Filter the 21-day plan ↓</a>
+              <a href="#expenses" class="btn-secondary">Live THB/BDT Expense Logger ฿</a>
+              <a href="#checklist" class="btn-secondary">Phone Checklist ✓</a>
+            </div>
+          </div>
+        </div>
 
-<section id="stays" class="wrap"><div class="sectionhead"><div><div class="label">Where to sleep</div><h2>Hostel-first accommodation.</h2></div><p>Use these neighbourhoods and comparison links to find current inventory for your exact dates. These are price guides, not live quotes or a guarantee of availability.</p></div><div class="staygrid">{stays.map(s=><article class="staycard"><div class="stayhead"><span class="label">{s.city}</span><span class="price">{s.price}</span></div><h3>{s.area}</h3><p>{s.why}</p><div class="linklist">{s.links.map(l=><a href={l[1]} target="_blank" rel="noreferrer">{l[0]} ↗</a>)}</div></article>)}</div><div class="safety"><b>Hostel booking checklist</b><p>Check recent reviews, air-conditioning, locker availability, location on a map, late check-in, cancellation deadline, taxes and whether the displayed price is per person or per room. Compare the final total for every date, especially 18–20 December and 30–31 December.</p></div></section>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <strong>21 days</strong>
+            <span>15 Dec 2026 – 4 Jan 2027</span>
+          </div>
+          <div class="stat-card">
+            <strong>20 nights</strong>
+            <span>18 hostels · 1 lake raft · 1 sleeper train</span>
+          </div>
+          <div class="stat-card">
+            <strong>৳250k–350k</strong>
+            <span>Target budget · Live THB→BDT tracker below</span>
+          </div>
+          <div class="stat-card">
+            <strong>5 bases + 1</strong>
+            <span>Tap any base below to filter days</span>
+          </div>
+        </div>
+      </header>
 
-<section id="experiences" class="wrap"><div class="sectionhead"><div><div class="label">Activity cost guide</div><h2>Pick the experiences<br/>that matter most.</h2></div><p>These ranges are budget placeholders. Confirm what is included before booking, especially park fees, transport, meals and equipment.</p></div><div class="activitygrid">
-<article class="activity"><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=85" alt="Electronic music festival" loading="lazy"><div class="inside"><h3>EDC Thailand · 18–20 Dec</h3><p>Buy via official ticketing. Check age, ID, entry, bag policy, venue and transport notices. A hostel far away can cost more once transfers are added.</p><span class="price">Budget allowance: ৳30,000–45,000 for ticket</span><p><a href="https://edcthailand.frontgatetickets.com/" target="_blank" rel="noreferrer">Official ticket checkout ↗</a> · <a href="https://thailand.edc.com/en/" target="_blank" rel="noreferrer">Festival info ↗</a></p></div></article>
-<article class="activity"><img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=900&q=85" alt="Tropical sea" loading="lazy"><div class="inside"><h3>Krabi island tour</h3><p>Group Four Islands/Hong Islands tour. Confirm park fees, lunch, snorkel gear, pickup and weather cancellation.</p><span class="price">฿1,500–2,800</span></div></article>
-<article class="activity"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="Mountain landscape" loading="lazy"><div class="inside"><h3>Cheow Lan Lake</h3><p>Compare village-based day trips with overnight floating raft-house packages; verify all meals and transfers.</p><span class="price">฿2,500–5,500 for overnight package (estimate)</span></div></article>
-<article class="activity"><img src="https://images.unsplash.com/photo-1552550049-db0e9b6b6a3f?auto=format&fit=crop&w=900&q=85" alt="Elephant in habitat" loading="lazy"><div class="inside"><h3>Elephant sanctuary</h3><p>Choose welfare-led observation and natural behaviour. Avoid riding, shows and forced bathing/handling.</p><span class="price">฿2,000–4,000 for day visit (estimate)</span></div></article>
-<article class="activity"><img src="https://images.unsplash.com/photo-1512553353614-82a7370096dc?auto=format&fit=crop&w=900&q=85" alt="Northern Thai temple" loading="lazy"><div class="inside"><h3>Doi Suthep & Doi Inthanon</h3><p>Use a shared tour or compare driver costs. Ask if park fees, lunch and hotel pickup are included.</p><span class="price">Doi Inthanon group tour: ฿1,400–2,800 (estimate)</span></div></article>
-<article class="activity"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=85" alt="Thai food" loading="lazy"><div class="inside"><h3>Food, markets & cooking</h3><p>Mix street food with a cooking class or guided food walk. Keep a little extra for coffee and snacks on travel days.</p><span class="price">Meals: roughly ฿350–700/day</span></div></article>
-</div><div class="safety"><b>Wildlife safety</b><p>Avoid tiger-contact photo attractions. Close contact with large predators carries real risk and raises animal-welfare concerns. For wildlife, prefer reputable observation-led experiences.</p></div></section>
+      <!-- ROUTE AT A GLANCE (CLICKABLE TO FILTER) -->
+      <section class="section container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Route at a glance · Tap a card to filter days</div>
+            <h2>Save on beds &amp; transit.<br />Go all-in on experiences.</h2>
+          </div>
+          <p class="section-sub">
+            Zero wasted backtracking: fly south for EDC Phuket, sweep overland through Krabi to Khao
+            Sok Lake, fly direct from Surat Thani (URT) to Chiang Mai, and ride the overnight
+            sleeper train back into Bangkok for New Year's Eve.
+          </p>
+        </div>
 
-<section id="budget" class="wrap"><div class="sectionhead"><div><div class="label">Full trip budget</div><h2>Will ৳250–350k cover it?</h2></div><p>It may, with hostel dorms and careful choices, but the upper end is safer if your flights, EDC pass or lake tour cost more than expected.</p></div><div class="budget"><div class="budgethero"><div class="label">Target</div><div class="amount">৳250–350k</div><p>Build your budget from live quotes. Christmas and New Year's Eve rates can be significantly higher; keep the contingency reserve untouched until needed.</p><a class="btn" href="https://www.hostelworld.com/" target="_blank" rel="noreferrer">Compare hostel prices ↗</a></div><div class="budgetlist">{costs.map(c=><div class="budgetrow"><span>{c[0]}</span><span>{c[1]}</span></div>)}<p class="note">All amounts are estimates, not quotes; ranges overlap and the high end may exceed ৳350,000. Do not double-count the EDC allowance if your chosen ticket is included elsewhere. Check current visa requirements for Bangladeshi passport holders with official sources.</p></div></div><div class="costtips"><div><b>Save here</b><p>Hostel dorms, street food, MRT/BTS, shared tours, and booking domestic transport after checking baggage rules.</p></div><div><b>Don't underbudget</b><p>EDC ticket and late-night transfers, the 26 Dec south-to-north connection, travel insurance, and the lake overnight package.</p></div><div><b>Keep flexible</b><p>Boat trips depend on weather. Don't prepay non-refundable activities that rely on sea conditions or tight flight connections.</p></div></div></section>
+        <div class="route-grid">
+          {
+            routeBases.map((item) => (
+              <article class="route-card" data-jump-city={item.cityKey}>
+                <img src={item.image} alt={item.alt} loading="lazy" />
+                <div class="route-card-body">
+                  <div class="route-dates">{item.dates}</div>
+                  <h3>{item.name}</h3>
+                  <p>{item.summary}</p>
+                  <div class="tag-row">
+                    {item.tags.map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                  </div>
+                  <button type="button" class="route-filter-btn" data-jump-btn={item.cityKey}>
+                    Filter {item.name} days ↓
+                  </button>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
 
-<section id="book" class="wrap"><div class="sectionhead"><div><div class="label">Booking order</div><h2>What to reserve first.</h2></div><p>Work through this list in order. Open links in a new tab and save confirmation numbers in one place.</p></div><div class="booksteps">
-<div class="step"><span>01</span><div><h3>EDC ticket</h3><p>Check live ticket tier, availability, age/ID rules, venue and official transport information.</p><a href="https://edcthailand.frontgatetickets.com/" target="_blank" rel="noreferrer">Official ticket checkout ↗</a></div></div>
-<div class="step"><span>02</span><div><h3>International flights</h3><p>Compare Dhaka → Bangkok and return on 4 Jan. Check baggage, airport (BKK/DMK) and arrival time.</p><a href="https://www.google.com/travel/flights" target="_blank" rel="noreferrer">Compare flights ↗</a></div></div>
-<div class="step"><span>03</span><div><h3>Phuket hostel and EDC transport</h3><p>Book 17–20 Dec with a refundable rate if possible, after confirming where the official shuttle picks up.</p><a href="https://www.hostelworld.com/hostels/asia/thailand/phuket/" target="_blank" rel="noreferrer">Find Phuket hostels ↗</a></div></div>
-<div class="step"><span>04</span><div><h3>Bangkok New Year's stay</h3><p>Reserve 30 Dec–3 Jan early; choose a location that makes your countdown return practical.</p><a href="https://www.hostelworld.com/hostels/asia/thailand/bangkok/" target="_blank" rel="noreferrer">Find Bangkok hostels ↗</a></div></div>
-<div class="step"><span>05</span><div><h3>Khao Sok lake package + 26 Dec flight</h3><p>Confirm the lake trip's checkout and transfer time first, then choose a Chiang Mai flight connection with enough buffer.</p><a href="https://www.booking.com/searchresults.html?ss=Khao+Sok%2C+Thailand" target="_blank" rel="noreferrer">Compare Khao Sok stays ↗</a></div></div>
-<div class="step"><span>06</span><div><h3>Other beds and tours</h3><p>Book refundable beds in Krabi and Chiang Mai, then reserve popular tours with clear inclusions and cancellation terms.</p><a href="https://www.hostelworld.com/" target="_blank" rel="noreferrer">Search hostels ↗</a></div></div>
-</div><div class="practical"><article class="info"><h3>Official essentials</h3><div class="linklist"><a href="https://www.thaievisa.go.th/" target="_blank" rel="noreferrer">Thai e-Visa ↗</a><a href="https://www.tourismthailand.org/" target="_blank" rel="noreferrer">Tourism Authority ↗</a><a href="https://thailand.edc.com/en/" target="_blank" rel="noreferrer">EDC Thailand ↗</a><a href="https://www.booking.com/" target="_blank" rel="noreferrer">Booking.com ↗</a></div><p>Verify visa eligibility and any arrival-registration requirements using official Thai government sources close to departure.</p></article><article class="info"><h3>Final checklist</h3><div class="checklist">{["Passport and visa checked","Travel insurance bought","EDC ticket and transport confirmed","Refundable beds booked","Domestic flights match transfers","Tour inclusions and cancellation checked","Card, cash and eSIM ready","Copies of bookings saved offline"].map(item=><label class="check"><input type="checkbox"><span>{item}</span></label>)}</div></article></div></section>
-</main><footer class="footer"><div class="wrap footerin"><div><strong>THAILAND, UNFILTERED.</strong><p>Zaed's editable travel plan · 15 Dec 2026 – 4 Jan 2027</p><p>Costs are estimates. Confirm dates, schedules, prices and availability before booking.</p></div><a class="toplink" href="#top">Back to top ↑</a></div></footer>
-</BaseLayout>
+      <!-- BUCKET LIST / UPGRADED HIGHLIGHTS -->
+      <section id="highlights" class="section container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Signature adrenaline &amp; bucket-list upgrades</div>
+            <h2>The "unfiltered" moments<br />built into this route.</h2>
+          </div>
+          <p class="section-sub">
+            Funded entirely by cutting Phuket surge taxis, flying out of Surat Thani (URT) instead
+            of backtracking, and taking the CNR Overnight Sleeper Train from Chiang Mai to Bangkok.
+          </p>
+        </div>
+
+        <div class="highlights-grid">
+          <div class="highlight-box">
+            <span class="hl-badge">Day 13 · Chiang Mai (Mae Rim)</span>
+            <h3>🐅 Giant Tiger Shoulder / Back Photos + Cubs</h3>
+            <p>
+              Arrive at <strong>Tiger Kingdom Mae Rim at 9:00 AM sharp</strong> when big cats are
+              active. Trainers guide you to crouch and lean right across a 200kg Giant or White
+              Tiger's shoulders/back, or hold a playful 2–4 month cub on your shoulder and lap.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <span class="hl-badge">Day 13 · Mae Rim Valley Loop</span>
+            <h3>🎢 Jungle Coaster, 36-Platform Zipline &amp; Sticky Waterfalls</h3>
+            <p>
+              15 minutes up the same road as Tiger Kingdom: ride the high-speed
+              <strong>Pongyang Jungle Coaster &amp; Zipline</strong> (or jump the <strong>50m Bungee at X-Centre</strong>),
+              then climb barefoot straight up the mineral-grippy <strong>Bua Thong Sticky Waterfalls</strong>.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <span class="hl-badge">Days 8–9 · Krabi &amp; Railay</span>
+            <h3>✨ Glowing Plankton Night Swim &amp; Cliff Climbing</h3>
+            <p>
+              Skip the crowded 9 AM boat for the <strong>7-Islands Sunset BBQ + Bioluminescent Plankton night snorkel</strong>,
+              followed by a half-day <strong>top-rope limestone rock climb at Railay</strong> and rope scramble to the Hidden Lagoon.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <span class="hl-badge">Days 11 &amp; 19 · Khao Sok &amp; Bangkok</span>
+            <h3>🥊 Cheow Lan Floating Bungalow &amp; Rajadamnern RWS</h3>
+            <p>
+              Spend Christmas night on an <strong>overwater raft house in Cheow Lan Lake</strong> (cave trek + dusk safari included),
+              and wrap up in Bangkok with <strong>Saturday Night RWS Muay Thai at Rajadamnern Stadium</strong> (dome light show + free-flow beer).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE 21-DAY ITINERARY (WITH INLINE EXPENSE LOGGER ON EVERY DAY CARD) -->
+      <section id="itinerary" class="section container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Interactive day-by-day plan + inline spend inputs</div>
+            <h2>Filter by city, log actual THB,<br />and track completed days.</h2>
+          </div>
+          <p class="section-sub">
+            Type what you spend in THB directly at the bottom of any day card below—it automatically
+            syncs with the <strong>Live BDT Expense Logger</strong> and updates your remaining budget.
+          </p>
+        </div>
+
+        <!-- STICKY FILTER BAR -->
+        <div class="filter-bar-sticky">
+          <div class="filter-pills" role="tablist" aria-label="Filter itinerary by city">
+            <button type="button" class="filter-pill active" data-city-filter="all">
+              All Days <span>21</span>
+            </button>
+            <button type="button" class="filter-pill" data-city-filter="bangkok">
+              Bangkok <span>7</span>
+            </button>
+            <button type="button" class="filter-pill" data-city-filter="phuket">
+              Phuket · EDC <span>4</span>
+            </button>
+            <button type="button" class="filter-pill" data-city-filter="krabi">
+              Krabi &amp; Railay <span>3</span>
+            </button>
+            <button type="button" class="filter-pill" data-city-filter="khaosok">
+              Khao Sok <span>3</span>
+            </button>
+            <button type="button" class="filter-pill" data-city-filter="chiangmai">
+              Chiang Mai <span>4</span>
+            </button>
+            <button type="button" class="filter-pill" data-city-filter="ayutthaya">
+              Ayutthaya <span>1</span>
+            </button>
+          </div>
+
+          <div class="filter-meta-bar">
+            <div class="filter-summary-text" id="itinerary-filter-summary">
+              Showing <strong>21 of 21 days</strong> · Planned daily spend:
+              <strong>฿28,300–49,000</strong>
+            </div>
+            <div class="filter-view-actions">
+              <button type="button" class="util-btn" id="toggle-compact-btn">
+                Compact phone view
+              </button>
+              <button type="button" class="util-btn" id="hide-completed-days-btn">
+                Hide completed days
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="days-list" id="days-container">
+          {
+            days.map((d) => (
+              <article
+                class="day-card"
+                data-day-id={`day-${d.day}`}
+                data-day-num={d.day}
+                data-cities={d.cities}
+                data-min-spend={d.minSpend}
+                data-max-spend={d.maxSpend}
+              >
+                <div class="day-date-col">
+                  <span>{d.weekday}</span>
+                  <strong>{d.dateNum}</strong>
+                  <span>{d.month}</span>
+                  <button
+                    type="button"
+                    class="day-done-btn"
+                    data-complete-day={`day-${d.day}`}
+                    title="Mark this day completed"
+                  >
+                    ✓ Done
+                  </button>
+                </div>
+                <div class="day-body-col">
+                  <div class="day-meta">
+                    <small>{d.location}</small>
+                    <div class="day-meta-right">
+                      <span class="city-chip">{d.cityLabel}</span>
+                      <span>DAY {d.day} / 21</span>
+                    </div>
+                  </div>
+                  <h3>{d.title}</h3>
+                  <p class="stay-pill">{d.stay}</p>
+
+                  <div class="time-blocks">
+                    <div class="time-slot">
+                      <b>Morning</b>
+                      <p>{d.morning}</p>
+                    </div>
+                    <div class="time-slot">
+                      <b>Afternoon</b>
+                      <p>{d.afternoon}</p>
+                    </div>
+                    <div class="time-slot">
+                      <b>Evening</b>
+                      <p>{d.evening}</p>
+                    </div>
+                  </div>
+
+                  <div class="day-footer-grid">
+                    <div>
+                      <b>Planned daily range</b>
+                      <span>{d.spend}</span>
+                    </div>
+                    <div>
+                      <b>Getting around</b>
+                      <span>{d.transport}</span>
+                    </div>
+                    <div class="booking-tip-box">
+                      <b>Insider &amp; booking tip</b>
+                      <p>{d.tip}</p>
+                    </div>
+                  </div>
+
+                  <!-- INLINE ACTUAL SPEND LOGGER FOR THIS DAY -->
+                  <div class="day-inline-expense-bar">
+                    <div class="inline-exp-field">
+                      <label for={`inline-thb-${d.day}`}>Actual Day {d.day} Spend (฿ THB)</label>
+                      <div class="inline-input-wrap">
+                        <span class="curr-prefix">฿</span>
+                        <input
+                          type="number"
+                          id={`inline-thb-${d.day}`}
+                          class="day-thb-input"
+                          data-exp-day={d.day}
+                          min="0"
+                          step="50"
+                          placeholder={`Plan: ${d.minSpend}–${d.maxSpend}`}
+                        />
+                      </div>
+                    </div>
+                    <div class="inline-exp-note-field">
+                      <label for={`inline-note-${d.day}`}>Quick Spend Note (Optional)</label>
+                      <input
+                        type="text"
+                        id={`inline-note-${d.day}`}
+                        class="day-note-input"
+                        data-note-day={d.day}
+                        placeholder="e.g., Street food, Grab, ticket..."
+                      />
+                    </div>
+                    <div class="inline-exp-status" data-exp-badge={d.day}>
+                      Not logged yet
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- LIVE THB-TO-BDT DAILY EXPENSE LOGGER SECTION -->
+      <section id="expenses" class="section container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Real-time THB → BDT wallet &amp; daily burn tracker</div>
+            <h2>Live trip expense logger<br />&amp; remaining BDT budget.</h2>
+          </div>
+          <p class="section-sub">
+            Adjust your target BDT budget and exchange rate below. Every THB amount you log updates
+            your remaining BDT balance and calculates your safe daily burn rate for the rest of the
+            trip.
+          </p>
+        </div>
+
+        <!-- SETTINGS & KPI COMMAND CENTER -->
+        <div class="exp-dashboard">
+          <div class="exp-controls-row">
+            <div class="exp-control-group">
+              <label for="exp-target-bdt">Total Target Budget (৳ BDT)</label>
+              <div class="inline-input-wrap">
+                <span class="curr-prefix">৳</span>
+                <input
+                  type="number"
+                  id="exp-target-bdt"
+                  min="150000"
+                  max="600000"
+                  step="5000"
+                  value="320000"
+                />
+              </div>
+              <small id="exp-target-thb-equiv">≈ ฿87,193 total budget at current rate</small>
+            </div>
+
+            <div class="exp-control-group">
+              <label for="exp-rate-input">Exchange Rate (1 THB = ৳ BDT)</label>
+              <div class="inline-input-wrap">
+                <span class="curr-prefix">৳</span>
+                <input
+                  type="number"
+                  id="exp-rate-input"
+                  min="2.5"
+                  max="5.5"
+                  step="0.01"
+                  value="3.67"
+                />
+              </div>
+              <small>Oct 2026 live mid-market rate ≈ 3.67 BDT/THB</small>
+            </div>
+
+            <div class="exp-control-actions">
+              <button type="button" class="util-btn" id="exp-fill-estimates-btn">
+                Demo: Fill planned midpoints
+              </button>
+              <button type="button" class="util-btn" id="exp-export-csv-btn">
+                ⬇ Export CSV
+              </button>
+              <button type="button" class="util-btn danger-btn" id="exp-clear-daily-btn">
+                Clear daily logs
+              </button>
+            </div>
+          </div>
+
+          <!-- 4 LIVE KPI CARDS -->
+          <div class="exp-kpi-grid">
+            <div class="exp-kpi-card">
+              <span class="kpi-label">1. Pre-Trip &amp; Fixed Costs</span>
+              <strong class="kpi-val" id="kpi-fixed-bdt">৳159,645</strong>
+              <small class="kpi-sub" id="kpi-fixed-thb">฿43,500 (Flights, EDC, Hostels)</small>
+            </div>
+
+            <div class="exp-kpi-card">
+              <span class="kpi-label">2. Logged Daily Spend (<span id="kpi-days-logged">0/21</span> days)</span>
+              <strong class="kpi-val" id="kpi-daily-bdt">৳0</strong>
+              <small class="kpi-sub" id="kpi-daily-thb">฿0 spent on the ground so far</small>
+            </div>
+
+            <div class="exp-kpi-card highlight-kpi" id="kpi-remaining-card">
+              <span class="kpi-label">3. Remaining Budget (Live)</span>
+              <strong class="kpi-val emerald-text" id="kpi-remaining-bdt">৳160,355</strong>
+              <small class="kpi-sub" id="kpi-remaining-thb">฿43,693 remaining to spend</small>
+            </div>
+
+            <div class="exp-kpi-card">
+              <span class="kpi-label">4. Safe Daily Burn Rate</span>
+              <strong class="kpi-val" id="kpi-burn-thb">฿2,081 / day</strong>
+              <small class="kpi-sub" id="kpi-burn-bdt">≈ ৳7,636 / day for 21 unlogged days</small>
+            </div>
+          </div>
+
+          <!-- BUDGET METER BAR -->
+          <div class="exp-meter-wrap">
+            <div class="exp-meter-labels">
+              <span id="exp-meter-left-label">Total Spent: ৳159,645 (50%)</span>
+              <span id="exp-meter-variance-label">On-the-ground variance: ฿0 vs plan</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="exp-budget-bar" style="width: 50%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLLAPSIBLE / EDITABLE PRE-TRIP FIXED COSTS -->
+        <div class="exp-subcard">
+          <div class="exp-subcard-head">
+            <div>
+              <h3>A. Pre-Trip &amp; Fixed Costs (Flights, EDC Pass &amp; Hostels)</h3>
+              <p>
+                Update these 4 numbers once you lock in your tickets and hostel bookings so your
+                remaining daily budget is 100% accurate.
+              </p>
+            </div>
+            <label class="toggle-fixed-label">
+              <input type="checkbox" id="include-fixed-toggle" checked />
+              <span>Deduct fixed costs from target BDT budget</span>
+            </label>
+          </div>
+
+          <div class="fixed-costs-grid">
+            {
+              fixedCostDefaults.map((fc) => (
+                <div class="fixed-cost-item">
+                  <label for={fc.id}>{fc.label}</label>
+                  <small>{fc.note}</small>
+                  <div class="inline-input-wrap">
+                    <span class="curr-prefix">฿</span>
+                    <input
+                      type="number"
+                      id={fc.id}
+                      class="fixed-thb-input"
+                      data-fixed-id={fc.id}
+                      min="0"
+                      step="100"
+                      value={fc.defaultTHB}
+                    />
+                    <span class="bdt-inline-Readout" data-fixed-bdt={fc.id}>
+                      ≈ ৳0
+                    </span>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- 21-DAY LEDGER TABLE -->
+        <div class="exp-subcard">
+          <div class="exp-subcard-head">
+            <div>
+              <h3>B. Day-by-Day On-the-Ground Spend Ledger (Days 1–21)</h3>
+              <p>
+                Synced directly with the inputs on the Daily Plan cards above. Enter THB spent each
+                day on food, tours, boats, and nightlife.
+              </p>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="budget-table ledger-table">
+              <thead>
+                <tr>
+                  <th>Day &amp; Date</th>
+                  <th>Base &amp; Main Activity</th>
+                  <th>Planned (฿)</th>
+                  <th>Actual Spend (฿ THB)</th>
+                  <th>Actual (৳ BDT)</th>
+                  <th>Status vs. Plan</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  days.map((d) => (
+                    <tr data-ledger-row={d.day}>
+                      <td class="num-col">
+                        <strong>Day {d.day}</strong> · {d.dateNum} {d.month}
+                      </td>
+                      <td>
+                        <span class="city-chip">{d.cityLabel}</span>
+                        <div class="ledger-sub-title">{d.title}</div>
+                      </td>
+                      <td class="num-col muted-cell">
+                        ฿{d.minSpend}–{d.maxSpend}
+                      </td>
+                      <td>
+                        <div class="inline-input-wrap compact-input">
+                          <span class="curr-prefix">฿</span>
+                          <input
+                            type="number"
+                            class="ledger-thb-input"
+                            data-ledger-day={d.day}
+                            min="0"
+                            step="50"
+                            placeholder="0"
+                          />
+                        </div>
+                      </td>
+                      <td class="num-col" data-ledger-bdt={d.day}>
+                        —
+                      </td>
+                      <td class="num-col" data-ledger-diff={d.day}>
+                        <span class="status-pill neutral">Unlogged</span>
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="ledger-note-input"
+                          data-ledger-note={d.day}
+                          placeholder="Add note..."
+                        />
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE BOOKING & PACKING CHECKLIST -->
+      <section id="checklist" class="section container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Interactive phone tracker (Saved automatically)</div>
+            <h2>Booking &amp; packing checklist<br />for your 21-day tour.</h2>
+          </div>
+          <p class="section-sub">
+            Tap any item below as you book flights, lock in hostels, or pack your gear. Your
+            progress is stored locally in your phone browser so it stays checked even offline.
+          </p>
+        </div>
+
+        <div class="checklist-dashboard">
+          <div class="chk-progress-header">
+            <div>
+              <strong id="chk-count-label">0 of 28 completed (0%)</strong>
+              <span id="chk-status-sub">Tap items below to check them off on your phone</span>
+            </div>
+            <div class="chk-dashboard-actions">
+              <button type="button" class="util-btn" id="chk-hide-done-btn">
+                Hide checked
+              </button>
+              <button type="button" class="util-btn danger-btn" id="chk-reset-btn">
+                Reset all
+              </button>
+            </div>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="chk-progress-bar" style="width: 0%"></div>
+          </div>
+
+          <div class="chk-tabs" role="tablist" aria-label="Filter checklist categories">
+            <button type="button" class="chk-tab active" data-chk-filter="all">
+              All Items (28)
+            </button>
+            <button type="button" class="chk-tab" data-chk-filter="flights">
+              1. Flights, Visa &amp; EDC (6)
+            </button>
+            <button type="button" class="chk-tab" data-chk-filter="stays">
+              2. Hostels &amp; Stays (6)
+            </button>
+            <button type="button" class="chk-tab" data-chk-filter="tours">
+              3. Tours &amp; Tickets (8)
+            </button>
+            <button type="button" class="chk-tab" data-chk-filter="packing">
+              4. Packing &amp; Gear (8)
+            </button>
+          </div>
+        </div>
+
+        <div class="chk-list" id="checklist-container">
+          {
+            checklistItems.map((item) => (
+              <label class="chk-row" data-chk-id={item.id} data-chk-cat={item.cat}>
+                <input type="checkbox" class="chk-input" value={item.id} />
+                <span class="chk-custom-box" aria-hidden="true">✓</span>
+                <div class="chk-content">
+                  <div class="chk-title-line">
+                    <span class="chk-cat-tag">{item.catLabel}</span>
+                    <strong class="chk-title">{item.title}</strong>
+                  </div>
+                  <p class="chk-meta">{item.meta}</p>
+                </div>
+                <span class="chk-cost-badge">{item.cost}</span>
+              </label>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- HOSTELS & STAYS -->
+      <section id="stays" class="section container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Vetted hostels &amp; base strategy</div>
+            <h2>Where to sleep so you<br />never waste time in traffic.</h2>
+          </div>
+          <p class="section-sub">
+            Every hostel below is picked for solo-traveller atmosphere, lockable pod beds, and
+            strategic proximity to transit or festival/pier gates during peak December week.
+          </p>
+        </div>
+
+        <div class="hostels-grid">
+          {
+            hostels.map((h) => (
+              <article class="hostel-card">
+                <div class="hostel-top">
+                  <div>
+                    <span class="hostel-dates">{h.dates}</span>
+                    <h3>{h.base}</h3>
+                  </div>
+                  <strong class="hostel-rate">{h.rate}</strong>
+                </div>
+                <ul class="hostel-picks">
+                  {h.picks.map((p) => (
+                    <li>
+                      <strong>{p.name}:</strong> {p.note}
+                    </li>
+                  ))}
+                </ul>
+                <div class="hostel-rule">
+                  <b>Location rule:</b> {h.rule}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- BUDGET BREAKDOWN -->
+      <section id="budget" class="section container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">All-in 21-day budget &amp; cost optimizations</div>
+            <h2>How to fit every bucket-list<br />activity inside ৳250k–350k.</h2>
+          </div>
+          <p class="section-sub">
+            Calculated at <strong>1 THB ≈ 3.67 BDT</strong>. By cutting out the 4 biggest tourist
+            money traps (Patong EDC surge taxis, Khao Sok online markups, Phuket flight
+            backtracking, and a peak-holiday CNX→BKK flight), you save <strong>~฿11,000 (৳40,370)</strong>.
+          </p>
+        </div>
+
+        <div class="table-wrap">
+          <table class="budget-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Optimized Strategy &amp; Inclusions</th>
+                <th>Estimated THB (฿)</th>
+                <th>Estimated BDT (৳)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                budgetRows.map((row) => (
+                  <tr>
+                    <td><strong>{row.category}</strong></td>
+                    <td>{row.details}</td>
+                    <td class="num-col">{row.thb}</td>
+                    <td class="num-col">{row.bdt}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">
+                  <strong>TOTAL ALL-IN (21 Days / 20 Nights · Flights + EDC + All Activities)</strong>
+                </td>
+                <td class="num-col"><strong>฿76,830 – 97,750</strong></td>
+                <td class="num-col"><strong>৳281,965 – 358,740</strong></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
+      <!-- BOOKING ORDER -->
+      <section id="book" class="section container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Execution checklist</div>
+            <h2>Exact booking order:<br />what to lock in vs. leave flexible.</h2>
+          </div>
+          <p class="section-sub">
+            Mid-December to January 4 is Thailand's busiest travel window of the year. Lock in fixed
+            bottlenecks early, and keep island/jungle tours flexible for on-the-ground bargaining.
+          </p>
+        </div>
+
+        <div class="booking-grid">
+          {
+            bookingSteps.map((b) => (
+              <article class="book-card">
+                <div class="book-step-num">{b.step}</div>
+                <span class="book-timing">{b.timing}</span>
+                <h3>{b.title}</h3>
+                <p>{b.desc}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+    </main>
+
+    <!-- MOBILE FLOATING BOTTOM APP BAR (5 TABS) -->
+    <nav class="mobile-bottom-nav" aria-label="Mobile quick navigation">
+      <a href="#itinerary" class="mob-nav-item">
+        <span>🗓️</span>
+        <small>Daily Plan</small>
+      </a>
+      <a href="#expenses" class="mob-nav-item">
+        <span>฿</span>
+        <small id="mob-nav-wallet">৳160k left</small>
+      </a>
+      <a href="#checklist" class="mob-nav-item">
+        <span>✅</span>
+        <small id="mob-nav-chk-count">Checklist</small>
+      </a>
+      <a href="#stays" class="mob-nav-item">
+        <span>🛏️</span>
+        <small>Hostels</small>
+      </a>
+      <a href="#budget" class="mob-nav-item">
+        <span>📊</span>
+        <small>Budget</small>
+      </a>
+    </nav>
+
+    <footer class="footer container">
+      <div>
+        <strong>THAILAND, UNFILTERED.</strong> · 15 Dec 2026 – 4 Jan 2027 · Solo Grand Tour
+      </div>
+      <a href="#top">Back to top ↑</a>
+    </footer>
+
+    <!-- CLIENT-SIDE INTERACTIVITY SCRIPT -->
+    <script is:inline>
+      (function () {
+        const CHK_STORAGE_KEY = "thailand_grand_tour_v2_checks";
+        const DAYS_STORAGE_KEY = "thailand_grand_tour_v2_done_days";
+        const EXP_STORAGE_KEY = "thailand_grand_tour_v3_expenses";
+
+        function formatNumber(num) {
+          return Math.round(num)
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // --- 1. EXPENSE LOGGER STATE & INITIALIZATION ---
+        let expState = {
+          targetBDT: 320000,
+          rate: 3.67,
+          includeFixed: true,
+          fixed: {
+            "fix-intl-flight": 13000,
+            "fix-dom-transit": 6800,
+            "fix-edc-pass": 10500,
+            "fix-hostels": 13200
+          },
+          dailyTHB: {},
+          dailyNotes: {}
+        };
+
+        try {
+          const savedExp = JSON.parse(localStorage.getItem(EXP_STORAGE_KEY) || "null");
+          if (savedExp && typeof savedExp === "object") {
+            expState = Object.assign({}, expState, savedExp);
+            expState.fixed = Object.assign({}, expState.fixed, savedExp.fixed || {});
+            expState.dailyTHB = Object.assign({}, savedExp.dailyTHB || {});
+            expState.dailyNotes = Object.assign({}, savedExp.dailyNotes || {});
+          }
+        } catch (e) {}
+
+        function saveExpState() {
+          try {
+            localStorage.setItem(EXP_STORAGE_KEY, JSON.stringify(expState));
+          } catch (e) {}
+        }
+
+        // --- 2. ITINERARY CITY FILTER & COMPLETED DAYS ---
+        const filterPills = document.querySelectorAll("[data-city-filter]");
+        const jumpButtons = document.querySelectorAll("[data-jump-btn]");
+        const dayCards = document.querySelectorAll(".day-card");
+        const summaryEl = document.getElementById("itinerary-filter-summary");
+        const compactBtn = document.getElementById("toggle-compact-btn");
+        const hideCompletedDaysBtn = document.getElementById("hide-completed-days-btn");
+        const daysContainer = document.getElementById("days-container");
+
+        let currentCityFilter = "all";
+        let hideCompletedDays = false;
+        let doneDays = {};
+
+        try {
+          doneDays = JSON.parse(localStorage.getItem(DAYS_STORAGE_KEY) || "{}");
+        } catch (e) {
+          doneDays = {};
+        }
+
+        function saveDoneDays() {
+          try {
+            localStorage.setItem(DAYS_STORAGE_KEY, JSON.stringify(doneDays));
+          } catch (e) {}
+        }
+
+        function updateItineraryView() {
+          let visibleCount = 0;
+          let minSum = 0;
+          let maxSum = 0;
+          let loggedCityTHB = 0;
+
+          dayCards.forEach((card) => {
+            const dayId = card.getAttribute("data-day-id");
+            const dayNum = card.getAttribute("data-day-num");
+            const citiesAttr = (card.getAttribute("data-cities") || "").split(" ");
+            const minSpend = parseInt(card.getAttribute("data-min-spend") || "0", 10);
+            const maxSpend = parseInt(card.getAttribute("data-max-spend") || "0", 10);
+            const isDone = !!doneDays[dayId];
+
+            card.classList.toggle("day-is-completed", isDone);
+            const doneBtn = card.querySelector("[data-complete-day]");
+            if (doneBtn) {
+              doneBtn.textContent = isDone ? "✓ Completed" : "✓ Done";
+            }
+
+            const matchesCity =
+              currentCityFilter === "all" || citiesAttr.indexOf(currentCityFilter) !== -1;
+            const matchesDoneFilter = !hideCompletedDays || !isDone;
+
+            if (matchesCity && matchesDoneFilter) {
+              card.style.display = "";
+              visibleCount++;
+              minSum += minSpend;
+              maxSum += maxSpend;
+              const actualVal = parseFloat(expState.dailyTHB[dayNum]);
+              if (!isNaN(actualVal) && actualVal > 0) {
+                loggedCityTHB += actualVal;
+              }
+            } else {
+              card.style.display = "none";
+            }
+          });
+
+          if (summaryEl) {
+            const minBDT = Math.round((minSum * expState.rate) / 1000);
+            const maxBDT = Math.round((maxSum * expState.rate) / 1000);
+            const loggedBDT = Math.round(loggedCityTHB * expState.rate);
+            summaryEl.innerHTML =
+              "Showing <strong>" +
+              visibleCount +
+              " of 21 days</strong> · Planned: <strong>฿" +
+              formatNumber(minSum) +
+              "–" +
+              formatNumber(maxSum) +
+              "</strong> (~৳" +
+              minBDT +
+              "k–" +
+              maxBDT +
+              "k) · Logged here: <strong>฿" +
+              formatNumber(loggedCityTHB) +
+              " (৳" +
+              formatNumber(loggedBDT) +
+              ")</strong>";
+          }
+        }
+
+        filterPills.forEach((pill) => {
+          pill.addEventListener("click", () => {
+            currentCityFilter = pill.getAttribute("data-city-filter") || "all";
+            filterPills.forEach((p) => p.classList.remove("active"));
+            pill.classList.add("active");
+            updateItineraryView();
+          });
+        });
+
+        jumpButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const targetCity = btn.getAttribute("data-jump-btn") || "all";
+            const matchingPill = document.querySelector(
+              '[data-city-filter="' + targetCity + '"]'
+            );
+            if (matchingPill) matchingPill.click();
+            const itinerarySec = document.getElementById("itinerary");
+            if (itinerarySec) itinerarySec.scrollIntoView({ behavior: "smooth" });
+          });
+        });
+
+        document.querySelectorAll("[data-complete-day]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const dayId = btn.getAttribute("data-complete-day");
+            if (!dayId) return;
+            doneDays[dayId] = !doneDays[dayId];
+            saveDoneDays();
+            updateItineraryView();
+          });
+        });
+
+        if (compactBtn && daysContainer) {
+          compactBtn.addEventListener("click", () => {
+            const isCompact = daysContainer.classList.toggle("compact-mode");
+            compactBtn.classList.toggle("active", isCompact);
+            compactBtn.textContent = isCompact ? "Expand full details" : "Compact phone view";
+          });
+        }
+
+        if (hideCompletedDaysBtn) {
+          hideCompletedDaysBtn.addEventListener("click", () => {
+            hideCompletedDays = !hideCompletedDays;
+            hideCompletedDaysBtn.classList.toggle("active", hideCompletedDays);
+            hideCompletedDaysBtn.textContent = hideCompletedDays
+              ? "Show completed days"
+              : "Hide completed days";
+            updateItineraryView();
+          });
+        }
+
+        // --- 3. EXPENSE LOGGER RECALCULATION & TWO-WAY SYNC ---
+        const targetBdtInput = document.getElementById("exp-target-bdt");
+        const rateInput = document.getElementById("exp-rate-input");
+        const includeFixedToggle = document.getElementById("include-fixed-toggle");
+        const targetThbEquiv = document.getElementById("exp-target-thb-equiv");
+
+        const kpiFixedBdt = document.getElementById("kpi-fixed-bdt");
+        const kpiFixedThb = document.getElementById("kpi-fixed-thb");
+        const kpiDaysLogged = document.getElementById("kpi-days-logged");
+        const kpiDailyBdt = document.getElementById("kpi-daily-bdt");
+        const kpiDailyThb = document.getElementById("kpi-daily-thb");
+        const kpiRemainingCard = document.getElementById("kpi-remaining-card");
+        const kpiRemainingBdt = document.getElementById("kpi-remaining-bdt");
+        const kpiRemainingThb = document.getElementById("kpi-remaining-thb");
+        const kpiBurnThb = document.getElementById("kpi-burn-thb");
+        const kpiBurnBdt = document.getElementById("kpi-burn-bdt");
+
+        const expBudgetBar = document.getElementById("exp-budget-bar");
+        const expMeterLeftLabel = document.getElementById("exp-meter-left-label");
+        const expMeterVarianceLabel = document.getElementById("exp-meter-variance-label");
+        const topWalletPill = document.getElementById("top-wallet-pill");
+        const mobNavWallet = document.getElementById("mob-nav-wallet");
+
+        function updateExpenseUI() {
+          const rate = parseFloat(expState.rate) || 3.67;
+          const targetBDT = parseFloat(expState.targetBDT) || 320000;
+          const targetTHB = targetBDT / rate;
+
+          if (targetBdtInput && document.activeElement !== targetBdtInput) {
+            targetBdtInput.value = targetBDT;
+          }
+          if (rateInput && document.activeElement !== rateInput) {
+            rateInput.value = rate;
+          }
+          if (includeFixedToggle) {
+            includeFixedToggle.checked = !!expState.includeFixed;
+          }
+          if (targetThbEquiv) {
+            targetThbEquiv.textContent =
+              "≈ ฿" + formatNumber(targetTHB) + " total budget at " + rate.toFixed(2) + " BDT/THB";
+          }
+
+          // Calculate Fixed Costs
+          let fixedSumTHB = 0;
+          document.querySelectorAll(".fixed-thb-input").forEach((inp) => {
+            const fid = inp.getAttribute("data-fixed-id");
+            const val = parseFloat(expState.fixed[fid]) || 0;
+            if (document.activeElement !== inp) {
+              inp.value = val;
+            }
+            fixedSumTHB += val;
+            const bdtReadout = document.querySelector('[data-fixed-bdt="' + fid + '"]');
+            if (bdtReadout) {
+              bdtReadout.textContent = "≈ ৳" + formatNumber(val * rate);
+            }
+          });
+
+          const countedFixedTHB = expState.includeFixed ? fixedSumTHB : 0;
+          const countedFixedBDT = countedFixedTHB * rate;
+
+          // Calculate Daily Logged Spend across 21 days
+          let dailySumTHB = 0;
+          let loggedDaysCount = 0;
+          let plannedMidpointSumForLogged = 0;
+
+          dayCards.forEach((card) => {
+            const dNum = card.getAttribute("data-day-num");
+            const minS = parseInt(card.getAttribute("data-min-spend") || "0", 10);
+            const maxS = parseInt(card.getAttribute("data-max-spend") || "0", 10);
+            const midpoint = Math.round((minS + maxS) / 2);
+
+            const rawVal = expState.dailyTHB[dNum];
+            const hasVal = rawVal !== undefined && rawVal !== "" && !isNaN(parseFloat(rawVal));
+            const valTHB = hasVal ? parseFloat(rawVal) : 0;
+            const noteStr = expState.dailyNotes[dNum] || "";
+
+            // Sync inline inputs on Day Card
+            const inlineInp = document.querySelector('[data-exp-day="' + dNum + '"]');
+            if (inlineInp && document.activeElement !== inlineInp) {
+              inlineInp.value = hasVal ? valTHB : "";
+            }
+            const inlineNote = document.querySelector('[data-note-day="' + dNum + '"]');
+            if (inlineNote && document.activeElement !== inlineNote) {
+              inlineNote.value = noteStr;
+            }
+
+            // Sync Ledger Table inputs
+            const ledgerInp = document.querySelector('[data-ledger-day="' + dNum + '"]');
+            if (ledgerInp && document.activeElement !== ledgerInp) {
+              ledgerInp.value = hasVal ? valTHB : "";
+            }
+            const ledgerNote = document.querySelector('[data-ledger-note="' + dNum + '"]');
+            if (ledgerNote && document.activeElement !== ledgerNote) {
+              ledgerNote.value = noteStr;
+            }
+
+            const inlineBadge = document.querySelector('[data-exp-badge="' + dNum + '"]');
+            const ledgerBdtCell = document.querySelector('[data-ledger-bdt="' + dNum + '"]');
+            const ledgerDiffCell = document.querySelector('[data-ledger-diff="' + dNum + '"]');
+
+            if (hasVal && valTHB >= 0) {
+              dailySumTHB += valTHB;
+              loggedDaysCount++;
+              plannedMidpointSumForLogged += midpoint;
+              const valBDT = valTHB * rate;
+
+              if (ledgerBdtCell) {
+                ledgerBdtCell.textContent = "৳" + formatNumber(valBDT);
+              }
+
+              let statusClass = "good";
+              let statusText = "Within plan";
+              if (valTHB < minS) {
+                statusClass = "good";
+                statusText = "฿" + formatNumber(minS - valTHB) + " under min";
+              } else if (valTHB > maxS) {
+                statusClass = "over";
+                statusText = "+฿" + formatNumber(valTHB - maxS) + " over max";
+              }
+
+              if (inlineBadge) {
+                inlineBadge.className = "inline-exp-status " + statusClass;
+                inlineBadge.textContent =
+                  "৳" + formatNumber(valBDT) + " · " + statusText;
+              }
+              if (ledgerDiffCell) {
+                ledgerDiffCell.innerHTML =
+                  '<span class="status-pill ' + statusClass + '">' + statusText + "</span>";
+              }
+            } else {
+              if (inlineBadge) {
+                inlineBadge.className = "inline-exp-status";
+                inlineBadge.textContent = "Not logged yet";
+              }
+              if (ledgerBdtCell) ledgerBdtCell.textContent = "—";
+              if (ledgerDiffCell) {
+                ledgerDiffCell.innerHTML = '<span class="status-pill neutral">Unlogged</span>';
+              }
+            }
+          });
+
+          const dailySumBDT = dailySumTHB * rate;
+          const totalSpentTHB = countedFixedTHB + dailySumTHB;
+          const totalSpentBDT = totalSpentTHB * rate;
+          const remainingBDT = targetBDT - totalSpentBDT;
+          const remainingTHB = remainingBDT / rate;
+          const remainingDays = Math.max(1, 21 - loggedDaysCount);
+          const safeDailyTHB = remainingTHB > 0 ? remainingTHB / remainingDays : 0;
+          const safeDailyBDT = safeDailyTHB * rate;
+
+          // Update KPI Cards
+          if (kpiFixedBdt) kpiFixedBdt.textContent = "৳" + formatNumber(countedFixedBDT);
+          if (kpiFixedThb) {
+            kpiFixedThb.textContent = expState.includeFixed
+              ? "฿" + formatNumber(countedFixedTHB) + " (Flights, EDC, Hostels)"
+              : "Excluded from calculation (Daily-only mode)";
+          }
+          if (kpiDaysLogged) kpiDaysLogged.textContent = loggedDaysCount + "/21";
+          if (kpiDailyBdt) kpiDailyBdt.textContent = "৳" + formatNumber(dailySumBDT);
+          if (kpiDailyThb) {
+            kpiDailyThb.textContent =
+              "฿" + formatNumber(dailySumTHB) + " spent across " + loggedDaysCount + " logged days";
+          }
+
+          if (kpiRemainingBdt) {
+            kpiRemainingBdt.textContent =
+              (remainingBDT < 0 ? "-৳" : "৳") + formatNumber(Math.abs(remainingBDT));
+            kpiRemainingBdt.className =
+              "kpi-val " + (remainingBDT >= 0 ? "emerald-text" : "danger-text");
+          }
+          if (kpiRemainingThb) {
+            kpiRemainingThb.textContent =
+              (remainingTHB < 0 ? "-฿" : "฿") +
+              formatNumber(Math.abs(remainingTHB)) +
+              (remainingBDT >= 0 ? " remaining in budget" : " over target budget");
+          }
+          if (kpiRemainingCard) {
+            kpiRemainingCard.classList.toggle("over-budget-card", remainingBDT < 0);
+          }
+
+          if (kpiBurnThb) {
+            kpiBurnThb.textContent =
+              loggedDaysCount >= 21
+                ? "Trip Complete"
+                : "฿" + formatNumber(safeDailyTHB) + " / day";
+          }
+          if (kpiBurnBdt) {
+            kpiBurnBdt.textContent =
+              loggedDaysCount >= 21
+                ? "All 21 days logged"
+                : "≈ ৳" +
+                  formatNumber(safeDailyBDT) +
+                  "/day across " +
+                  (21 - loggedDaysCount) +
+                  " remaining days";
+          }
+
+          // Update Progress Bar & Variance
+          const spentPct = Math.min(100, Math.max(0, Math.round((totalSpentBDT / targetBDT) * 100)));
+          if (expBudgetBar) {
+            expBudgetBar.style.width = spentPct + "%";
+            expBudgetBar.classList.toggle("over-bar", remainingBDT < 0);
+          }
+          if (expMeterLeftLabel) {
+            expMeterLeftLabel.textContent =
+              "Total Spent: ৳" +
+              formatNumber(totalSpentBDT) +
+              " (฿" +
+              formatNumber(totalSpentTHB) +
+              " · " +
+              spentPct +
+              "% of target)";
+          }
+          if (expMeterVarianceLabel) {
+            if (loggedDaysCount === 0) {
+              expMeterVarianceLabel.textContent =
+                "Log any day's THB spend to see variance vs. planned midpoint";
+            } else {
+              const diffTHB = dailySumTHB - plannedMidpointSumForLogged;
+              const diffBDT = Math.abs(diffTHB) * rate;
+              expMeterVarianceLabel.textContent =
+                diffTHB <= 0
+                  ? "✅ ฿" +
+                    formatNumber(Math.abs(diffTHB)) +
+                    " (৳" +
+                    formatNumber(diffBDT) +
+                    ") under planned midpoint for logged days"
+                  : "⚠️ +฿" +
+                    formatNumber(diffTHB) +
+                    " (৳" +
+                    formatNumber(diffBDT) +
+                    ") above planned midpoint for logged days";
+            }
+          }
+
+          // Update Topbar & Mobile Bottom Nav Pills
+          const shortRemK = (remainingBDT / 1000).toFixed(1);
+          if (topWalletPill) {
+            topWalletPill.textContent =
+              (remainingBDT < 0 ? "-৳" : "৳") + Math.abs(parseFloat(shortRemK)) + "k left";
+          }
+          if (mobNavWallet) {
+            mobNavWallet.textContent =
+              (remainingBDT < 0 ? "-৳" : "৳") + Math.round(Math.abs(remainingBDT) / 1000) + "k left";
+          }
+
+          updateItineraryView();
+        }
+
+        // Bind Target BDT, Rate, and Fixed Cost listeners
+        if (targetBdtInput) {
+          targetBdtInput.addEventListener("input", (e) => {
+            expState.targetBDT = parseFloat(e.target.value) || 0;
+            saveExpState();
+            updateExpenseUI();
+          });
+        }
+
+        if (rateInput) {
+          rateInput.addEventListener("input", (e) => {
+            expState.rate = parseFloat(e.target.value) || 3.67;
+            saveExpState();
+            updateExpenseUI();
+          });
+        }
+
+        if (includeFixedToggle) {
+          includeFixedToggle.addEventListener("change", (e) => {
+            expState.includeFixed = e.target.checked;
+            saveExpState();
+            updateExpenseUI();
+          });
+        }
+
+        document.querySelectorAll(".fixed-thb-input").forEach((inp) => {
+          inp.addEventListener("input", (e) => {
+            const fid = inp.getAttribute("data-fixed-id");
+            expState.fixed[fid] = parseFloat(e.target.value) || 0;
+            saveExpState();
+            updateExpenseUI();
+          });
+        });
+
+        // Bind Inline Day Card & Ledger Table THB/Note inputs
+        function handleDaySpendInput(dayNum, valueStr) {
+          if (valueStr === "" || valueStr === null) {
+            delete expState.dailyTHB[dayNum];
+          } else {
+            expState.dailyTHB[dayNum] = Math.max(0, parseFloat(valueStr) || 0);
+          }
+          saveExpState();
+          updateExpenseUI();
+        }
+
+        function handleDayNoteInput(dayNum, noteStr) {
+          expState.dailyNotes[dayNum] = noteStr;
+          saveExpState();
+          updateExpenseUI();
+        }
+
+        document.querySelectorAll(".day-thb-input").forEach((inp) => {
+          inp.addEventListener("input", (e) => {
+            handleDaySpendInput(inp.getAttribute("data-exp-day"), e.target.value);
+          });
+        });
+
+        document.querySelectorAll(".ledger-thb-input").forEach((inp) => {
+          inp.addEventListener("input", (e) => {
+            handleDaySpendInput(inp.getAttribute("data-ledger-day"), e.target.value);
+          });
+        });
+
+        document.querySelectorAll(".day-note-input").forEach((inp) => {
+          inp.addEventListener("input", (e) => {
+            handleDayNoteInput(inp.getAttribute("data-note-day"), e.target.value);
+          });
+        });
+
+        document.querySelectorAll(".ledger-note-input").forEach((inp) => {
+          inp.addEventListener("input", (e) => {
+            handleDayNoteInput(inp.getAttribute("data-ledger-note"), e.target.value);
+          });
+        });
+
+        // Demo Fill Planned Midpoints Button
+        const fillEstBtn = document.getElementById("exp-fill-estimates-btn");
+        if (fillEstBtn) {
+          fillEstBtn.addEventListener("click", () => {
+            dayCards.forEach((card) => {
+              const dNum = card.getAttribute("data-day-num");
+              const minS = parseInt(card.getAttribute("data-min-spend") || "0", 10);
+              const maxS = parseInt(card.getAttribute("data-max-spend") || "0", 10);
+              expState.dailyTHB[dNum] = Math.round((minS + maxS) / 2);
+            });
+            saveExpState();
+            updateExpenseUI();
+          });
+        }
+
+        // Clear Daily Logs Button
+        const clearDailyBtn = document.getElementById("exp-clear-daily-btn");
+        if (clearDailyBtn) {
+          clearDailyBtn.addEventListener("click", () => {
+            if (window.confirm("Clear all 21 daily THB spend logs and notes?")) {
+              expState.dailyTHB = {};
+              expState.dailyNotes = {};
+              saveExpState();
+              updateExpenseUI();
+            }
+          });
+        }
+
+        // Export CSV Button
+        const exportCsvBtn = document.getElementById("exp-export-csv-btn");
+        if (exportCsvBtn) {
+          exportCsvBtn.addEventListener("click", () => {
+            const rate = parseFloat(expState.rate) || 3.67;
+            let csv = "Item/Day,Location/Category,Planned THB,Actual THB,Actual BDT,Notes\n";
+
+            document.querySelectorAll(".fixed-thb-input").forEach((inp) => {
+              const fid = inp.getAttribute("data-fixed-id");
+              const val = parseFloat(expState.fixed[fid]) || 0;
+              csv +=
+                '"' +
+                fid +
+                '","Pre-Trip Fixed",0,' +
+                val +
+                "," +
+                Math.round(val * rate) +
+                ',""\n';
+            });
+
+            dayCards.forEach((card) => {
+              const dNum = card.getAttribute("data-day-num");
+              const minS = card.getAttribute("data-min-spend");
+              const maxS = card.getAttribute("data-max-spend");
+              const rawVal = expState.dailyTHB[dNum];
+              const val = rawVal !== undefined && rawVal !== "" ? parseFloat(rawVal) : 0;
+              const note = (expState.dailyNotes[dNum] || "").replace(/"/g, '""');
+              csv +=
+                '"Day ' +
+                dNum +
+                '","' +
+                card.getAttribute("data-cities") +
+                '","' +
+                minS +
+                "-" +
+                maxS +
+                '",' +
+                val +
+                "," +
+                Math.round(val * rate) +
+                ',"' +
+                note +
+                '"\n';
+            });
+
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "thailand-grand-tour-expenses.csv";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          });
+        }
+
+        // --- 4. BOOKING & PACKING CHECKLIST ---
+        const chkInputs = document.querySelectorAll(".chk-input");
+        const chkRows = document.querySelectorAll(".chk-row");
+        const chkTabs = document.querySelectorAll("[data-chk-filter]");
+        const progressBar = document.getElementById("chk-progress-bar");
+        const countLabel = document.getElementById("chk-count-label");
+        const topProgressPill = document.getElementById("top-progress-pill");
+        const mobNavChkCount = document.getElementById("mob-nav-chk-count");
+        const hideDoneBtn = document.getElementById("chk-hide-done-btn");
+        const resetBtn = document.getElementById("chk-reset-btn");
+
+        let checkedState = {};
+        let currentChkCat = "all";
+        let hideCheckedItems = false;
+
+        try {
+          checkedState = JSON.parse(localStorage.getItem(CHK_STORAGE_KEY) || "{}");
+        } catch (e) {
+          checkedState = {};
+        }
+
+        function saveCheckedState() {
+          try {
+            localStorage.setItem(CHK_STORAGE_KEY, JSON.stringify(checkedState));
+          } catch (e) {}
+        }
+
+        function updateChecklistUI() {
+          const total = chkInputs.length;
+          let completed = 0;
+
+          chkRows.forEach((row) => {
+            const id = row.getAttribute("data-chk-id");
+            const cat = row.getAttribute("data-chk-cat");
+            const input = row.querySelector(".chk-input");
+            const isChecked = !!checkedState[id];
+
+            if (input) input.checked = isChecked;
+            row.classList.toggle("is-checked", isChecked);
+            if (isChecked) completed++;
+
+            const matchesCat = currentChkCat === "all" || cat === currentChkCat;
+            const matchesHide = !hideCheckedItems || !isChecked;
+
+            row.style.display = matchesCat && matchesHide ? "flex" : "none";
+          });
+
+          const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+          if (progressBar) progressBar.style.width = pct + "%";
+          if (countLabel) {
+            countLabel.textContent =
+              completed + " of " + total + " completed (" + pct + "%)";
+          }
+          if (topProgressPill) {
+            topProgressPill.textContent = "Checklist · " + completed + "/" + total;
+          }
+          if (mobNavChkCount) {
+            mobNavChkCount.textContent = completed + "/" + total + " Done";
+          }
+        }
+
+        chkInputs.forEach((input) => {
+          input.addEventListener("change", (e) => {
+            const id = e.target.value;
+            checkedState[id] = e.target.checked;
+            saveCheckedState();
+            updateChecklistUI();
+          });
+        });
+
+        chkTabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            currentChkCat = tab.getAttribute("data-chk-filter") || "all";
+            chkTabs.forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
+            updateChecklistUI();
+          });
+        });
+
+        if (hideDoneBtn) {
+          hideDoneBtn.addEventListener("click", () => {
+            hideCheckedItems = !hideCheckedItems;
+            hideDoneBtn.classList.toggle("active", hideCheckedItems);
+            hideDoneBtn.textContent = hideCheckedItems ? "Show checked" : "Hide checked";
+            updateChecklistUI();
+          });
+        }
+
+        if (resetBtn) {
+          resetBtn.addEventListener("click", () => {
+            if (window.confirm("Reset all checked booking and packing items?")) {
+              checkedState = {};
+              saveCheckedState();
+              updateChecklistUI();
+            }
+          });
+        }
+
+        // Initialize all views
+        updateExpenseUI();
+        updateChecklistUI();
+      })();
+    </script>
+
+    <style>
+      :root {
+        --bg: #0c0f0d;
+        --bg-elevated: #141916;
+        --bg-card: #181f1b;
+        --border: rgba(255, 255, 255, 0.1);
+        --text: #f3f5f3;
+        --muted: #a3afa7;
+        --accent: #f59e0b;
+        --accent-soft: rgba(245, 158, 11, 0.14);
+        --emerald: #34d399;
+        --emerald-soft: rgba(52, 211, 153, 0.14);
+        --danger: #f87171;
+        --danger-soft: rgba(248, 113, 113, 0.15);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+      }
+
+      body {
+        padding-bottom: 4.2rem;
+      }
+
+      .container {
+        width: min(1200px, 92vw);
+        margin-inline: auto;
+      }
+
+      /* Topbar */
+      .topbar-wrap {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(12, 15, 13, 0.9);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.9rem 0;
+        gap: 0.8rem;
+      }
+
+      .brand {
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 0.95rem;
+      }
+
+      .brand span {
+        color: var(--accent);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.86rem;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      .topbar-pills {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .nav-wallet-pill {
+        background: var(--emerald-soft);
+        color: var(--emerald);
+        border: 1px solid rgba(52, 211, 153, 0.35);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.8rem;
+        padding: 0.42rem 0.85rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+
+      .nav-cta {
+        background: var(--accent);
+        color: #0c0f0d;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.8rem;
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+
+      /* Hero */
+      .hero {
+        padding: 4rem 0 3rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .eyebrow {
+        display: inline-block;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        color: var(--accent);
+        background: var(--accent-soft);
+        padding: 0.35rem 0.8rem;
+        border-radius: 999px;
+        margin-bottom: 1.25rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Fraunces", Georgia, serif;
+        line-height: 1.12;
+      }
+
+      h1 {
+        font-size: clamp(2.6rem, 6vw, 4.6rem);
+        margin-bottom: 1.2rem;
+      }
+
+      h1 em {
+        color: var(--accent);
+        font-style: italic;
+        font-weight: 400;
+      }
+
+      .hero-lead {
+        max-width: 720px;
+        font-size: 1.08rem;
+        color: var(--muted);
+        margin-bottom: 1.8rem;
+      }
+
+      .hero-lead strong {
+        color: var(--text);
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 0.85rem;
+        flex-wrap: wrap;
+        margin-bottom: 2.8rem;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        display: inline-block;
+        padding: 0.75rem 1.3rem;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #0c0f0d;
+      }
+
+      .btn-secondary {
+        border: 1px solid var(--border);
+        color: var(--text);
+        background: var(--bg-elevated);
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+
+      .stat-card {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        padding: 1.2rem 1.35rem;
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .stat-card strong {
+        font-family: "Fraunces", serif;
+        font-size: 1.6rem;
+        color: var(--text);
+      }
+
+      .stat-card span {
+        font-size: 0.84rem;
+        color: var(--muted);
+      }
+
+      /* Sections */
+      .section {
+        padding: 4.2rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-bottom: 2.2rem;
+      }
+
+      .section-kicker {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.76rem;
+        font-weight: 700;
+        color: var(--accent);
+        margin-bottom: 0.45rem;
+      }
+
+      h2 {
+        font-size: clamp(1.85rem, 3.5vw, 2.65rem);
+      }
+
+      .section-sub {
+        max-width: 520px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      /* Route Grid */
+      .route-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+        gap: 1.4rem;
+      }
+
+      .route-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s, border-color 0.2s;
+      }
+
+      .route-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(245, 158, 11, 0.4);
+      }
+
+      .route-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .route-card-body {
+        padding: 1.35rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        flex: 1;
+      }
+
+      .route-dates {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .route-card h3 {
+        font-size: 1.35rem;
+      }
+
+      .route-card p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        flex: 1;
+      }
+
+      .tag-row {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin-top: 0.3rem;
+      }
+
+      .tag {
+        font-size: 0.73rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      .route-filter-btn {
+        margin-top: 0.6rem;
+        background: var(--bg-elevated);
+        color: var(--accent);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        padding: 0.55rem 0.9rem;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 0.82rem;
+        cursor: pointer;
+        text-align: center;
+        transition: background 0.2s, color 0.2s;
+      }
+
+      .route-filter-btn:hover {
+        background: var(--accent);
+        color: #0c0f0d;
+      }
+
+      /* Highlights Grid */
+      .highlights-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+        gap: 1.2rem;
+      }
+
+      .highlight-box {
+        background: linear-gradient(160deg, #1b241f 0%, #131815 100%);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        border-radius: 18px;
+        padding: 1.45rem;
+      }
+
+      .hl-badge {
+        display: inline-block;
+        font-size: 0.74rem;
+        font-weight: 700;
+        color: var(--accent);
+        background: var(--accent-soft);
+        padding: 0.25rem 0.65rem;
+        border-radius: 999px;
+        margin-bottom: 0.7rem;
+      }
+
+      .highlight-box h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .highlight-box p {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      /* Interactive Filter Bar */
+      .filter-bar-sticky {
+        position: sticky;
+        top: 57px;
+        z-index: 80;
+        background: rgba(16, 21, 18, 0.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1rem 1.15rem;
+        margin-bottom: 1.6rem;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+      }
+
+      .filter-pills {
+        display: flex;
+        gap: 0.55rem;
+        overflow-x: auto;
+        padding-bottom: 0.65rem;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .filter-pills::-webkit-scrollbar {
+        display: none;
+      }
+
+      .filter-pill {
+        background: var(--bg-card);
+        color: var(--muted);
+        border: 1px solid var(--border);
+        padding: 0.5rem 0.95rem;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        transition: all 0.18s;
+      }
+
+      .filter-pill span {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 0.1rem 0.45rem;
+        border-radius: 999px;
+        font-size: 0.73rem;
+      }
+
+      .filter-pill.active {
+        background: var(--accent);
+        color: #0c0f0d;
+        border-color: var(--accent);
+        font-weight: 700;
+      }
+
+      .filter-pill.active span {
+        background: rgba(0, 0, 0, 0.2);
+        color: #0c0f0d;
+      }
+
+      .filter-meta-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        padding-top: 0.65rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .filter-summary-text strong {
+        color: var(--text);
+      }
+
+      .filter-view-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .util-btn {
+        background: var(--bg-card);
+        color: var(--text);
+        border: 1px solid var(--border);
+        padding: 0.42rem 0.85rem;
+        border-radius: 8px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      .util-btn:hover {
+        border-color: rgba(245, 158, 11, 0.45);
+      }
+
+      .util-btn.active {
+        background: var(--emerald-soft);
+        color: var(--emerald);
+        border-color: var(--emerald);
+      }
+
+      .util-btn.danger-btn:hover {
+        background: var(--danger-soft);
+        color: var(--danger);
+        border-color: rgba(248, 113, 113, 0.45);
+      }
+
+      /* Days List */
+      .days-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.4rem;
+      }
+
+      .day-card {
+        display: grid;
+        grid-template-columns: 98px 1fr;
+        gap: 1.4rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 1.5rem;
+        transition: opacity 0.2s, border-color 0.2s;
+      }
+
+      .day-card.day-is-completed {
+        border-color: rgba(52, 211, 153, 0.4);
+        background: rgba(20, 29, 24, 0.75);
+      }
+
+      .day-card.day-is-completed h3 {
+        text-decoration: line-through;
+        color: var(--muted);
+      }
+
+      .day-date-col {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 0.45rem;
+        height: fit-content;
+        text-align: center;
+        gap: 0.15rem;
+      }
+
+      .day-date-col span {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .day-date-col strong {
+        font-family: "Fraunces", serif;
+        font-size: 1.95rem;
+        line-height: 1.05;
+        color: var(--accent);
+      }
+
+      .day-done-btn {
+        margin-top: 0.45rem;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      .day-card.day-is-completed .day-done-btn {
+        background: var(--emerald-soft);
+        color: var(--emerald);
+        border-color: var(--emerald);
+      }
+
+      .day-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        font-size: 0.8rem;
+        color: var(--accent);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.35rem;
+      }
+
+      .day-meta-right {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .city-chip {
+        background: var(--accent-soft);
+        color: var(--accent);
+        padding: 0.15rem 0.55rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+
+      .day-body-col h3 {
+        font-size: 1.45rem;
+        margin-bottom: 0.45rem;
+      }
+
+      .stay-pill {
+        display: inline-block;
+        font-size: 0.84rem;
+        color: var(--emerald);
+        background: var(--emerald-soft);
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        margin-bottom: 1.1rem;
+      }
+
+      .time-blocks {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+        gap: 0.95rem;
+        margin-bottom: 1.15rem;
+      }
+
+      .time-slot {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        padding: 0.95rem;
+        border-radius: 12px;
+      }
+
+      .time-slot b {
+        display: block;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        margin-bottom: 0.3rem;
+      }
+
+      .time-slot p {
+        font-size: 0.88rem;
+        color: var(--text);
+      }
+
+      .day-footer-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1.4fr;
+        gap: 1rem;
+        padding-top: 0.95rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+      }
+
+      .day-footer-grid b {
+        display: block;
+        color: var(--text);
+        margin-bottom: 0.18rem;
+      }
+
+      .day-footer-grid span,
+      .day-footer-grid p {
+        color: var(--muted);
+      }
+
+      /* Inline Actual Spend Bar on Day Cards */
+      .day-inline-expense-bar {
+        display: grid;
+        grid-template-columns: 220px 1fr auto;
+        align-items: end;
+        gap: 0.85rem;
+        background: rgba(20, 26, 22, 0.9);
+        border: 1px dashed rgba(245, 158, 11, 0.35);
+        padding: 0.85rem 1rem;
+        border-radius: 12px;
+      }
+
+      .inline-exp-field label,
+      .inline-exp-note-field label {
+        display: block;
+        font-size: 0.73rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--accent);
+        margin-bottom: 0.3rem;
+      }
+
+      .inline-input-wrap {
+        display: flex;
+        align-items: center;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0 0.6rem;
+      }
+
+      .inline-input-wrap:focus-within {
+        border-color: var(--accent);
+      }
+
+      .curr-prefix {
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 0.88rem;
+        margin-right: 0.35rem;
+      }
+
+      .inline-input-wrap input,
+      .day-note-input,
+      .ledger-note-input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.88rem;
+        padding: 0.45rem 0;
+        outline: none;
+      }
+
+      .day-note-input,
+      .ledger-note-input {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.45rem 0.65rem;
+      }
+
+      .day-note-input:focus,
+      .ledger-note-input:focus {
+        border-color: var(--accent);
+      }
+
+      .inline-exp-status {
+        font-size: 0.8rem;
+        font-weight: 700;
+        padding: 0.45rem 0.8rem;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--muted);
+        white-space: nowrap;
+      }
+
+      .inline-exp-status.good {
+        background: var(--emerald-soft);
+        color: var(--emerald);
+      }
+
+      .inline-exp-status.over {
+        background: var(--danger-soft);
+        color: var(--danger);
+      }
+
+      /* Compact Mode for Phone */
+      .days-list.compact-mode .time-blocks,
+      .days-list.compact-mode .booking-tip-box {
+        display: none;
+      }
+
+      .days-list.compact-mode .day-card {
+        padding: 1rem 1.2rem;
+      }
+
+      .days-list.compact-mode .day-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        padding-top: 0.5rem;
+      }
+
+      /* EXPENSE LOGGER SECTION */
+      .exp-dashboard {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 1.5rem;
+        margin-bottom: 1.4rem;
+      }
+
+      .exp-controls-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 1.2rem;
+        align-items: end;
+        padding-bottom: 1.35rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1.35rem;
+      }
+
+      .exp-control-group label {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--accent);
+        margin-bottom: 0.35rem;
+      }
+
+      .exp-control-group small {
+        display: block;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-top: 0.3rem;
+      }
+
+      .exp-control-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        align-self: center;
+      }
+
+      .exp-kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.3rem;
+      }
+
+      .exp-kpi-card {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.15rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .exp-kpi-card.highlight-kpi {
+        border-color: rgba(52, 211, 153, 0.45);
+        background: linear-gradient(155deg, rgba(20, 35, 28, 0.9), rgba(20, 25, 22, 0.9));
+      }
+
+      .exp-kpi-card.over-budget-card {
+        border-color: rgba(248, 113, 113, 0.5);
+        background: linear-gradient(155deg, rgba(40, 20, 20, 0.9), rgba(20, 25, 22, 0.9));
+      }
+
+      .kpi-label {
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .kpi-val {
+        font-family: "Fraunces", serif;
+        font-size: 1.7rem;
+        color: var(--text);
+      }
+
+      .emerald-text {
+        color: var(--emerald);
+      }
+
+      .danger-text {
+        color: var(--danger);
+      }
+
+      .kpi-sub {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      .exp-meter-labels {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        font-size: 0.82rem;
+        color: var(--muted);
+        margin-bottom: 0.45rem;
+      }
+
+      .exp-subcard {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 1.4rem;
+        margin-bottom: 1.4rem;
+      }
+
+      .exp-subcard-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.15rem;
+      }
+
+      .exp-subcard-head h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .exp-subcard-head p {
+        font-size: 0.86rem;
+        color: var(--muted);
+      }
+
+      .toggle-fixed-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: var(--accent);
+        cursor: pointer;
+      }
+
+      .fixed-costs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+      }
+
+      .fixed-cost-item {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        padding: 1rem;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .fixed-cost-item label {
+        font-size: 0.84rem;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .fixed-cost-item small {
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 0.35rem;
+      }
+
+      .bdt-inline-Readout {
+        font-size: 0.78rem;
+        color: var(--muted);
+        white-space: nowrap;
+        padding-left: 0.5rem;
+      }
+
+      .ledger-sub-title {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-top: 0.15rem;
+      }
+
+      .compact-input {
+        width: 115px;
+      }
+
+      .muted-cell {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .status-pill {
+        display: inline-block;
+        padding: 0.2rem 0.55rem;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+      }
+
+      .status-pill.neutral {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--muted);
+      }
+
+      .status-pill.good {
+        background: var(--emerald-soft);
+        color: var(--emerald);
+      }
+
+      .status-pill.over {
+        background: var(--danger-soft);
+        color: var(--danger);
+      }
+
+      /* Interactive Checklist Section */
+      .checklist-dashboard {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 1.35rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .chk-progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.85rem;
+      }
+
+      .chk-progress-header strong {
+        display: block;
+        font-family: "Fraunces", serif;
+        font-size: 1.35rem;
+        color: var(--text);
+      }
+
+      .chk-progress-header span {
+        font-size: 0.84rem;
+        color: var(--muted);
+      }
+
+      .chk-dashboard-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .progress-track {
+        width: 100%;
+        height: 12px;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        overflow: hidden;
+        margin-bottom: 1.1rem;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent), var(--emerald));
+        border-radius: 999px;
+        transition: width 0.3s ease;
+      }
+
+      .progress-fill.over-bar {
+        background: linear-gradient(90deg, var(--accent), var(--danger));
+      }
+
+      .chk-tabs {
+        display: flex;
+        gap: 0.5rem;
+        overflow-x: auto;
+        padding-bottom: 0.25rem;
+        scrollbar-width: none;
+      }
+
+      .chk-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .chk-tab {
+        background: var(--bg-elevated);
+        color: var(--muted);
+        border: 1px solid var(--border);
+        padding: 0.48rem 0.9rem;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+
+      .chk-tab.active {
+        background: var(--accent);
+        color: #0c0f0d;
+        border-color: var(--accent);
+        font-weight: 700;
+      }
+
+      .chk-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+
+      .chk-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1rem 1.15rem;
+        cursor: pointer;
+        user-select: none;
+        transition: border-color 0.15s, background 0.15s;
+      }
+
+      .chk-row:hover {
+        border-color: rgba(245, 158, 11, 0.35);
+      }
+
+      .chk-row.is-checked {
+        background: rgba(20, 28, 23, 0.65);
+        border-color: rgba(52, 211, 153, 0.3);
+      }
+
+      .chk-input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .chk-custom-box {
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+        border-radius: 8px;
+        border: 2px solid var(--muted);
+        background: var(--bg-elevated);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        font-weight: 800;
+        color: transparent;
+        transition: all 0.15s;
+      }
+
+      .chk-row.is-checked .chk-custom-box {
+        background: var(--emerald);
+        border-color: var(--emerald);
+        color: #0c0f0d;
+      }
+
+      .chk-content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .chk-title-line {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.2rem;
+      }
+
+      .chk-cat-tag {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 0.12rem 0.5rem;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+
+      .chk-title {
+        font-size: 0.96rem;
+        color: var(--text);
+      }
+
+      .chk-row.is-checked .chk-title {
+        text-decoration: line-through;
+        color: var(--muted);
+      }
+
+      .chk-meta {
+        font-size: 0.83rem;
+        color: var(--muted);
+      }
+
+      .chk-cost-badge {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 0.3rem 0.65rem;
+        border-radius: 8px;
+        white-space: nowrap;
+      }
+
+      /* Hostels Grid */
+      .hostels-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+        gap: 1.35rem;
+      }
+
+      .hostel-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 1.45rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.95rem;
+      }
+
+      .hostel-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .hostel-dates {
+        font-size: 0.76rem;
+        color: var(--accent);
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .hostel-rate {
+        background: var(--accent-soft);
+        color: var(--accent);
+        padding: 0.28rem 0.65rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+      }
+
+      .hostel-picks {
+        padding-left: 1.1rem;
+        color: var(--muted);
+        font-size: 0.88rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.48rem;
+      }
+
+      .hostel-picks strong {
+        color: var(--text);
+      }
+
+      .hostel-rule {
+        margin-top: auto;
+        background: var(--bg-elevated);
+        border-left: 3px solid var(--accent);
+        padding: 0.7rem 0.85rem;
+        font-size: 0.84rem;
+        color: var(--muted);
+        border-radius: 6px;
+      }
+
+      /* Budget Table */
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: var(--bg-card);
+      }
+
+      .budget-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 0.88rem;
+      }
+
+      .budget-table th,
+      .budget-table td {
+        padding: 0.95rem 1.1rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .budget-table th {
+        background: var(--bg-elevated);
+        color: var(--accent);
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .num-col {
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .budget-table tfoot td {
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--text);
+        font-size: 0.96rem;
+        border-bottom: none;
+      }
+
+      /* Booking Order */
+      .booking-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.2rem;
+      }
+
+      .book-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 1.45rem;
+      }
+
+      .book-step-num {
+        font-family: "Fraunces", serif;
+        font-size: 1.9rem;
+        color: var(--accent);
+        margin-bottom: 0.25rem;
+      }
+
+      .book-timing {
+        display: inline-block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--emerald);
+        margin-bottom: 0.45rem;
+        font-weight: 700;
+      }
+
+      .book-card h3 {
+        font-size: 1.18rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .book-card p {
+        font-size: 0.88rem;
+        color: var(--muted);
+      }
+
+      /* Mobile Floating Bottom App Bar */
+      .mobile-bottom-nav {
+        display: none;
+      }
+
+      .footer {
+        padding: 2.4rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .footer a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .filter-bar-sticky {
+          top: 53px;
+          padding: 0.8rem 0.9rem;
+        }
+
+        .day-card {
+          grid-template-columns: 1fr;
+          padding: 1.2rem;
+        }
+
+        .day-date-col {
+          flex-direction: row;
+          justify-content: space-between;
+          width: 100%;
+          padding: 0.5rem 0.85rem;
+        }
+
+        .day-date-col strong {
+          font-size: 1.25rem;
+        }
+
+        .day-done-btn {
+          margin-top: 0;
+          width: auto;
+          padding: 0.3rem 0.7rem;
+        }
+
+        .day-footer-grid,
+        .day-inline-expense-bar,
+        .exp-controls-row {
+          grid-template-columns: 1fr;
+        }
+
+        .chk-row {
+          flex-wrap: wrap;
+          padding: 0.9rem;
+        }
+
+        .chk-cost-badge {
+          margin-left: 2.6rem;
+        }
+
+        .mobile-bottom-nav {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          z-index: 120;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          background: rgba(14, 18, 16, 0.96);
+          backdrop-filter: blur(14px);
+          border-top: 1px solid var(--border);
+          padding: 0.45rem 0.15rem calc(0.45rem + env(safe-area-inset-bottom));
+        }
+
+        .mob-nav-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          color: var(--muted);
+          font-size: 1rem;
+          gap: 0.1rem;
+        }
+
+        .mob-nav-item small {
+          font-size: 0.66rem;
+          font-weight: 600;
+          color: var(--text);
+        }
+      }
+    </style>
+  </body>
+</html>
